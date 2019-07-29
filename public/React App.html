@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<!-- saved from url=(0060)http://localhost:3000/dashboard/lesson-planner/lessonCreator -->
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+		<link rel="shortcut icon" href="http://localhost:3000/favicon.ico" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="theme-color" content="#000000" />
+		<!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+		<link rel="manifest" href="http://localhost:3000/manifest.json" />
+		<!--
+      Notice the use of  in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+		<title>MrWetherall.org</title>
+		<style type="text/css">
+			body {
+				margin: 0;
+				font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+					'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+				-webkit-font-smoothing: antialiased;
+				-moz-osx-font-smoothing: grayscale;
+				background-color: var(--white);
+			}
+
+			code {
+				font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+			}
+
+			:root {
+				--blue: #0e3c61;
+				--grey: #c0c3c4;
+				--darkGrey: #7d7e80;
+				--red: #730000;
+				--white: #fffdfa;
+			}
+			/* #8f1010 */
+			/* #fffdfa */
+			/* #fff7ed */
+			/* #7d7e80 */
+			/* #96a2b4 */
+		</style>
+		<style type="text/css">
+			input.form-textbox {
+				height: 250px;
+				min-height: 25px;
+			}
+			/* Logo color ideas: #004175,  #103e87, #var(--blue) */
+			.App {
+				background-color: var(--white);
+			}
+			.Header {
+				display: grid;
+				grid-template-columns: 1fr 4fr;
+				background-color: var(--blue);
+				min-height: 5vh;
+				align-items: center;
+				justify-content: center;
+				color: var(--white);
+			}
+			.SubHeader {
+				display: grid;
+				grid-template-columns: 1fr 4fr;
+				grid-template-rows: 1fr 5fr;
+				background-color: var(--blue);
+				min-height: 5vh;
+				align-items: center;
+				justify-content: center;
+				color: var(--white);
+			}
+
+			.button {
+				background-color: var(--grey);
+				border: 0.01px solid black;
+				width: 100px;
+				height: 50px;
+				color: var(--blue);
+				text-decoration: none;
+				font-size: 75%;
+				font-weight: bolder;
+				box-shadow: 3px 3px 3px black;
+				text-shadow: 2px 2px 2px #888;
+			}
+			.blueButton {
+				font-size: 70%;
+				height: 50px;
+				width: 30%;
+				text-decoration: none;
+				color: var(--white);
+				background-color: var(--blue);
+			}
+			.redButton {
+				font-size: 70%;
+				height: 50px;
+				width: 30%;
+				text-decoration: none;
+				color: var(--white);
+				background-color: var(--red);
+			}
+			.whiteButton {
+				font-size: 70%;
+				height: 50px;
+				width: 30%;
+				text-decoration: none;
+				color: var(--blue);
+				background-color: var(--white);
+			}
+
+			.Header a {
+				color: var(--white);
+				font-size: 150%;
+				text-decoration: none;
+				text-shadow: '10px 10px 5px #888';
+			}
+
+			.class-room-desk-pair {
+				display: flex;
+				flex-direction: row;
+				justify-content: center;
+				align-items: flex-end;
+			}
+
+			.classroom-desks {
+				width: 40%;
+				height: 70%;
+				background-color: var(--blue);
+				color: var(--white);
+				text-decoration: none;
+				border-radius: 5px;
+			}
+
+			.student-info-mutator-blue {
+				background-color: var(--blue);
+				color: var(--white);
+				width: 5rem;
+				height: 3rem;
+				margin: 10px;
+				font-size: 200%;
+				box-shadow: 1px 1px 2px 1px var(--blue);
+				border-radius: 5px;
+			}
+			.student-info-mutator-red {
+				background-color: var(--red);
+				color: var(--white);
+				width: 5rem;
+				height: 3rem;
+				margin: 10px;
+				font-size: 200%;
+				box-shadow: 1px 1px 2px 1px var(--blue);
+				border-radius: 5px;
+			}
+		</style>
+	</head>
+	<body>
+		<noscript>You need to enable JavaScript to run this app.</noscript>
+		<div id="root">
+			<div class="App">
+				<div>
+					<header class="Header" style="border-bottom: 3px solid var(--white);">
+						<a href="http://localhost:3000/" style="padding: 2%;">MrWetherall.org</a>
+						<div style="display: flex; place-content: center flex-end;">
+							<a href="http://localhost:3000/dashboard/roster-view" style="margin: 1%;">Rosters</a
+							><a
+								href="http://localhost:3000/dashboard/classroom/class-period-selector"
+								style="margin: 1%;"
+								>Class</a
+							><a href="http://localhost:3000/dashboard/lesson-planner/" style="margin: 1%;"
+								>Lesson Planner</a
+							><a href="http://localhost:3000/dashboard/school-day" style="margin: 1%;"
+								>School Day</a
+							>
+						</div>
+					</header>
+					<div id="test" style="display: grid; grid-template-columns: 1fr 4fr;"></div>
+					<div>
+						<h1>Lesson Planner</h1>
+						<div>
+							<h1>Lesson Creator</h1>
+							<h2>Loading</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+		<script src="./React App_files/bundle.js"></script
+		><script src="./React App_files/1.chunk.js"></script
+		><script src="./React App_files/main.chunk.js"></script
+		><script src="./React App_files/main.cf0370061f6353bedf0b.hot-update.js"></script>
+	</body>
+</html>

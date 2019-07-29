@@ -1,0 +1,108 @@
+input.form-textbox {
+	height: 250px;
+	min-height: 25px;
+}
+/* Logo color ideas: #004175,  #103e87, #var(--blue) */
+.App {
+	background-color: var(--white);
+}
+.Header {
+	display: grid;
+	grid-template-columns: 1fr 4fr;
+	background-color: var(--blue);
+	min-height: 5vh;
+	align-items: center;
+	justify-content: center;
+	color: var(--white);
+}
+.SubHeader {
+	display: grid;
+	grid-template-columns: 1fr 4fr;
+	grid-template-rows: 1fr 5fr;
+	background-color: var(--blue);
+	min-height: 5vh;
+	align-items: center;
+	justify-content: center;
+	color: var(--white);
+}
+
+.button {
+	background-color: var(--grey);
+	border: 0.01px solid black;
+	width: 100px;
+	height: 50px;
+	color: var(--blue);
+	text-decoration: none;
+	font-size: 75%;
+	font-weight: bolder;
+	box-shadow: 3px 3px 3px black;
+	text-shadow: 2px 2px 2px #888;
+}
+.blueButton {
+	font-size: 70%;
+	height: 50px;
+	width: 30%;
+	text-decoration: none;
+	color: var(--white);
+	background-color: var(--blue);
+}
+.redButton {
+	font-size: 70%;
+	height: 50px;
+	width: 30%;
+	text-decoration: none;
+	color: var(--white);
+	background-color: var(--red);
+}
+.whiteButton {
+	font-size: 70%;
+	height: 50px;
+	width: 30%;
+	text-decoration: none;
+	color: var(--blue);
+	background-color: var(--white);
+}
+
+.Header a {
+	color: var(--white);
+	font-size: 150%;
+	text-decoration: none;
+	text-shadow: '10px 10px 5px #888';
+}
+
+.class-room-desk-pair {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: flex-end;
+}
+
+.classroom-desks {
+	width: 40%;
+	height: 70%;
+	background-color: var(--blue);
+	color: var(--white);
+	text-decoration: none;
+	border-radius: 5px;
+}
+
+.student-info-mutator-blue {
+	background-color: var(--blue);
+	color: var(--white);
+	width: 5rem;
+	height: 3rem;
+	margin: 10px;
+	font-size: 200%;
+	box-shadow: 1px 1px 2px 1px var(--blue);
+	border-radius: 5px;
+}
+.student-info-mutator-red {
+	background-color: var(--red);
+	color: var(--white);
+	width: 5rem;
+	height: 3rem;
+	margin: 10px;
+	font-size: 200%;
+	box-shadow: 1px 1px 2px 1px var(--blue);
+	border-radius: 5px;
+}
