@@ -14,7 +14,7 @@ const GET_PERIOD_NAMES = gql`
 `
 const ClassPeriodSelector = ({ match }) => {
 	const { data, loading, error } = useQuery(GET_PERIOD_NAMES)
-
+	console.log(data)
 	if (loading) return <h1>Loading</h1>
 	if (error) console.log(error)
 
@@ -29,7 +29,7 @@ const ClassPeriodSelector = ({ match }) => {
 				display: 'grid',
 				gridTemplateRows: '1fr 7fr',
 				borderBottom: '1px solid black',
-				overflow: 'scroll',
+				overflow: 'scroll'
 			}}>
 			<div>
 				<div
@@ -37,7 +37,7 @@ const ClassPeriodSelector = ({ match }) => {
 						marginTop: '0px',
 						alignContent: 'center',
 						justifyContent: 'flex-start',
-						paddingTop: '1px',
+						paddingTop: '1px'
 					}}>
 					<h1 style={{ textDecoration: 'underline' }}>Class Period</h1>
 				</div>
@@ -46,11 +46,11 @@ const ClassPeriodSelector = ({ match }) => {
 						display: 'flex',
 						flexDirection: 'column',
 						alignContent: 'center',
-						fontSize: '200%',
+						fontSize: '200%'
 					}}>
 					<ClassPeriodItems
 						match={match}
-						items={data.periodName.enumValues.map((period) => period.name)}
+						items={data.periodName.enumValues.map(period => period.name)}
 					/>
 				</div>
 			</div>
@@ -68,13 +68,13 @@ const ClassPeriodItems = ({ items, match }) => {
 				<Link
 					key={period}
 					to={`/dashboard/classroom/class-period-selector/${period}/${Math.floor(
-						Math.random() * 24 + 1,
+						Math.random() * 24 + 1
 					)}`}
 					style={{
 						marginTop: '4%',
 						fontSize: '120%',
 						textDecoration: 'none',
-						color: 'white',
+						color: 'white'
 					}}>
 					<button
 						style={{
@@ -85,7 +85,7 @@ const ClassPeriodItems = ({ items, match }) => {
 							color: 'var(--white)',
 							backgroundColor: 'var(--blue)',
 							boxShadow: '3px 3px 3px var(--darkgray)',
-							overflow: 'scroll',
+							overflow: 'scroll'
 						}}>
 						Period {period}
 					</button>

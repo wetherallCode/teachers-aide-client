@@ -16,23 +16,23 @@ const defaultState = {
 	isEditLessonMode: false,
 	isEditLessonItemMode: false,
 	removeLessonModal: false,
-	userLogin: true,
+	userLogin: true
 }
 
 const client = new ApolloClient({
-	uri: `https://mrwetherall.herokuapp.com`,
-	credentials: 'same-origin',
+	uri: `https://mrwetherall.herokuapp.com/graphql`,
+	credentials: 'include',
 	clientState: {
 		defaults: defaultState,
-		resolvers: {},
-	},
+		resolvers: {}
+	}
 })
 
 render(
 	<ApolloProvider client={client}>
 		<App />
 	</ApolloProvider>,
-	document.getElementById('root'),
+	document.getElementById('root')
 )
 
 // If you want your app to work offline and load faster, you can change

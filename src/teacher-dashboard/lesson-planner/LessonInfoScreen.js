@@ -51,21 +51,21 @@ const REMOVE_LESSON_MUTATION = gql`
 `
 
 const LessonInfoScreen = ({ match, history }) => {
-	console.log(match.path)
 	const { lessonId } = match.params
 	const client = useApolloClient()
 
 	const { data, loading } = useQuery(FIND_LESSON_QUERY, {
-		variables: { _id: lessonId },
+		variables: { _id: lessonId }
 	})
+	console.log(data)
 	const [removeLesson] = useMutation(REMOVE_LESSON_MUTATION, {
 		variables: { _id: lessonId },
-		refetchQueries: ['findAllLessons'],
+		refetchQueries: ['findAllLessons']
 	})
 	if (loading) return <h1>Loading</h1>
 
 	const { findLesson, isEditLessonMode, removeLessonModal } = data
-	console.log(isEditLessonMode)
+
 	const editLessonModeToggle = () => {
 		client.writeData({ data: { isEditLessonMode: !isEditLessonMode } })
 		console.log(isEditLessonMode)
@@ -80,7 +80,7 @@ const LessonInfoScreen = ({ match, history }) => {
 				border: '3px solid var(--white)',
 				width: '100%',
 				display: 'grid',
-				gridTemplateRows: '4fr 1fr',
+				gridTemplateRows: '4fr 1fr'
 			}}>
 			<div>
 				<div>
@@ -94,14 +94,14 @@ const LessonInfoScreen = ({ match, history }) => {
 				<Modal
 					style={{
 						overlay: {
-							backgroundColor: 'var(--darkGrey)',
+							backgroundColor: 'var(--darkGrey)'
 						},
 						content: {
 							// marginTop: '10%',
 							marginLeft: '20%',
 							width: '40rem',
-							height: '25rem',
-						},
+							height: '25rem'
+						}
 					}}
 					isOpen={removeLessonModal}
 					onRequestClose={() => removeLessonModalToggle()}>
@@ -114,7 +114,7 @@ const LessonInfoScreen = ({ match, history }) => {
 								display: 'flex',
 								flexDirection: 'column',
 								justifyContent: 'center',
-								alignItems: 'center',
+								alignItems: 'center'
 							}}>
 							<button
 								style={{
@@ -122,7 +122,7 @@ const LessonInfoScreen = ({ match, history }) => {
 									fontSize: '130%',
 									width: '20rem',
 									height: '5rem',
-									borderRadius: '5px',
+									borderRadius: '5px'
 								}}
 								className='blueButton'
 								onClick={() => removeLessonModalToggle()}>
@@ -152,7 +152,7 @@ const LessonInfoScreen = ({ match, history }) => {
 					display: 'flex',
 					justifyContent: 'flex-end',
 					alignItems: 'center',
-					backgroundColor: 'var(--blue)',
+					backgroundColor: 'var(--blue)'
 				}}>
 				<button
 					style={{
@@ -161,7 +161,7 @@ const LessonInfoScreen = ({ match, history }) => {
 						fontSize: '120%',
 						marginRight: '5%',
 						color: 'var(--blue)',
-						borderRadius: '5px',
+						borderRadius: '5px'
 					}}
 					onClick={() => editLessonModeToggle()}>
 					{!isEditLessonMode ? 'Edit Lesson' : 'Lesson Display'}
@@ -173,7 +173,7 @@ const LessonInfoScreen = ({ match, history }) => {
 						fontSize: '120%',
 						marginRight: '5%',
 						color: 'var(--blue)',
-						borderRadius: '5px',
+						borderRadius: '5px'
 					}}
 					onClick={() => removeLessonModalToggle()}>
 					Delete Lesson
