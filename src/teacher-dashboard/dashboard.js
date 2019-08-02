@@ -33,7 +33,7 @@ const DashBoardNavigation = ({ match }) => {
 	const { data, loading } = useQuery(ME_QUERY)
 	if (loading)
 		return <h1 style={{ color: 'var(--blue)', textAlign: 'center' }}>Redirecting to Login</h1>
-	console.log(data.me)
+	console.log(data)
 	const { me } = data
 
 	return (
