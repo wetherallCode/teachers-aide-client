@@ -30,6 +30,7 @@ const client = new ApolloClient({
 		resolvers: {}
 	}
 })
+console.log(client)
 
 render(
 	<ApolloProvider client={client}>
