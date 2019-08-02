@@ -21,7 +21,10 @@ const defaultState = {
 
 const client = new ApolloClient({
 	uri: `https://mrwetherall.herokuapp.com`,
-	credentials: 'include',
+	fetchOptions: {
+		mode: 'no-cors'
+	},
+	// credentials: 'include',
 	clientState: {
 		defaults: defaultState,
 		resolvers: {}
