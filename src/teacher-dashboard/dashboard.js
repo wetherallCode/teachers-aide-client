@@ -30,9 +30,10 @@ const LOGOUT_MUTATION = gql`
 
 const DashBoardNavigation = ({ match }) => {
 	const [logout] = useMutation(LOGOUT_MUTATION)
-	const { data, loading } = useQuery(ME_QUERY)
+	const { data, loading, error } = useQuery(ME_QUERY)
 	if (loading)
 		return <h1 style={{ color: 'var(--blue)', textAlign: 'center' }}>Redirecting to Login</h1>
+	if (error) console.error(error)
 	console.log(data)
 	const { me } = data
 
