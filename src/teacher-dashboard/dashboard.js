@@ -33,7 +33,7 @@ const DashBoardNavigation = ({ match }) => {
 	const { data, loading } = useQuery(ME_QUERY)
 	if (loading)
 		return <h1 style={{ color: 'var(--blue)', textAlign: 'center' }}>Redirecting to Login</h1>
-	console.log(data)
+	console.log(data.me)
 	const { me } = data
 
 	return (
@@ -78,7 +78,7 @@ const DashBoardNavigation = ({ match }) => {
 					<Route path={`${match.path}/lesson-planner/`} component={LessonPlanner} />
 
 					<Route path={`${match.path}/school-day`} component={SchoolDay} />
-					<Route path={`${match.path}/logout`} component={Logout} />
+					<Route path={`${match.path}/logout`} component={logout} />
 				</div>
 			)}
 		</>
