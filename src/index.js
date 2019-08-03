@@ -24,7 +24,7 @@ const client = new ApolloClient({
 	// fetchOptions: {
 	// 	mode: 'no-cors'
 	// },
-	// credentials: 'include',
+	credentials: 'include',
 	clientState: {
 		defaults: defaultState,
 		resolvers: {}
