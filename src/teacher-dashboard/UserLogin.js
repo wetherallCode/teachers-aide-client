@@ -110,6 +110,7 @@ const UserLogin = ({ history }) => {
 						className='blueButton'
 						style={{ width: '20.45rem', fontSize: '140%', marginBottom: '4%' }}
 						onClick={() => {
+							console.log('click')
 							login()
 							return history.push('/dashboard')
 						}}>
