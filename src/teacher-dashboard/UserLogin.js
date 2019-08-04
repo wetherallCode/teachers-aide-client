@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Redirect } from 'react-router-dom'
 
 import Modal from 'react-modal'
 import { gql } from 'apollo-boost'
@@ -112,7 +112,8 @@ const UserLogin = ({ history }) => {
 						onClick={() => {
 							console.log('click')
 							login()
-							return history.push('/dashboard')
+							return <Redirect to='/dashboard' />
+							// return history.push('/dashboard')
 						}}>
 						Login
 					</button>
