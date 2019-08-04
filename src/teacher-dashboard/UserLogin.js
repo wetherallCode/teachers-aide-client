@@ -27,12 +27,12 @@ const UserLogin = ({ history }) => {
 	console.log(errorLog)
 	const { data } = useQuery(USER_LOGIN_MODAL_TOGGLE)
 
-	const displayError = (error) => setErrorLog(error)
+	const displayError = error => setErrorLog(error)
 
 	const [login] = useMutation(LOGIN_MUTATION, {
 		variables: { name: loginName, password: loginPassword },
 		refetchQueries: ['me'],
-		onError: displayError,
+		onError: displayError
 	})
 
 	const client = useApolloClient()
@@ -41,18 +41,18 @@ const UserLogin = ({ history }) => {
 	const userLoginModalToggle = () => {
 		client.writeData({ data: { userLogin: !userLogin } })
 	}
-
+	console.log('login screen')
 	return (
 		<Modal
 			style={{
 				overlay: {
-					backgroundColor: 'var(--darkGrey)',
+					backgroundColor: 'var(--darkGrey)'
 				},
 				content: {
 					marginLeft: '20%',
 					width: '40rem',
-					height: '25rem',
-				},
+					height: '25rem'
+				}
 			}}
 			isOpen={userLogin}
 			onRequestClose={() => userLoginModalToggle()}>
@@ -67,7 +67,7 @@ const UserLogin = ({ history }) => {
 						flexDirection: 'column',
 						justifyContent: 'center',
 						alignItems: 'center',
-						marginBottom: '0px',
+						marginBottom: '0px'
 					}}>
 					{errorLog !== null && (
 						<h6 style={{ color: 'var(--red)', margin: '0px' }}>Wrong UserName/Password</h6>
@@ -79,14 +79,14 @@ const UserLogin = ({ history }) => {
 							color: 'var(--blue)',
 							fontSize: '120%',
 							width: '20rem',
-							marginBottom: '4%',
+							marginBottom: '4%'
 						}}
 						type='text'
 						name='loginName'
 						placeholder='Username'
 						autoComplete='new-password'
 						value={loginName}
-						onChange={(e) => setLoginName(e.target.value)}
+						onChange={e => setLoginName(e.target.value)}
 					/>
 					<input
 						style={{
@@ -95,14 +95,14 @@ const UserLogin = ({ history }) => {
 							color: 'var(--blue)',
 							fontSize: '120%',
 							width: '20rem',
-							marginBottom: '4%',
+							marginBottom: '4%'
 						}}
 						type='password'
 						name='loginPassword'
 						placeholder='Password'
 						autoComplete='new-password'
 						value={loginPassword}
-						onChange={(e) => setLoginPassword(e.target.value)}
+						onChange={e => setLoginPassword(e.target.value)}
 					/>
 
 					<button
