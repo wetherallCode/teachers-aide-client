@@ -22,14 +22,7 @@ export const ME_QUERY = gql`
 	}
 `
 
-const LOGOUT_MUTATION = gql`
-	mutation Logout {
-		logout
-	}
-`
-
 const DashBoardNavigation = ({ match }) => {
-	const [logout] = useMutation(LOGOUT_MUTATION)
 	const { data, loading, error } = useQuery(ME_QUERY)
 	if (loading)
 		return <h1 style={{ color: 'var(--blue)', textAlign: 'center' }}>Redirecting to Login</h1>
@@ -79,7 +72,7 @@ const DashBoardNavigation = ({ match }) => {
 					<Route path={`${match.path}/lesson-planner/`} component={LessonPlanner} />
 
 					<Route path={`${match.path}/school-day`} component={SchoolDay} />
-					<Route path={`${match.path}/logout`} component={logout} />
+					<Route path={`${match.path}/logout`} component={Logout} />
 				</div>
 			)}
 		</>
