@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { withRouter, Redirect } from 'react-router-dom'
 
-import Modal from 'react-modal'
+import Modal from 'react-responsive-modal'
 import { gql } from 'apollo-boost'
 import { useApolloClient, useQuery, useMutation } from '@apollo/react-hooks'
 
@@ -54,8 +54,8 @@ const UserLogin = ({ history }) => {
 					height: '25rem'
 				}
 			}}
-			isOpen={userLogin}
-			onRequestClose={() => userLoginModalToggle()}>
+			open={userLogin}
+			onClose={() => userLoginModalToggle()}>
 			<div style={{ display: 'grid', gridTemplateRows: '1fr 3fr' }}>
 				<div>
 					<h1 style={{ color: 'var(--blue)', textAlign: 'center' }}>Teacher Login</h1>
@@ -123,8 +123,7 @@ const UserLogin = ({ history }) => {
 						className='redButton'
 						style={{ width: '20.45rem', fontSize: '140%' }}
 						onClick={() => {
-							login()
-							return history.push('/')
+							return <Redirect to='/' />
 						}}>
 						Go Back
 					</button>
