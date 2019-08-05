@@ -33,7 +33,10 @@ const DashBoardNavigation = ({ match }) => {
 	return (
 		<>
 			{!me ? (
-				<UserLogin />
+				<>
+					<UserLogin />
+					<h1>{me}</h1>
+				</>
 			) : (
 				<div>
 					<header className='Header' style={{ borderBottom: '3px solid var(--white)' }}>
