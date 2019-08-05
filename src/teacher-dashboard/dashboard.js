@@ -36,7 +36,7 @@ const DashBoardNavigation = ({ match }) => {
 				<UserLogin />
 			) : (
 				<>
-					{me && (
+					{me !== null && (
 						<div>
 							<header className='Header' style={{ borderBottom: '3px solid var(--white)' }}>
 								<Link style={{ padding: '2%' }} to='/'>
