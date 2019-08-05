@@ -27,9 +27,9 @@ const DashBoardNavigation = ({ match }) => {
 	if (loading)
 		return <h1 style={{ color: 'var(--blue)', textAlign: 'center' }}>Redirecting to Login</h1>
 	if (error) console.error(error)
-	console.log(data)
-	const { me } = data
 
+	const { me } = data
+	console.log(me)
 	return (
 		<>
 			{!me ? (
