@@ -43,93 +43,93 @@ const UserLogin = ({ history }) => {
 	}
 	console.log('login screen')
 	return (
-		<Modal
-			style={{
-				overlay: {
-					backgroundColor: 'var(--darkGrey)'
-				},
-				content: {
-					marginLeft: '20%',
-					width: '40rem',
-					height: '25rem'
-				}
-			}}
-			open={userLogin}
-			onClose={() => userLoginModalToggle()}>
-			<div style={{ display: 'grid', gridTemplateRows: '1fr 3fr' }}>
-				<div>
-					<h1 style={{ color: 'var(--blue)', textAlign: 'center' }}>Teacher Login</h1>
-				</div>
-
-				<div
-					style={{
-						display: 'flex',
-						flexDirection: 'column',
-						justifyContent: 'center',
-						alignItems: 'center',
-						marginBottom: '0px'
-					}}>
-					{errorLog !== null && (
-						<h6 style={{ color: 'var(--red)', margin: '0px' }}>Wrong UserName/Password</h6>
-					)}
-					<input
-						style={{
-							height: '1.5rem',
-							backgroundColor: 'transparent',
-							color: 'var(--blue)',
-							fontSize: '120%',
-							width: '20rem',
-							marginBottom: '4%'
-						}}
-						type='text'
-						name='loginName'
-						placeholder='Username'
-						autoComplete='new-password'
-						value={loginName}
-						onChange={e => setLoginName(e.target.value)}
-					/>
-					<input
-						style={{
-							height: '1.5rem',
-							backgroundColor: 'transparent',
-							color: 'var(--blue)',
-							fontSize: '120%',
-							width: '20rem',
-							marginBottom: '4%'
-						}}
-						type='password'
-						name='loginPassword'
-						placeholder='Password'
-						autoComplete='new-password'
-						value={loginPassword}
-						onChange={e => setLoginPassword(e.target.value)}
-					/>
-
-					<button
-						type='submit'
-						className='blueButton'
-						style={{ width: '20.45rem', fontSize: '140%', marginBottom: '4%' }}
-						onClick={() => {
-							console.log('click')
-							login()
-							return <Redirect to='/dashboard' />
-							// return history.push('/dashboard')
-						}}>
-						Login
-					</button>
-
-					<button
-						type='submit'
-						className='redButton'
-						style={{ width: '20.45rem', fontSize: '140%' }}
-						onClick={() => {
-							return <Redirect to='/' />
-						}}>
-						Go Back
-					</button>
-				</div>
+		// <Modal
+		// 	style={{
+		// 		overlay: {
+		// 			backgroundColor: 'var(--darkGrey)'
+		// 		},
+		// 		content: {
+		// 			marginLeft: '20%',
+		// 			width: '40rem',
+		// 			height: '25rem'
+		// 		}
+		// 	}}
+		// 	open={userLogin}
+		// 	onClose={() => userLoginModalToggle()}>
+		<div style={{ display: 'grid', gridTemplateRows: '1fr 3fr' }}>
+			<div>
+				<h1 style={{ color: 'var(--blue)', textAlign: 'center' }}>Teacher Login</h1>
 			</div>
-		</Modal>
+
+			<div
+				style={{
+					display: 'flex',
+					flexDirection: 'column',
+					justifyContent: 'center',
+					alignItems: 'center',
+					marginBottom: '0px'
+				}}>
+				{errorLog !== null && (
+					<h6 style={{ color: 'var(--red)', margin: '0px' }}>Wrong UserName/Password</h6>
+				)}
+				<input
+					style={{
+						height: '1.5rem',
+						backgroundColor: 'transparent',
+						color: 'var(--blue)',
+						fontSize: '120%',
+						width: '20rem',
+						marginBottom: '4%'
+					}}
+					type='text'
+					name='loginName'
+					placeholder='Username'
+					autoComplete='new-password'
+					value={loginName}
+					onChange={e => setLoginName(e.target.value)}
+				/>
+				<input
+					style={{
+						height: '1.5rem',
+						backgroundColor: 'transparent',
+						color: 'var(--blue)',
+						fontSize: '120%',
+						width: '20rem',
+						marginBottom: '4%'
+					}}
+					type='password'
+					name='loginPassword'
+					placeholder='Password'
+					autoComplete='new-password'
+					value={loginPassword}
+					onChange={e => setLoginPassword(e.target.value)}
+				/>
+
+				<button
+					type='submit'
+					className='blueButton'
+					style={{ width: '20.45rem', fontSize: '140%', marginBottom: '4%' }}
+					onClick={() => {
+						console.log('click')
+						login()
+						return <Redirect to='/dashboard' />
+						// return history.push('/dashboard')
+					}}>
+					Login
+				</button>
+
+				<button
+					type='submit'
+					className='redButton'
+					style={{ width: '20.45rem', fontSize: '140%' }}
+					onClick={() => {
+						return <Redirect to='/' />
+					}}>
+					Go Back
+				</button>
+			</div>
+		</div>
+		// </Modal>
 	)
 }
 
