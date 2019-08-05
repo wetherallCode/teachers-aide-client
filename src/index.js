@@ -28,8 +28,6 @@ const client = new ApolloClient({
 	}
 })
 
-console.log(client)
-
 render(
 	<ApolloProvider client={client}>
 		<App />

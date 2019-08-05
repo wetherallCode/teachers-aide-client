@@ -41,7 +41,7 @@ const UserLogin = ({ history }) => {
 	const userLoginModalToggle = () => {
 		client.writeData({ data: { userLogin: !userLogin } })
 	}
-	console.log('login screen')
+
 	return (
 		<Modal
 			style={{
@@ -122,6 +122,7 @@ const UserLogin = ({ history }) => {
 						className='redButton'
 						style={{ width: '20.45rem', fontSize: '140%' }}
 						onClick={() => {
+							console.log('click')
 							return <Redirect to='/' />
 						}}>
 						Go Back
