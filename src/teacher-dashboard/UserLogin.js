@@ -24,7 +24,7 @@ const UserLogin = ({ history }) => {
 	const [loginName, setLoginName] = useState('')
 	const [loginPassword, setLoginPassword] = useState('')
 	const [errorLog, setErrorLog] = useState(null)
-	console.log(errorLog)
+
 	const { data } = useQuery(USER_LOGIN_MODAL_TOGGLE)
 
 	const displayError = error => setErrorLog(error)
@@ -113,7 +113,6 @@ const UserLogin = ({ history }) => {
 							console.log('click')
 							login()
 							return <Redirect to='/dashboard' />
-							// return history.push('/dashboard')
 						}}>
 						Login
 					</button>
