@@ -20,7 +20,7 @@ const defaultState = {
 }
 
 const client = new ApolloClient({
-	uri: `https://mrwetherall.org/graphql`,
+	uri: `/graphql`,
 	credentials: 'same-origin',
 	clientState: {
 		defaults: defaultState,
