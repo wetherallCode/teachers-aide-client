@@ -36,7 +36,7 @@ const DashBoardNavigation = ({ match }) => {
 				<UserLogin />
 			) : (
 				<>
-					{me !== null && (
+					{
 						<div>
 							<header className='Header' style={{ borderBottom: '3px solid var(--white)' }}>
 								<Link style={{ padding: '2%' }} to='/'>
@@ -83,7 +83,7 @@ const DashBoardNavigation = ({ match }) => {
 							<Route path={`${match.path}/school-day`} component={SchoolDay} />
 							<Route path={`${match.path}/logout`} component={Logout} />
 						</div>
-					)}
+					}
 				</>
 			)}
 		</>
