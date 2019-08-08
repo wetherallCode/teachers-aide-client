@@ -20,8 +20,9 @@ const defaultState = {
 }
 
 const client = new ApolloClient({
-	uri: `https://mrwetherall.herokuapp.com/graphql`,
-	credentials: 'include',
+	uri: `https://mrwetherall/graphql`,
+	// uri: `https://mrwetherall.herokuapp.com/graphql`,
+	credentials: 'same-origin',
 	clientState: {
 		defaults: defaultState,
 		resolvers: {}
