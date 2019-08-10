@@ -23,6 +23,7 @@ const LOGIN_MUTATION = gql`
 const UserLogin = ({ history }) => {
 	const [loginName, setLoginName] = useState('')
 	const [loginPassword, setLoginPassword] = useState('')
+	console.log('Name: ' + loginName)
 	const [errorLog, setErrorLog] = useState(null)
 
 	const { data } = useQuery(USER_LOGIN_MODAL_TOGGLE)
