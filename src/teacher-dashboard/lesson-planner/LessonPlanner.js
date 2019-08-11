@@ -6,6 +6,8 @@ import UnitCreator from './UnitCreator'
 
 const LessonPlanner = ({ match }) => {
 	const { url, path } = match
+	console.log(`${url}`)
+	console.log(`${url}lessonCreator`)
 	return (
 		<div>
 			<div
@@ -14,22 +16,22 @@ const LessonPlanner = ({ match }) => {
 					display: 'grid',
 					gridTemplateColumns: '1fr 4fr',
 					height: '3rem',
-					borderBottom: '3px solid var(--white)',
+					borderBottom: '3px solid var(--white)'
 				}}>
 				<div
 					style={{
 						display: 'flex',
 						justifyContent: 'flex-start',
 						alignItems: 'center',
-						marginLeft: '1rem',
+						marginLeft: '1rem'
 					}}>
 					<Link
 						style={{
 							color: 'var(--white)',
 							textDecoration: 'none',
-							fontSize: '150%',
+							fontSize: '150%'
 						}}
-						to={`${url}`}>
+						to={`${url}/`}>
 						Lesson Planner
 					</Link>
 				</div>
@@ -39,7 +41,7 @@ const LessonPlanner = ({ match }) => {
 							color: 'var(--white)',
 							textDecoration: 'none',
 							fontSize: '130%',
-							marginRight: '3%',
+							marginRight: '3%'
 						}}
 						to={`${url}/lessonCreator`}>
 						Lesson Creator
@@ -49,7 +51,7 @@ const LessonPlanner = ({ match }) => {
 							color: 'var(--white)',
 							textDecoration: 'none',
 							fontSize: '130%',
-							marginRight: '3%',
+							marginRight: '3%'
 						}}
 						to={`${url}/unitCreator`}>
 						Unit Creator
@@ -59,7 +61,7 @@ const LessonPlanner = ({ match }) => {
 							color: 'var(--white)',
 							textDecoration: 'none',
 							fontSize: '130%',
-							marginRight: '3%',
+							marginRight: '3%'
 						}}
 						to={`${url}/lessonFinderDirectory`}>
 						Lesson Finder

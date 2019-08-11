@@ -20,23 +20,26 @@ const App = () => {
 }
 //  #383b3d
 const Home = () => (
-	<header
-		className='Header'
-		style={{ textShadow: '2px 2px 8px #474747', borderBottom: '3px solid var(--white)' }}>
-		<Link style={{ padding: '2%' }} to='/'>
-			MrWetherall.org
-		</Link>
-		<div style={{ display: 'flex', alignContent: 'center', justifyContent: 'flex-end' }}>
-			<Link style={{ margin: '1%', marginRight: '3%' }} to='/website'>
+	<>
+		<header
+			className='Header'
+			style={{ textShadow: '2px 2px 8px #474747', borderBottom: '3px solid var(--white)' }}>
+			<Link style={{ padding: '2%' }} to='/'>
+				MrWetherall.org
+			</Link>
+			<div style={{ display: 'flex', alignContent: 'center', justifyContent: 'flex-end' }}>
+				{/* <Link style={{ margin: '1%', marginRight: '3%' }} to='/website'>
 				Class Web Site
-			</Link>
-			<Link style={{ margin: '1%', marginRight: '3%' }} to='/dashboard'>
-				Teacher Login
-			</Link>
-			<Link style={{ margin: '1%', marginRight: '3%' }} to='/students'>
+			</Link> */}
+				<Link style={{ margin: '1%', marginRight: '3%' }} to='/dashboard'>
+					Teacher
+				</Link>
+				{/* <Link style={{ margin: '1%', marginRight: '3%' }} to='/students'>
 				Student Login
-			</Link>
-		</div>
-	</header>
+			</Link> */}
+			</div>
+		</header>
+		<WebSite />
+	</>
 )
 export default App

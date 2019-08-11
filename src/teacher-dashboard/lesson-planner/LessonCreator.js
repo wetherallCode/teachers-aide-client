@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom'
+// import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom'
 import { gql } from 'apollo-boost'
 import { useMutation, useQuery, useApolloClient } from '@apollo/react-hooks'
 
@@ -106,7 +106,6 @@ const LessonCreatorForm = ({
 	isEditLessonItemMode,
 	history
 }) => {
-	console.log(isEditLessonMode)
 	const client = useApolloClient()
 
 	const setIsEditLessonItemMode = () =>

@@ -62,6 +62,12 @@ input.form-textbox {
 	color: var(--blue);
 	background-color: var(--white);
 }
+.greyButton {
+	font-size: 70%;
+	text-decoration: none;
+	color: var(--blue);
+	background-color: var(--grey);
+}
 
 .Header a {
 	color: var(--white);
