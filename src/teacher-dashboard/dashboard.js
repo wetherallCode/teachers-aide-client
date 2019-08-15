@@ -29,7 +29,7 @@ const DashBoardNavigation = ({ match }) => {
 	if (error) console.error(error)
 
 	const { me } = data
-	console.log(me)
+
 	return (
 		<>
 			{!me ? (
@@ -42,16 +42,16 @@ const DashBoardNavigation = ({ match }) => {
 						</Link>
 						<div style={{ display: 'flex', alignContent: 'center', justifyContent: 'flex-end' }}>
 							<Link style={{ margin: '1%' }} to={`${match.url}/roster-view`}>
-								Rosters
+								GradeBook
 							</Link>
 							<Link style={{ margin: '1%' }} to={`${match.url}/classroom/class-period-selector`}>
-								Class
+								Teachers Aide
+							</Link>
+							<Link style={{ margin: '1%' }} to={`${match.url}/school-day`}>
+								Course Manager
 							</Link>
 							<Link style={{ margin: '1%' }} to={`${match.url}/lesson-planner/`}>
 								Lesson Planner
-							</Link>
-							<Link style={{ margin: '1%' }} to={`${match.url}/school-day`}>
-								School Day
 							</Link>
 							<Link style={{ margin: '1%' }} to={`${match.url}/logout`}>
 								Logout

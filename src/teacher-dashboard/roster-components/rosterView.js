@@ -28,7 +28,7 @@ const Rosters = ({ match }) => {
 	const { periodName } = match.params
 
 	const { data, loading, error } = useQuery(GET_CLASS_ROSTER, {
-		variables: { period: periodName },
+		variables: { period: periodName }
 	})
 
 	if (loading) return <h1>Loading</h1>
@@ -38,7 +38,7 @@ const Rosters = ({ match }) => {
 	const { classRoster } = data
 
 	classRoster.forEach(({ lastName, firstName }) =>
-		lastNames.unshift({ lastName: lastName, firstName: firstName }),
+		lastNames.unshift({ lastName: lastName, firstName: firstName })
 	)
 
 	const desks = []
@@ -56,7 +56,6 @@ const Rosters = ({ match }) => {
 	}
 
 	let pickedDesk = deskPicker()
-	console.log(match.params.periodName)
 
 	return (
 		<div
@@ -69,7 +68,7 @@ const Rosters = ({ match }) => {
 				backgroundColor: 'var(--white)',
 				borderLeft: '3px solid var(--white)',
 				borderBottom: '1px solid black',
-				overflow: 'scroll',
+				overflow: 'scroll'
 			}}>
 			<header className='SubHeader' style={{ alignContent: 'center', justifyContent: 'center' }}>
 				<div style={{ display: 'flex', justifyContent: 'center', alignText: 'center' }}>
@@ -80,7 +79,7 @@ const Rosters = ({ match }) => {
 						display: 'flex',
 						justifyContent: 'flex-end',
 						alignContent: 'center',
-						paddingRight: '5%',
+						paddingRight: '5%'
 					}}>
 					<div style={{ display: 'flex', flexDirection: 'row' }}>
 						{desks.length < deskLimit && (
@@ -116,6 +115,7 @@ const Rosters = ({ match }) => {
 					</div>
 				)}
 				<>
+					{/* delete all students from this */}
 					{match.params.periodName === 'allStudents' ? (
 						<AllStudentRoster />
 					) : (

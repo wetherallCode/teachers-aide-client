@@ -6,8 +6,7 @@ import UnitCreator from './UnitCreator'
 
 const LessonPlanner = ({ match }) => {
 	const { url, path } = match
-	console.log(`${url}`)
-	console.log(`${url}lessonCreator`)
+
 	return (
 		<div>
 			<div

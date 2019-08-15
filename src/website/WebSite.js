@@ -1,19 +1,34 @@
-import React from 'react'
-// import { Route, Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Route, Link } from 'react-router-dom'
 import TodaysDate from './TodaysDate'
 import WebSitePeriodSelector from './WebSitePeriodSelector'
-import AgendaItemsNavBar from './AgendaItemsNavBar'
-// import StudentToolBar from './StudentToolBar'
+import DailyAgenda from './DailyAgenda'
 
 const WebSite = () => {
+	return <WebsiteDisplay />
+}
+
+const WebsiteDisplay = ({ match }) => {
 	return (
-		<div
-			style={{
-				backgroundColor: 'var(--grey)'
-				// height: '100vh',
-				// display: 'grid'
-				// gridTemplateRows: '2 10fr 1fr'
-			}}>
+		<>
+			<header
+				className='Header'
+				style={{ textShadow: '2px 2px 8px #474747', borderBottom: '3px solid var(--white)' }}>
+				<Link style={{ padding: '2%' }} to='/'>
+					MrWetherall.org
+				</Link>
+				<div style={{ display: 'flex', alignContent: 'center', justifyContent: 'flex-end' }}>
+					{/* <Link style={{ margin: '1%', marginRight: '3%' }} to='/website'>
+				Class Web Site
+			</Link> */}
+					<Link style={{ margin: '1%', marginRight: '3%' }} to='/dashboard'>
+						Teacher
+					</Link>
+					{/* <Link style={{ margin: '1%', marginRight: '3%' }} to='/students'>
+				Student Login
+			</Link> */}
+				</div>
+			</header>
 			<div
 				style={{
 					display: 'grid',
@@ -26,7 +41,14 @@ const WebSite = () => {
 					fontSize: '150%',
 					borderBottom: '3px solid var(--white)'
 				}}>
-				<div>
+				<div
+					style={{
+						display: 'flex',
+						alignItems: 'center',
+						height: '100%',
+						width: '100%',
+						paddingLeft: '2%'
+					}}>
 					<WebSitePeriodSelector />
 				</div>
 				<div
@@ -38,20 +60,11 @@ const WebSite = () => {
 					<TodaysDate date={new Date()} />
 				</div>
 			</div>
-			<div style={{ display: 'grid', gridTemplateColumns: '1fr 4fr' }}>
-				<AgendaItemsNavBar />
-				<div
-					style={{
-						display: 'flex',
-						justifyContent: 'center',
-						alignItems: 'center',
-						color: 'var(--blue)'
-					}}>
-					A whole bunch of stuff
-				</div>
-			</div>
 
-			<div
+			<Route path='/website/:courseName' component={DailyAgenda} />
+			{/* <DailyAgenda /> */}
+
+			{/* <div
 				style={{
 					backgroundColor: 'var(--blue)',
 					color: 'var(--white)',
@@ -62,9 +75,8 @@ const WebSite = () => {
 					alignItems: 'center'
 				}}>
 				<p>Website designed, coded, and maintained by Mr. Wetherall</p>
-				{/* <TodaysDate date={new Date()} /> */}
-			</div>
-		</div>
+			</div> */}
+		</>
 	)
 }
 

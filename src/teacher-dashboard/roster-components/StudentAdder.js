@@ -57,7 +57,7 @@ const StudentInfoLoader = () => {
 			</Link>
 			<h1>Add Student</h1>
 			<StudentAdder
-				periodName={data.periodName.enumValues.map((period) => period.name)}
+				periodName={data.periodName.enumValues.map(period => period.name)}
 				style={{ borderBottom: '1px black solid', paddingBottom: '30px' }}
 				isRosterMode={false}
 			/>{' '}
@@ -72,17 +72,16 @@ const StudentAdder = ({ periodName, isRosterMode, unUsedDesk, roster }) => {
 		period: periodName[periodName] || periodName[0],
 		responsibilityPoints: 100,
 		teacher: 'Wetherall',
-		isHiddenFromRoster: false,
+		isHiddenFromRoster: false
 	})
 
 	const {
 		firstName,
 		lastName,
 		period,
-		desk,
 		responsibilityPoints,
 		teacher,
-		isHiddenFromRoster,
+		isHiddenFromRoster
 	} = NewStudent
 
 	const [addStudent, { error }] = useMutation(ADD_STUDENTS_MUTATION, {
@@ -93,9 +92,9 @@ const StudentAdder = ({ periodName, isRosterMode, unUsedDesk, roster }) => {
 			desk: unUsedDesk,
 			responsibilityPoints,
 			teacher,
-			isHiddenFromRoster,
+			isHiddenFromRoster
 		},
-		refetchQueries: ['rosterList', 'getAllStudents'],
+		refetchQueries: ['rosterList', 'getAllStudents']
 	})
 
 	if (error) {
@@ -106,14 +105,14 @@ const StudentAdder = ({ periodName, isRosterMode, unUsedDesk, roster }) => {
 		<div>
 			<form
 				style={isRosterMode && { paddingLeft: '1%' }}
-				onSubmit={(e) => {
+				onSubmit={e => {
 					e.preventDefault()
 					addStudent()
 					setNewStudent({
 						...NewStudent,
 						firstName: '',
 						lastName: '',
-						period: periodName[periodName] || periodName[0],
+						period: periodName[periodName] || periodName[0]
 					})
 				}}>
 				<input
@@ -126,7 +125,7 @@ const StudentAdder = ({ periodName, isRosterMode, unUsedDesk, roster }) => {
 							height: '25px',
 							textDecoration: 'none',
 							color: 'var(--blue)',
-							backgroundColor: '#var(--blue)',
+							backgroundColor: '#var(--blue)'
 						}
 					}
 					name='firstName'
@@ -134,7 +133,7 @@ const StudentAdder = ({ periodName, isRosterMode, unUsedDesk, roster }) => {
 					placeholder='First Name'
 					type='text'
 					value={NewStudent.firstName}
-					onChange={(e) => setNewStudent({ ...NewStudent, firstName: e.target.value })}
+					onChange={e => setNewStudent({ ...NewStudent, firstName: e.target.value })}
 				/>
 				<input
 					style={
@@ -146,18 +145,18 @@ const StudentAdder = ({ periodName, isRosterMode, unUsedDesk, roster }) => {
 							height: '25px',
 							textDecoration: 'none',
 							color: 'var(--blue)',
-							backgroundColor: '#var(--blue)',
+							backgroundColor: '#var(--blue)'
 						}
 					}
 					name='lastName'
 					placeholder='Last Name'
 					type='text'
 					value={NewStudent.lastName}
-					onChange={(e) => setNewStudent({ ...NewStudent, lastName: e.target.value })}
+					onChange={e => setNewStudent({ ...NewStudent, lastName: e.target.value })}
 				/>
 				{!isRosterMode && (
-					<select onChange={(e) => setNewStudent({ ...NewStudent, period: e.target.value })}>
-						{periodName.map((period) => (
+					<select onChange={e => setNewStudent({ ...NewStudent, period: e.target.value })}>
+						{periodName.map(period => (
 							<option key={period} value={period}>
 								Period {period}
 							</option>
@@ -180,7 +179,7 @@ const StudentAdder = ({ periodName, isRosterMode, unUsedDesk, roster }) => {
 						width: '20%',
 						textDecoration: 'none',
 						color: 'var(--white)',
-						backgroundColor: 'var(--blue)',
+						backgroundColor: 'var(--blue)'
 					}}
 					type='submit'>
 					Create Student

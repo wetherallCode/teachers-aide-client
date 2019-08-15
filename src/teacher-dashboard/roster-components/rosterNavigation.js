@@ -39,7 +39,7 @@ const RosterNavBar = ({ match }) => {
 				display: 'grid',
 				gridTemplateRows: '1fr 7fr',
 				border: '1px solid var(--blue)',
-				overflow: 'scroll',
+				overflow: 'scroll'
 			}}>
 			<div>
 				<div
@@ -47,13 +47,13 @@ const RosterNavBar = ({ match }) => {
 						marginTop: '0px',
 						alignContent: 'center',
 						justifyContent: 'flex-start',
-						paddingTop: '1px',
+						paddingTop: '1px'
 					}}>
 					<h1
 						style={{
-							textDecoration: 'underline',
+							textDecoration: 'underline'
 						}}>
-						Grade Book
+						GradeBook
 					</h1>
 				</div>
 				<div
@@ -61,11 +61,11 @@ const RosterNavBar = ({ match }) => {
 						display: 'flex',
 						flexDirection: 'column',
 						alignContent: 'center',
-						fontSize: '200%',
+						fontSize: '200%'
 					}}>
 					<RosterNavBarItems
 						match={match}
-						items={data.periodName.enumValues.map((period) => period.name)}
+						items={data.periodName.enumValues.map(period => period.name)}
 					/>
 				</div>
 			</div>
@@ -84,7 +84,7 @@ const RosterNavBarItems = ({ items, match }) => {
 						marginBottom: '21%',
 						fontSize: '120%',
 						textDecoration: 'none',
-						color: 'white',
+						color: 'white'
 					}}>
 					<button
 						style={{
@@ -95,7 +95,7 @@ const RosterNavBarItems = ({ items, match }) => {
 							color: 'var(--white)',
 							backgroundColor: 'var(--blue)',
 							boxShadow: '1px 1px 1px black',
-							borderRadius: '5px',
+							borderRadius: '5px'
 						}}>
 						Period {period}
 					</button>

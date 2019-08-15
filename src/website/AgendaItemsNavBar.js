@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-const AgendaItemsNavBar = () => {
+const AgendaItemsNavBar = ({ match }) => {
 	const [agendaButton, setAgendaButton] = useState(false)
 
 	return (
@@ -31,7 +31,9 @@ const AgendaItemsNavBar = () => {
 					borderRadius: '5px',
 					boxShadow: '1px 1px 1px black'
 				}}
-				onClick={() => setAgendaButton(!agendaButton)}>
+				onClick={() => {
+					setAgendaButton(!agendaButton)
+				}}>
 				Agenda
 			</button>
 			{agendaButton && (
@@ -43,24 +45,50 @@ const AgendaItemsNavBar = () => {
 						alignItems: 'center',
 						paddingTop: '8%'
 					}}>
-					<Link style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }} to='/'>
+					<div
+						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}
+						onClick={() => console.log('click')}
+
+						// to={`${match.url}/`}
+					>
 						Warm Up
-					</Link>
-					<Link style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }} to='/'>
+					</div>
+					<div
+						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}
+						onClick={() => console.log('click')}
+						// to={`${match.url}/`}
+					>
 						Essential Question
-					</Link>
-					<Link style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }} to='/'>
+					</div>
+					<div
+						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}
+						onClick={() => console.log('click')}
+						// to={`${match.url}/`}
+					>
 						Reading
-					</Link>
-					<Link style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }} to='/'>
+					</div>
+					<div
+						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}
+						onClick={() => console.log('click')}
+						// to={`${match.url}/`}
+					>
 						Vocabulary
-					</Link>
-					<Link style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }} to='/'>
+					</div>
+					<div
+						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}
+						onClick={() => console.log('click')}
+						// to={`${match.url}/`}
+					>
 						Questions
-					</Link>
-					<Link style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }} to='/'>
+					</div>
+					<div
+						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}
+						onClick={() => console.log('click')}
+
+						// to={`${match.url}/`}
+					>
 						Homework
-					</Link>
+					</div>
 				</div>
 			)}
 		</div>

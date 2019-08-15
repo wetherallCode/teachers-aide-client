@@ -19,7 +19,7 @@ const StudentListInRosterView = ({ classRoster }) => {
 								paddingBottom: '5x',
 								display: 'flex',
 								flextDirection: 'row',
-								alignContent: 'center',
+								alignContent: 'center'
 							}}>
 							<div
 								style={
@@ -28,13 +28,13 @@ const StudentListInRosterView = ({ classRoster }) => {
 												backgroundColor: 'var(--white)',
 												width: '100%',
 												height: '100%',
-												paddingLeft: '2%',
+												paddingLeft: '2%'
 										  }
 										: {
 												backgroundColor: 'var(--grey)',
 												width: '100%',
 												height: '100%',
-												paddingLeft: '2%',
+												paddingLeft: '2%'
 										  }
 								}>
 								<Link
@@ -46,9 +46,7 @@ const StudentListInRosterView = ({ classRoster }) => {
 						</div>
 					)}
 				</div>
-			))
-			// .sort()
-			}
+			))}
 		</>
 	)
 }

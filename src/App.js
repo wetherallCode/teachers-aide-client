@@ -4,6 +4,9 @@ import './App.css'
 import DashBoardNavigation from './teacher-dashboard/dashboard'
 import StudentDashboard from './student-dashboard/StudentDashboard'
 import WebSite from './website/WebSite'
+import TodaysDate from './website/TodaysDate'
+import WebSitePeriodSelector from './website/WebSitePeriodSelector'
+import DailyAgenda from './website/DailyAgenda'
 // import { ApolloConsumer } from '@apollo/react-hooks'
 
 const App = () => {
@@ -39,7 +42,33 @@ const Home = () => (
 			</Link> */}
 			</div>
 		</header>
-		<WebSite />
+		<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+			<div
+				style={{
+					display: 'flex',
+					justifyContent: 'center',
+					flexDirection: 'column',
+					alignItems: 'center',
+					width: '40rem',
+					height: '25rem',
+					backgroundColor: 'var(--white)',
+					color: 'var(--blue)'
+				}}>
+				<h1 style={{ fontSize: '250%' }}>Welcome to Mr. Wetherall's Class</h1>
+				<Link style={{ color: 'var(--white)', textDecoration: 'none' }} to='/website'>
+					<button
+						style={{
+							width: '10rem',
+							height: '3rem',
+							fontSize: '140%',
+							color: 'var(--white)',
+							backgroundColor: 'var(--blue)'
+						}}>
+						Get Started
+					</button>
+				</Link>
+			</div>
+		</div>
 	</>
 )
 export default App
