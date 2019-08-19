@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-const AgendaItemsNavBar = ({ match }) => {
+const AgendaItemsNavBar = ({ match, lesson }) => {
+	console.log(lesson)
 	const [agendaButton, setAgendaButton] = useState(false)
 
 	return (
@@ -45,50 +46,42 @@ const AgendaItemsNavBar = ({ match }) => {
 						alignItems: 'center',
 						paddingTop: '8%'
 					}}>
-					<div
+					<Link
 						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}
 						onClick={() => console.log('click')}
-
-						// to={`${match.url}/`}
-					>
+						to={`${match.url}/warmUp`}>
 						Warm Up
-					</div>
-					<div
+					</Link>
+					<Link
 						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}
 						onClick={() => console.log('click')}
-						// to={`${match.url}/`}
-					>
+						to={`${match.url}/essentialQuestion`}>
 						Essential Question
-					</div>
-					<div
+					</Link>
+					<Link
 						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}
 						onClick={() => console.log('click')}
-						// to={`${match.url}/`}
-					>
+						to={`${match.url}/readings`}>
 						Reading
-					</div>
-					<div
+					</Link>
+					<Link
 						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}
 						onClick={() => console.log('click')}
-						// to={`${match.url}/`}
-					>
+						to={`${match.url}/vocabWords`}>
 						Vocabulary
-					</div>
-					<div
+					</Link>
+					<Link
 						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}
 						onClick={() => console.log('click')}
-						// to={`${match.url}/`}
-					>
-						Questions
-					</div>
-					<div
+						to={`${match.url}/socraticQuestions`}>
+						Socratic Questions
+					</Link>
+					<Link
 						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}
 						onClick={() => console.log('click')}
-
-						// to={`${match.url}/`}
-					>
+						to={`${match.url}/workDue`}>
 						Homework
-					</div>
+					</Link>
 				</div>
 			)}
 		</div>

@@ -1,5 +1,6 @@
 module.exports = {
-	service: {
-		localSchemaFile: './typeDefs.graphql'
+	client: {
+		name: 'Teachers-Aide-Client',
+		service: 'wetherallCode-mrwetherall-dot-org'
 	}
 }

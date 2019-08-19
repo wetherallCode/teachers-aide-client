@@ -17,7 +17,7 @@ const FIND_STUDENT_QUERY = gql`
 
 const Desk = ({ match, deskNumber, periodName }) => {
 	const { data, loading, error } = useQuery(FIND_STUDENT_QUERY, {
-		variables: { period: periodName, desk: deskNumber },
+		variables: { period: periodName, desk: deskNumber }
 	})
 
 	if (loading) return null
@@ -35,12 +35,13 @@ const Desk = ({ match, deskNumber, periodName }) => {
 						style={{
 							width: '100%',
 							height: '100%',
-							fontSize: '150%',
+							fontSize: '100%',
 							textDecoration: 'none',
+							textAlign: 'center',
 							backgroundColor: 'var(--blue)',
 							color: 'var(--white)',
 							borderRadius: '5px',
-							boxShadow: '1x 1px 1px var(--darkgrey)',
+							boxShadow: '1x 1px 1px var(--darkgrey)'
 						}}>
 						{findStudentByPeriodAndDesk.firstName}
 					</button>
@@ -55,7 +56,7 @@ const Desk = ({ match, deskNumber, periodName }) => {
 							backgroundColor: 'var(--darkGrey)',
 							color: 'var(--white)',
 							boxShadow: '1x 1px 1px var(--darkgrey)',
-							borderRadius: '5px',
+							borderRadius: '5px'
 						}}
 					/>
 				</Link>

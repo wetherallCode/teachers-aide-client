@@ -4,10 +4,15 @@ import { gql } from 'apollo-boost'
 import { useMutation, useQuery, useApolloClient } from '@apollo/react-hooks'
 
 const LESSON_CREATOR_MUTATION = gql`
-	mutation createLesson($input: CreateLessonInput!) {
+	mutation createLesson($input: LessonInput!) {
 		createLesson(input: $input) {
 			_id
 			lessonName
+			inUnit {
+				_id
+				name
+				gradeLevel
+			}
 			essentialQuestion {
 				type
 				textStructure

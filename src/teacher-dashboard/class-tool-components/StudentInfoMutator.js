@@ -16,7 +16,7 @@ const StudentInfoMutator = ({ match, periodName, student }) => {
 	const { _id } = student
 
 	const [updateResponsibilityPoints] = useMutation(UPDATE_RESPONSIBILTY_POINTS, {
-		refetchQueries: ['FindStudent'],
+		refetchQueries: ['FindStudent']
 	})
 
 	return (
@@ -28,7 +28,7 @@ const StudentInfoMutator = ({ match, periodName, student }) => {
 				justifyContent: 'flex-start',
 				alignItems: 'center',
 				textAlign: 'center',
-				overflow: 'scroll',
+				overflow: 'scroll'
 			}}>
 			<button
 				style={{
@@ -38,10 +38,10 @@ const StudentInfoMutator = ({ match, periodName, student }) => {
 					marginTop: '25px',
 					backgroundColor: 'var(--blue)',
 					color: 'var(--white)',
-					fontSize: '150%',
+					fontSize: '100%',
 					fontWeight: 'bolder',
 					boxShadow: '1px 1px 2px 1px var(--blue)',
-					borderRadius: '5px',
+					borderRadius: '5px'
 				}}
 				onClick={() => {
 					setBehaviorPointsToggle(!BehaviorPointsToggle)
@@ -53,13 +53,13 @@ const StudentInfoMutator = ({ match, periodName, student }) => {
 					style={{
 						display: 'grid',
 						gridTemplateColumns: '1fr 1fr',
-						gridTemplateRows: '1fr 1fr',
+						gridTemplateRows: '1fr 1fr'
 					}}>
 					<button
 						className='student-info-mutator-blue'
 						onClick={() => {
 							updateResponsibilityPoints({
-								variables: { _id: _id, responsibilityPoints: 1 },
+								variables: { _id: _id, responsibilityPoints: 1 }
 							})
 						}}>
 						+1
@@ -68,7 +68,7 @@ const StudentInfoMutator = ({ match, periodName, student }) => {
 						className='student-info-mutator-blue'
 						onClick={() => {
 							updateResponsibilityPoints({
-								variables: { _id: _id, responsibilityPoints: 2 },
+								variables: { _id: _id, responsibilityPoints: 2 }
 							})
 						}}>
 						+2
@@ -77,7 +77,7 @@ const StudentInfoMutator = ({ match, periodName, student }) => {
 						className='student-info-mutator-red'
 						onClick={() => {
 							updateResponsibilityPoints({
-								variables: { _id: _id, responsibilityPoints: -1 },
+								variables: { _id: _id, responsibilityPoints: -1 }
 							})
 						}}>
 						-1
@@ -86,7 +86,7 @@ const StudentInfoMutator = ({ match, periodName, student }) => {
 						className='student-info-mutator-red'
 						onClick={() => {
 							updateResponsibilityPoints({
-								variables: { _id: _id, responsibilityPoints: -2 },
+								variables: { _id: _id, responsibilityPoints: -2 }
 							})
 						}}>
 						-2

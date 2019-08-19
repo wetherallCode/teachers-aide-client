@@ -5,18 +5,29 @@ import { Link } from 'react-router-dom'
 
 const StudentListInRosterView = ({ classRoster }) => {
 	let numberMaker = 1
-	// classRoster.forEach((element) => students.unshift(element))
-	// students.sort().map(console.log(students))
+	const sortByLastName = (a, b) => {
+		let lastNameA = a.lastName.toLowerCase()
+		let lastNameB = b.lastName.toLowerCase()
+
+		if (lastNameA < lastNameB) {
+			return -1
+		}
+		if (lastNameA > lastNameB) {
+			return 1
+		}
+		return 0
+	}
 	return (
 		<>
-			{classRoster.sort().map((student, index) => (
+			{classRoster.sort(sortByLastName).map((student, index) => (
 				<div key={index}>
 					{!student.isHiddenFromRoster && (
 						<div
 							style={{
-								borderTop: '1px solid black',
-								paddingTop: '5x',
-								paddingBottom: '5x',
+								borderTop: '1px solid var(--blue)',
+								// paddingTop: '5px',
+								// paddingBottom: '5px',
+								height: '100%',
 								display: 'flex',
 								flextDirection: 'row',
 								alignContent: 'center'

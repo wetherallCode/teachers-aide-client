@@ -122,7 +122,7 @@ const Rosters = ({ match }) => {
 						<StudentListInRosterView classRoster={classRoster} />
 					)}
 
-					<div style={{ borderBottom: '1px solid black' }} />
+					<div style={{ borderBottom: '1px solid var(--blue)' }} />
 				</>
 			</div>
 			<div style={{ backgroundColor: 'var(--grey)', width: '100%' }} />
