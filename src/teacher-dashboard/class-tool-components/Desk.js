@@ -35,7 +35,7 @@ const Desk = ({ match, deskNumber, periodName }) => {
 						style={{
 							width: '100%',
 							height: '100%',
-							fontSize: '100%',
+							fontSize: '150%',
 							textDecoration: 'none',
 							textAlign: 'center',
 							backgroundColor: 'var(--blue)',

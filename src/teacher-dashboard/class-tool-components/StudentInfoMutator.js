@@ -38,7 +38,7 @@ const StudentInfoMutator = ({ match, periodName, student }) => {
 					marginTop: '25px',
 					backgroundColor: 'var(--blue)',
 					color: 'var(--white)',
-					fontSize: '100%',
+					fontSize: '120%',
 					fontWeight: 'bolder',
 					boxShadow: '1px 1px 2px 1px var(--blue)',
 					borderRadius: '5px'
