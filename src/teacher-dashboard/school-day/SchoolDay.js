@@ -3,9 +3,12 @@ import { Route, Link } from 'react-router-dom'
 import AssignmentCreator from '../lesson-planner/AssignmentCreator'
 import LessonCreator from '../lesson-planner/LessonCreator'
 import LessonLoader from './LessonLoader'
+import ClassManager from './ClassManager'
+import ClassManagerDisplay from './ClassManagerDisplay'
 
 const SchoolDay = ({ match }) => {
 	const { url, path } = match
+	console.log(url)
 	return (
 		<div>
 			<div
@@ -20,9 +23,20 @@ const SchoolDay = ({ match }) => {
 					fontSize: '150%',
 					borderBottom: '3px solid var(--white)'
 				}}>
-				<div style={{ display: 'flex', alignItems: 'center', height: '100%', paddingLeft: '2%' }}>
+				<Link
+					to={`${url}`}
+					style={{
+						display: 'flex',
+						alignItems: 'center',
+						height: '100%',
+						paddingLeft: '2%',
+						color: 'var(--white)',
+						textDecoration: 'none',
+						fontSize: '110%',
+						marginRight: '3%'
+					}}>
 					School Day
-				</div>
+				</Link>
 				<div
 					style={{
 						display: 'flex',
@@ -36,13 +50,27 @@ const SchoolDay = ({ match }) => {
 							fontSize: '110%',
 							marginRight: '3%'
 						}}
-						to={`${url}/`}>
-						Lesson Loader
+						to={`${url}/lessonLoader`}>
+						Class Creator
+					</Link>
+					<Link
+						style={{
+							color: 'var(--white)',
+							textDecoration: 'none',
+							fontSize: '110%',
+							marginRight: '3%'
+						}}
+						to={`${url}/classManager`}>
+						Class Period Manager
 					</Link>
 				</div>
 			</div>
-			<Route path={`${path}`} component={LessonLoader} />
-			{/* <Route path={`${path}/:periods`} component={}></Route> */}
+			<Route path={`${path}/lessonLoader`} component={LessonLoader} />
+
+			<div style={{ display: 'grid', gridTemplateColumns: '1fr 4fr' }}>
+				<Route path={`${path}/classManager`} component={ClassManager} />
+				<Route path={`${path}/classManager/:periods`} component={ClassManagerDisplay} />
+			</div>
 		</div>
 	)
 }

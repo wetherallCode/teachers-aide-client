@@ -10,7 +10,7 @@ import SchoolDay from './school-day/SchoolDay'
 import LessonPlanner from './lesson-planner/LessonPlanner'
 import { gql } from 'apollo-boost'
 import { useQuery } from '@apollo/react-hooks'
-import UserLogin from './UserLogin'
+import UserLogin from './Login'
 import Logout from './Logout'
 // import * as ApolloTypes from './__generated__/getAllStudents'
 export const ME_QUERY = gql`

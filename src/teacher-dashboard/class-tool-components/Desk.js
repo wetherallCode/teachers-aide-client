@@ -35,7 +35,7 @@ const Desk = ({ match, deskNumber, periodName }) => {
 						style={{
 							width: '100%',
 							height: '100%',
-							// fontSize: '150%',
+							fontSize: '110%',
 							textDecoration: 'none',
 							textAlign: 'center',
 							backgroundColor: 'var(--blue)',
@@ -43,7 +43,7 @@ const Desk = ({ match, deskNumber, periodName }) => {
 							borderRadius: '5px',
 							boxShadow: '1x 1px 1px var(--darkgrey)'
 						}}>
-						<h1>{findStudentByPeriodAndDesk.firstName}</h1>
+						<div>{findStudentByPeriodAndDesk.firstName}</div>
 					</button>
 				</Link>
 			) : (

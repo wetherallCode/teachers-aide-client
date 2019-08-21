@@ -60,8 +60,14 @@ const WebsiteDisplay = ({ match }) => {
 					<TodaysDate date={new Date()} />
 				</div>
 			</div>
+			<div
+				style={{
+					backgroundColor: 'var(--white)',
+					color: 'var(--blue)'
+				}}>
+				<Route path='/website/:courseName' component={DailyAgenda} />
+			</div>
 
-			<Route path='/website/:courseName' component={DailyAgenda} />
 			{/* <DailyAgenda /> */}
 
 			{/* <div

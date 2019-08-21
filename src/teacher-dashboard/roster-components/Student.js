@@ -43,13 +43,13 @@ const Student = ({ match, history }) => {
 	const { studentInfo } = match.params
 
 	const { data, loading, error } = useQuery(STUDENT_INFO_QUERY, {
-		variables: { _id: studentInfo },
+		variables: { _id: studentInfo }
 	})
 	const [removeStudent] = useMutation(REMOVE_STUDENT_MUTATION, {
 		variables: {
-			_id: studentInfo,
+			_id: studentInfo
 		},
-		refetchQueries: ['rosterList', 'getAllStudents', 'roster'],
+		refetchQueries: ['rosterList', 'getAllStudents', 'roster']
 	})
 
 	if (loading) return <h1>Loading</h1>
@@ -63,20 +63,20 @@ const Student = ({ match, history }) => {
 		teacher,
 		responsibilityPoints,
 		desk,
-		isHiddenFromRoster,
+		isHiddenFromRoster
 	} = student
 	const client = useApolloClient
 	return (
 		<div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr' }}>
 			<ApolloConsumer>
-				{(client) => (
+				{client => (
 					<div
 						style={{
 							color: 'var(--blue)',
 							padding: '1%',
 							border: '1px solid black',
 							width: '100%',
-							backgroundColor: 'var(--grey)',
+							backgroundColor: 'var(--grey)'
 						}}>
 						{!removeStudentScreen ? (
 							<div>
@@ -105,7 +105,7 @@ const Student = ({ match, history }) => {
 													boxShadow: '1px 1px 1px black',
 													border: '1px solid var(--white)',
 													display: 'flex',
-													justifyContent: 'center',
+													justifyContent: 'center'
 												}}>
 												Back to Roster
 											</button>
@@ -131,12 +131,13 @@ const Student = ({ match, history }) => {
 												flexDirection: 'row',
 												textShadow: '1px 3px 1px black',
 												boxShadow: '1px 1px 1px black',
-												border: '1px solid var(--white)',
+												border: '1px solid var(--white)'
 											}}>
 											<Link to={`/dashboard/classroom/class-period-selector/${period}/${desk}`}>
 												<button
 													style={{
 														width: '100%',
+														textShadow: '1px 3px 1px black'
 													}}
 													className='blueButton'>
 													Back to Class
@@ -168,21 +169,21 @@ const Student = ({ match, history }) => {
 										fontSize: '125%',
 										fontWeight: 'bolder',
 										boxShadow: '3px 3px 3px black',
-										textShadow: '2px 2px 2px #888',
+										textShadow: '2px 2px 2px #888'
 									}}
 									removeStudentScreen={removeStudentScreen}
 								/>
 								<Modal
 									style={{
 										overlay: {
-											backgroundColor: 'var(--darkGrey)',
+											backgroundColor: 'var(--darkGrey)'
 										},
 										content: {
 											// marginTop: '10%',
 											marginLeft: '20%',
 											width: '40rem',
-											height: '25rem',
-										},
+											height: '25rem'
+										}
 									}}
 									isOpen={removeStudentScreen}
 									onRequestClose={() =>
@@ -193,7 +194,7 @@ const Student = ({ match, history }) => {
 											display: 'flex',
 											flexDirection: 'column',
 											justifyContent: 'center',
-											alignItems: 'center',
+											alignItems: 'center'
 										}}>
 										<h1 style={{ color: 'var(--red)' }}>
 											Are You Sure You want to Delete {firstName}!!
@@ -204,7 +205,7 @@ const Student = ({ match, history }) => {
 												width: '40rem',
 												height: '10rem',
 												fontSize: '170%',
-												marginBottom: '10%',
+												marginBottom: '10%'
 											}}
 											onClick={() =>
 												client.writeData({ data: { removeStudentScreen: !removeStudentScreen } })
@@ -218,7 +219,7 @@ const Student = ({ match, history }) => {
 												width: '30rem',
 												textDecoration: 'none',
 												color: 'var(--white)',
-												backgroundColor: 'var(--red)',
+												backgroundColor: 'var(--red)'
 											}}
 											onClick={() => {
 												removeStudent()

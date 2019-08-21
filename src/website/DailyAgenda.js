@@ -28,9 +28,12 @@ const FIND_CLASS_PERIOD = gql`
 					definition
 				}
 				workDue {
-					name
 					type
 					dueDate
+					readings {
+						pages
+						sections
+					}
 				}
 			}
 		}
@@ -48,19 +51,38 @@ const DailyAgenda = ({ match }) => {
 	if (error) console.error(error)
 
 	const { assignedLesson } = data.findClassPeriod
-
+	console.log(assignedLesson._id)
+	console.log(assignedLesson.workDue)
 	return (
-		<div style={{ display: 'grid', gridTemplateColumns: '1fr 4fr' }}>
+		<div style={{ display: 'grid', gridTemplateColumns: '1fr 3fr' }}>
 			<AgendaItemsNavBar match={match} lesson={data.findClassPeriod} />
 			<Route
 				path={`${match.path}/warmUp`}
 				render={() => (
 					<div
 						style={{
-							color: 'var(--blue)'
+							color: 'var(--blue)',
+							display: 'flex',
+							flexDirection: 'column',
+							justifyContent: 'center',
+							alignItems: 'center'
 						}}>
-						<h1>Warm Up</h1>
-						<h2>{assignedLesson.warmup}</h2>
+						<h1
+							style={{
+								textDecoration: 'underline',
+								fontSize: '300%'
+							}}>
+							Warm Up
+						</h1>
+						<div
+							style={{
+								textAlign: 'center',
+								fontSize: '250%',
+								marginTop: '10%',
+								marginBottom: '25%'
+							}}>
+							{assignedLesson.warmup}
+						</div>
 					</div>
 				)}
 			/>
@@ -69,10 +91,28 @@ const DailyAgenda = ({ match }) => {
 				render={() => (
 					<div
 						style={{
-							color: 'var(--blue)'
+							color: 'var(--blue)',
+							display: 'flex',
+							flexDirection: 'column',
+							justifyContent: 'center',
+							alignItems: 'center'
 						}}>
-						<h1>Essential Question</h1>
-						<h2>{assignedLesson.essentialQuestion.question}</h2>
+						<h1
+							style={{
+								textDecoration: 'underline',
+								fontSize: '300%'
+							}}>
+							Essential Question
+						</h1>
+						<div
+							style={{
+								textAlign: 'center',
+								fontSize: '250%',
+								marginTop: '10%',
+								marginBottom: '25%'
+							}}>
+							{assignedLesson.essentialQuestion.question}
+						</div>
 					</div>
 				)}
 			/>
@@ -81,11 +121,30 @@ const DailyAgenda = ({ match }) => {
 				render={() => (
 					<div
 						style={{
-							color: 'var(--blue)'
+							color: 'var(--blue)',
+							display: 'flex',
+							flexDirection: 'column',
+							justifyContent: 'center',
+							alignItems: 'center'
 						}}>
-						<h1>Today's Assigned Reading</h1>
-						<h2>{assignedLesson.readings.pages}</h2>
-						<h2>{assignedLesson.readings.sections}</h2>
+						<h1
+							style={{
+								textDecoration: 'underline',
+								fontSize: '300%',
+								marginTop: '2%'
+							}}>
+							Today's Assigned Reading
+						</h1>
+						<div
+							style={{
+								textAlign: 'center',
+								fontSize: '250%',
+								// marginTop: '%',
+								marginBottom: '20%'
+							}}>
+							<div>Read page: {assignedLesson.readings.pages}</div>
+							<div>Sections: {assignedLesson.readings.sections}</div>
+						</div>
 					</div>
 				)}
 			/>
@@ -94,10 +153,26 @@ const DailyAgenda = ({ match }) => {
 				render={() => (
 					<div
 						style={{
-							color: 'var(--blue)'
+							color: 'var(--blue)',
+							display: 'grid',
+							gridTemplateRows: '1fr 4fr'
 						}}>
-						<h1>Vocab</h1>
 						<div>
+							<h1
+								style={{
+									textDecoration: 'underline',
+									fontSize: '300%',
+									textAlign: 'center'
+								}}>
+								Vocab
+							</h1>
+						</div>
+						<div
+							style={{
+								fontSize: '200%',
+								paddingLeft: '3%'
+								// marginBottom: '20%'
+							}}>
 							{assignedLesson.vocabWords.map((word, i) => (
 								<div>
 									{word.word}: {word.definition}.
@@ -112,10 +187,26 @@ const DailyAgenda = ({ match }) => {
 				render={() => (
 					<div
 						style={{
-							color: 'var(--blue)'
+							color: 'var(--blue)',
+							display: 'grid',
+							gridTemplateRows: '1fr 4fr'
 						}}>
-						<h1>Vocab</h1>
-						<div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
+						<div>
+							<h1
+								style={{
+									textDecoration: 'underline',
+									fontSize: '300%',
+									textAlign: 'center'
+								}}>
+								Socratic Questions
+							</h1>
+						</div>
+						<div
+							style={{
+								fontSize: '200%',
+								paddingLeft: '3%'
+								// marginBottom: '20%'
+							}}>
 							{assignedLesson.socraticQuestions.map((question, i) => (
 								<div key={i}>{question.question}</div>
 							))}
@@ -128,16 +219,66 @@ const DailyAgenda = ({ match }) => {
 				render={() => (
 					<div
 						style={{
-							color: 'var(--blue)'
+							color: 'var(--blue)',
+							display: 'grid',
+							gridTemplateRows: '1fr 4fr'
 						}}>
-						<h1>Assignments Due</h1>
+						<h1
+							style={{
+								textDecoration: 'underline',
+								fontSize: '300%',
+								textAlign: 'center'
+							}}>
+							Assignments Due
+						</h1>
 						<div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
 							{assignedLesson.workDue.map((assignment, i) => (
-								<div>
-									<div>{assignment.type}</div>
-									<div>{assignment.name}</div>
-									<div>{assignment.dueDate}</div>
-								</div>
+								<ol
+									key={i}
+									style={{
+										fontSize: '170%',
+										paddingLeft: '4%'
+										// marginBottom: '20%'
+									}}>
+									{assignment.type === 'OEQ' && (
+										<li
+										// style={{ borderBottom: '1px solid var(--blue)', width: '85%' }}
+										>
+											<>
+												<div>
+													Read pages {assignment.readings.pages}: {assignment.readings.sections} and
+													answer the following Open Ended Question:
+												</div>
+												<ul>
+													<li style={{ marginTop: '1%' }}>
+														{assignedLesson.essentialQuestion.question}
+													</li>
+													<li style={{ marginTop: '1%' }}>
+														Due on {assignment.dueDate.substring(6, 10)}
+													</li>
+												</ul>
+											</>
+										</li>
+									)}
+									<br />
+									{assignment.type === 'THINKING_GUIDE' && (
+										<li
+										// style={{ borderBottom: '1px solid var(--blue)', width: '85%' }}
+										>
+											<>
+												<div>
+													Read pages {assignment.readings.pages}: {assignment.readings.sections} and
+													complete a Critical Thinking Guide.
+												</div>
+												<ul>
+													<li style={{ marginTop: '1%' }}>
+														Due on {assignment.dueDate.substring(6, 10)}
+													</li>
+												</ul>
+											</>
+										</li>
+									)}
+								</ol>
 							))}
 						</div>
 					</div>
