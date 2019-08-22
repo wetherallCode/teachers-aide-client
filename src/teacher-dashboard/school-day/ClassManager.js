@@ -22,7 +22,6 @@ const ClassManagerNavigationDisplay = ({ match }) => {
 	if (loading) return <h1>Loading</h1>
 	if (error) console.log(error)
 
-	console.log(match)
 	return (
 		<>
 			<div
@@ -61,7 +60,7 @@ const ClassManagerNavigationDisplay = ({ match }) => {
 }
 
 const ClassManagerNavBarItems = ({ match, items }) => {
-	const { url, path } = match
+	const { url } = match
 	return (
 		<>
 			{items.map((item, i) => (

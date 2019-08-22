@@ -134,10 +134,10 @@ const LessonInfoScreen = ({ match, history }) => {
 								onClick={() => {
 									removeLesson()
 									// Would like to use redirect here, just gotta figure out how
-									// return<Redirect to='/dashboard/lesson-planner/lessonFinderDirectory' />
+									// return<Redirect to='/dashboard/lesson-planner/LessonManager' />
 									const goBack = () => {
 										removeLessonModalToggle()
-										return history.push('/dashboard/lesson-planner/lessonFinderDirectory')
+										return history.push('/dashboard/lesson-planner/LessonManager')
 									}
 									goBack()
 								}}>

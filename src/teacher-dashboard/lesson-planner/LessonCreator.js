@@ -13,12 +13,16 @@ const LESSON_CREATOR_MUTATION = gql`
 				name
 				gradeLevel
 			}
+			warmup
 			essentialQuestion {
 				type
 				textStructure
 				question
 			}
-			warmup
+			readings {
+				pages
+				sections
+			}
 			socraticQuestions {
 				type
 				question
@@ -29,13 +33,12 @@ const LESSON_CREATOR_MUTATION = gql`
 				definition
 			}
 			workDue {
-				name
 				type
+				readings {
+					pages
+					sections
+				}
 				dueDate
-			}
-			readings {
-				pages
-				sections
 			}
 		}
 	}
@@ -73,7 +76,19 @@ const LESSON_CREATOR_ENUM_NAMES_QUERY = gql`
 	}
 `
 
+const GET_UNIT_NAMES = gql`
+	query findUnitNames($gradeLevel: GradeLevelEnum) {
+		findUnitsByGrade(gradeLevel: $gradeLevel) {
+			name
+		}
+	}
+`
+
 const LessonCreator = ({ history }) => {
+	return <InfoLoader history={history} />
+}
+
+const InfoLoader = ({ history }) => {
 	const { loading, data } = useQuery(LESSON_CREATOR_ENUM_NAMES_QUERY)
 	// const client = useApolloClient()
 	const { isEditLessonMode, isEditLessonItemMode } = data
@@ -201,7 +216,7 @@ const LessonCreatorForm = ({
 	})
 
 	// const goToLessonFinder = () => {
-	// 	return history.push(`/dashboard/lesson-planner/lessonFinderDirectory/${data.createLesson._id}`)
+	// 	return history.push(`/dashboard/lesson-planner/LessonManager/${data.createLesson._id}`)
 	// }
 
 	return (
@@ -222,7 +237,7 @@ const LessonCreatorForm = ({
 
 						if (data) {
 							return history.push(
-								`/dashboard/lesson-planner/lessonFinderDirectory/${data.createLesson._id}`
+								`/dashboard/lesson-planner/LessonManager/${data.createLesson._id}`
 							)
 						}
 					}}>
@@ -261,31 +276,31 @@ const LessonCreatorForm = ({
 							</h2>
 						</div>
 					</div>
-					{/* <div
-					style={{
-						display: 'grid',
-						gridTemplateColumns: '1fr 6fr',
-						alignItems: 'center',
-						borderBottom: '1px solid var(--blue)',
-					}}>
-					<h2>Unit: </h2>
-					<div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', alignItems: 'center' }}>
-						<input
-							style={{
-								height: '1.5rem',
-								backgroundColor: 'transparent',
-								color: 'var(--blue)',
-								fontSize: '120%',
-							}}
-							type='text'
-							name='unit'
-							placeholder='Unit Name'
-							value={unit}
-							onChange={(e) => setUnit(e.target.value)}
-						/>
-						<h2 style={{ textAlign: 'center' }}>{unit}</h2>
+					<div
+						style={{
+							display: 'grid',
+							gridTemplateColumns: '1fr 6fr',
+							alignItems: 'center',
+							borderBottom: '1px solid var(--blue)'
+						}}>
+						<h2>Unit: </h2>
+						<div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', alignItems: 'center' }}>
+							<input
+								style={{
+									height: '1.5rem',
+									backgroundColor: 'transparent',
+									color: 'var(--blue)',
+									fontSize: '120%'
+								}}
+								type='text'
+								name='unit'
+								placeholder='Unit Name'
+								value={unit}
+								onChange={e => setUnit(e.target.value)}
+							/>
+							<h2 style={{ textAlign: 'center' }}>{unit}</h2>
+						</div>
 					</div>
-				</div> */}
 					<div
 						style={{
 							display: 'grid',

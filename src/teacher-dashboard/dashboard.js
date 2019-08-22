@@ -45,13 +45,13 @@ const DashBoardNavigation = ({ match }) => {
 								GradeBook
 							</Link>
 							<Link style={{ margin: '1%' }} to={`${match.url}/classroom/class-period-selector`}>
-								Teachers Aide
+								Teacher's Aide
 							</Link>
-							<Link style={{ margin: '1%' }} to={`${match.url}/school-day`}>
+							<Link style={{ margin: '1%' }} to={`${match.url}/school-day/classManager/A`}>
 								Course Manager
 							</Link>
-							<Link style={{ margin: '1%' }} to={`${match.url}/lesson-planner/`}>
-								Lesson Planner
+							<Link style={{ margin: '1%' }} to={`${match.url}/lesson-planner`}>
+								Lesson Manager
 							</Link>
 							<Link style={{ margin: '1%' }} to={`${match.url}/logout`}>
 								Logout

@@ -6,6 +6,9 @@ input.form-textbox {
 .App {
 	background-color: var(--white);
 }
+.loading {
+	color: var(--blue);
+}
 .Header {
 	display: grid;
 	grid-template-columns: 1fr 4fr;

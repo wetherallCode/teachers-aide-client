@@ -16,6 +16,7 @@ const GET_PERIOD_NAMES = gql`
 		}
 	}
 `
+
 const GET_UNIT_NAMES = gql`
 	query findUnitNames($gradeLevel: GradeLevelEnum) {
 		findUnitsByGrade(gradeLevel: $gradeLevel) {
@@ -23,6 +24,7 @@ const GET_UNIT_NAMES = gql`
 		}
 	}
 `
+
 const GET_LESSONS_BY_UNIT = gql`
 	query findLessonByUnit($inUnit: String) {
 		findLessonsByUnit(inUnit: $inUnit) {

@@ -8,7 +8,7 @@ import ClassManagerDisplay from './ClassManagerDisplay'
 
 const SchoolDay = ({ match }) => {
 	const { url, path } = match
-	console.log(url)
+	console.log(url, path)
 	return (
 		<div>
 			<div
@@ -24,7 +24,7 @@ const SchoolDay = ({ match }) => {
 					borderBottom: '3px solid var(--white)'
 				}}>
 				<Link
-					to={`${url}`}
+					to={`${match.url}/classManager/A`}
 					style={{
 						display: 'flex',
 						alignItems: 'center',
@@ -53,7 +53,7 @@ const SchoolDay = ({ match }) => {
 						to={`${url}/lessonLoader`}>
 						Class Creator
 					</Link>
-					<Link
+					{/* <Link
 						style={{
 							color: 'var(--white)',
 							textDecoration: 'none',
@@ -62,7 +62,7 @@ const SchoolDay = ({ match }) => {
 						}}
 						to={`${url}/classManager`}>
 						Class Period Manager
-					</Link>
+					</Link> */}
 				</div>
 			</div>
 			<Route path={`${path}/lessonLoader`} component={LessonLoader} />
