@@ -51,9 +51,10 @@ const ClassRoomTools = ({ period }) => {
 	const eligibleStudentList = []
 	classRoster.forEach(student => {
 		if (student.daysAbsent !== null && student.daysAbsent.includes(todaysDate)) {
-			console.log('not here today')
+			return null
 		} else eligibleStudentList.unshift(student.desk)
 	})
+	console.log(eligibleStudentList)
 
 	return (
 		<div

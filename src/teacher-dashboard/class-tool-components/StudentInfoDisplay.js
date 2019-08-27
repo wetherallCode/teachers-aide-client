@@ -24,7 +24,7 @@ const StudentInfoDisplay = ({ student }) => {
 	const [undoAbsentMark, setUndoAbsentMark] = useState(false)
 	const [markStudentAbsent] = useMutation(MARK_STUDENT_ABSENT, {
 		variables: { _id: _id, date: date, assignedDate: date, period: period },
-		refetchQueries: ['FindStudent']
+		refetchQueries: ['FindStudent', 'findEligibleStudents']
 	})
 
 	console.log(date)
