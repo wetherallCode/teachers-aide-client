@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 // import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom'
 import { gql } from 'apollo-boost'
 import { useMutation, useQuery, useApolloClient } from '@apollo/react-hooks'
+import { Redirect } from 'react-router'
 
 const LESSON_CREATOR_MUTATION = gql`
 	mutation createLesson($input: LessonInput!) {
@@ -34,10 +35,8 @@ const LESSON_CREATOR_MUTATION = gql`
 			}
 			workDue {
 				type
-				readings {
-					pages
-					sections
-				}
+				readingPages
+				readingSections
 				dueDate
 			}
 		}
@@ -84,11 +83,14 @@ const GET_UNIT_NAMES = gql`
 	}
 `
 
-const LessonCreator = ({ history }) => {
-	return <InfoLoader history={history} />
+const LessonCreator = ({ history, data, match }) => {
+	const { grade } = match.params
+	const { name } = data.findLesson.inUnit
+
+	return <InfoLoader history={history} unitName={name} grade={grade} />
 }
 
-const InfoLoader = ({ history }) => {
+const InfoLoader = ({ history, unitName, grade }) => {
 	const { loading, data } = useQuery(LESSON_CREATOR_ENUM_NAMES_QUERY)
 	// const client = useApolloClient()
 	const { isEditLessonMode, isEditLessonItemMode } = data
@@ -111,6 +113,8 @@ const InfoLoader = ({ history }) => {
 			isEditLessonMode={isEditLessonMode}
 			isEditLessonItemMode={isEditLessonItemMode}
 			history={history}
+			unitName={unitName}
+			grade={grade}
 		/>
 	)
 }
@@ -124,7 +128,9 @@ const LessonCreatorForm = ({
 	lesson,
 	isEditLessonMode,
 	isEditLessonItemMode,
-	history
+	history,
+	unitName,
+	grade
 }) => {
 	const client = useApolloClient()
 
@@ -133,8 +139,6 @@ const LessonCreatorForm = ({
 
 	// Create Lesson Name
 	const [lessonName, setLessonName] = useState(lesson === undefined ? '' : lesson.lessonName)
-
-	const [unit, setUnit] = useState('')
 
 	// Create Warm Up
 	const [warmUp, setWarmUp] = useState(lesson === undefined ? '' : lesson.warmUp)
@@ -189,9 +193,10 @@ const LessonCreatorForm = ({
 
 	// Homework Due Dates
 	const [workDue, setWorkDue] = useState({
-		name: '',
 		type: assignmentTypeEnumNames[0],
-		dueDate: 'Wednesday'
+		readingPages: '',
+		readingSections: '',
+		dueDate: new Date().toLocaleString().substring(0, 10)
 	})
 
 	// const editModeWorkDueList = []
@@ -204,6 +209,7 @@ const LessonCreatorForm = ({
 		variables: {
 			input: {
 				lessonName: lessonName,
+				inUnit: unitName,
 				essentialQuestion: essentialQuestion,
 				socraticQuestions: socraticQuestionsList,
 				readings: readings,
@@ -212,7 +218,7 @@ const LessonCreatorForm = ({
 				workDue: workDueList
 			}
 		},
-		refetchQueries: ['findAllLessons']
+		refetchQueries: ['findLessonsByUnit']
 	})
 
 	// const goToLessonFinder = () => {
@@ -225,6 +231,8 @@ const LessonCreatorForm = ({
 				display: 'grid',
 				gridTemplateRows: 'repeat(1fr 8)',
 				color: 'var(--blue)',
+				height: '100vh',
+				overflow: 'scroll',
 				borderBottom: '1px solid var(--blue)'
 			}}>
 			{/* {data && goToLessonFinder()} */}
@@ -235,13 +243,14 @@ const LessonCreatorForm = ({
 						e.preventDefault()
 						createLesson()
 
-						if (data) {
-							return history.push(
-								`/dashboard/lesson-planner/LessonManager/${data.createLesson._id}`
-							)
+						const goToLessonFinder = () => {
+							return history.push(`/dashboard/lesson-planner/${grade}`)
 						}
+						goToLessonFinder()
 					}}>
-					<h1 style={{ textAlign: 'center', textDecoration: 'underline' }}>Lesson Creator</h1>
+					<div style={{ textAlign: 'center', textDecoration: 'underline', fontSize: '250%' }}>
+						Lesson Creator
+					</div>
 					<div
 						style={{
 							display: 'grid',
@@ -276,7 +285,7 @@ const LessonCreatorForm = ({
 							</h2>
 						</div>
 					</div>
-					<div
+					{/* <div
 						style={{
 							display: 'grid',
 							gridTemplateColumns: '1fr 6fr',
@@ -300,7 +309,7 @@ const LessonCreatorForm = ({
 							/>
 							<h2 style={{ textAlign: 'center' }}>{unit}</h2>
 						</div>
-					</div>
+					</div> */}
 					<div
 						style={{
 							display: 'grid',
@@ -527,8 +536,6 @@ const LessonCreatorForm = ({
 						{!isEditLessonMode ? (
 							<div>
 								{socraticQuestionsList.reverse().map((question, i) => {
-									console.log(question.question, i)
-									console.log(socraticQuestionsList)
 									return (
 										<div
 											style={{
@@ -807,7 +814,7 @@ const LessonCreatorForm = ({
 								gridTemplateRows: '1fr 1fr',
 								alignItems: 'center'
 							}}>
-							<div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+							{/* <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
 								<h3 style={{ marginRight: '5%' }}>Name</h3>
 								<input
 									style={{
@@ -823,7 +830,7 @@ const LessonCreatorForm = ({
 									value={workDue.name}
 									onChange={e => setWorkDue({ ...workDue, name: e.target.value })}
 								/>
-							</div>
+							</div> */}
 							<div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
 								<h3 style={{ marginRight: '5%' }}>Type</h3>
 								<select
@@ -844,6 +851,44 @@ const LessonCreatorForm = ({
 									})}
 								</select>
 							</div>
+							<div style={{}}>
+								<h3 style={{}}>Pages</h3>
+								<input
+									style={{
+										height: '1.5rem',
+										width: '100%',
+										backgroundColor: 'transparent',
+										color: 'var(--blue)',
+										fontSize: '120%'
+									}}
+									type='text'
+									name='ReadingPages'
+									placeholder='Pages'
+									value={workDue.readingPages}
+									onChange={e => {
+										setWorkDue({ ...workDue, readingPages: e.target.value })
+										console.log(workDue.readingPages)
+									}}
+								/>
+								<h3 style={{}}>Sections</h3>
+								<input
+									style={{
+										height: '1.5rem',
+										width: '100%',
+										backgroundColor: 'transparent',
+										color: 'var(--blue)',
+										fontSize: '120%'
+									}}
+									type='text'
+									name='ReadingSections'
+									placeholder='Sections'
+									value={workDue.readingSections}
+									onChange={e => {
+										setWorkDue({ ...workDue, readingSections: e.target.value })
+										console.log(workDue.readingSections)
+									}}
+								/>
+							</div>
 							<div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
 								<h3 style={{ marginRight: '5%' }}>Due Date</h3>
 								<input
@@ -854,7 +899,7 @@ const LessonCreatorForm = ({
 										color: 'var(--blue)',
 										fontSize: '120%'
 									}}
-									type='text'
+									type='date'
 									name='dueDate'
 									placeholder='Assignment Due Date'
 									value={workDue.dueDate}
@@ -868,9 +913,10 @@ const LessonCreatorForm = ({
 									e.preventDefault()
 									setWorkDueList(list => [workDue].concat(list))
 									setWorkDue({
-										name: '',
 										type: assignmentTypeEnumNames[0],
-										dueDate: 'Wednesday'
+										readingPages: '',
+										readingSections: '',
+										dueDate: new Date().toLocaleString().substring(0, 10)
 									})
 								}}>
 								Add an Assignment
@@ -880,7 +926,8 @@ const LessonCreatorForm = ({
 							{workDueList.reverse().map((assignment, i) => {
 								return (
 									<div style={{ textAlign: 'center' }} key={i}>
-										<h2>{assignment.name + ' ' + assignment.type + ': ' + assignment.dueDate}</h2>
+										<h2>{assignment.type + ' due on ' + assignment.dueDate}</h2>
+										<h2>{assignment.readingPages + ': ' + assignment.readingSections}</h2>
 									</div>
 								)
 							})}

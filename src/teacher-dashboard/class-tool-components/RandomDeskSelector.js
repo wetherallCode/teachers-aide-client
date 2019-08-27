@@ -1,14 +1,10 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
-import { ApolloConsumer } from '@apollo/react-hooks'
-
-//needs an array of all available desks to choose from
-//needs a array of already selected students (10-15) to keep from having to many repeats
-//needs to display the selected student in the studentInfo
+import { Link } from 'react-router-dom'
 
 const calledOnStudents = []
 
 const RandomDeskSelector = ({ eligibleStudentList, period }) => {
+	console.log(eligibleStudentList)
 	const calledOnStudentListSize = Math.ceil(eligibleStudentList.length * 0.4)
 
 	const randomizer = () => {
@@ -44,7 +40,7 @@ const RandomDeskSelectorDisplay = ({ period, student }) => {
 					color: 'var(--blue)',
 					backgroundColor: 'var(--white)',
 					borderRadius: '5px',
-					boxShadow: '1px 1px 1px black',
+					boxShadow: '1px 1px 1px black'
 				}}>
 				Random Student Generator
 			</button>

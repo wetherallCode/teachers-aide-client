@@ -124,7 +124,10 @@ const UserLogin = ({ history }) => {
 						style={{ width: '20.45rem', fontSize: '140%' }}
 						onClick={() => {
 							console.log('click')
-							return <Redirect to='/' />
+							const goBack = () => {
+								return history.push(`/`)
+							}
+							goBack()
 						}}>
 						Go Back
 					</button>

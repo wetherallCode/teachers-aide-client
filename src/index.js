@@ -16,7 +16,9 @@ const defaultState = {
 	isEditLessonMode: false,
 	isEditLessonItemMode: false,
 	removeLessonModal: false,
-	userLogin: true
+	userLogin: true,
+	createLessonMode: false,
+	addUnitMode: false
 }
 
 const client = new ApolloClient({

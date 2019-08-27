@@ -14,8 +14,7 @@ const GET_PERIOD_NAMES = gql`
 `
 const ClassPeriodSelector = ({ match }) => {
 	const { data, loading, error } = useQuery(GET_PERIOD_NAMES)
-	console.log(data)
-	if (loading) return <h1>Loading</h1>
+	if (loading) return <h1 className='loading'>Loading</h1>
 	if (error) console.log(error)
 
 	return (

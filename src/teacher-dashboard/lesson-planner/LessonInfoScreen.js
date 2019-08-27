@@ -2,41 +2,45 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom'
 import { gql } from 'apollo-boost'
 import { useQuery, useApolloClient, useMutation } from '@apollo/react-hooks'
-import LessonInfoDisplay from './LessonInfoDisplay'
+import LessonInfo from './LessonInfo'
 import LessonEditMode from './LessonEditMode'
 import Modal from 'react-modal'
+import { LessonCreator } from './LessonCreator'
+// import LessonBuilder from './LessonBuilder'
 
 export const FIND_LESSON_QUERY = gql`
 	query findLesson($_id: ID!) {
 		findLesson(_id: $_id) {
 			lessonName
+			inUnit {
+				name
+			}
+			warmup
 			essentialQuestion {
-				type
-				textStructure
 				question
 			}
 			readings {
 				pages
 				sections
 			}
+			socraticQuestions {
+				question
+			}
 			vocabWords {
 				word
 				partOfSpeech
 				definition
 			}
-			warmup
-			socraticQuestions {
-				type
-				question
-			}
 			workDue {
 				type
-				name
+				readingPages
+				readingSections
 				dueDate
 			}
 		}
 		isEditLessonMode @client
 		removeLessonModal @client
+		createLessonMode @client
 	}
 `
 const REMOVE_LESSON_MUTATION = gql`
@@ -49,26 +53,38 @@ const REMOVE_LESSON_MUTATION = gql`
 		}
 	}
 `
-
 const LessonInfoScreen = ({ match, history }) => {
-	const { lessonId } = match.params
-	const client = useApolloClient()
-
-	const { data, loading } = useQuery(FIND_LESSON_QUERY, {
+	const { lessonId, grade } = match.params
+	const { data, loading, error } = useQuery(FIND_LESSON_QUERY, {
 		variables: { _id: lessonId }
 	})
-	console.log(data)
+	if (loading) return <h1 className='loading'>Loading</h1>
+	if (error) console.error(error)
+
+	return (
+		<LessonInfoDisplay
+			match={match}
+			history={history}
+			data={data}
+			lessonId={lessonId}
+			grade={grade}
+		/>
+	)
+}
+
+const LessonInfoDisplay = ({ match, history, data, lessonId, grade }) => {
+	const client = useApolloClient()
+	const { findLesson } = data
+
 	const [removeLesson] = useMutation(REMOVE_LESSON_MUTATION, {
 		variables: { _id: lessonId },
-		refetchQueries: ['findAllLessons']
+		refetchQueries: ['findAllLessons', 'findLessonsByUnit']
 	})
-	if (loading) return <h1>Loading</h1>
 
-	const { findLesson, isEditLessonMode, removeLessonModal } = data
+	const { isEditLessonMode, removeLessonModal, createLessonMode } = data
 
 	const editLessonModeToggle = () => {
 		client.writeData({ data: { isEditLessonMode: !isEditLessonMode } })
-		console.log(isEditLessonMode)
 	}
 	const removeLessonModalToggle = () => {
 		client.writeData({ data: { removeLessonModal: !removeLessonModal } })
@@ -76,16 +92,29 @@ const LessonInfoScreen = ({ match, history }) => {
 
 	return (
 		<div
-			style={{
-				border: '3px solid var(--white)',
-				width: '100%',
-				display: 'grid',
-				gridTemplateRows: '4fr 1fr'
-			}}>
+			id='lessonInfoScreen'
+			style={
+				createLessonMode
+					? {
+							border: '3px solid var(--white)',
+							width: '100%',
+							display: 'grid'
+							// gridTemplateRows: '4fr 1fr'
+					  }
+					: {
+							border: '3px solid var(--white)',
+							borderBottom: '3px solid var(--blue)',
+							width: '100%',
+							display: 'grid',
+							gridTemplateRows: '4fr 1fr'
+					  }
+			}>
 			<div>
+				<>{createLessonMode && <LessonCreator match={match} data={data} history={history} />}</>
+
 				<div>
-					{findLesson !== undefined && !isEditLessonMode && (
-						<LessonInfoDisplay lesson={findLesson} />
+					{findLesson !== undefined && !isEditLessonMode && !createLessonMode && (
+						<LessonInfo lesson={findLesson} />
 					)}
 				</div>
 				<div>
@@ -137,7 +166,7 @@ const LessonInfoScreen = ({ match, history }) => {
 									// return<Redirect to='/dashboard/lesson-planner/LessonManager' />
 									const goBack = () => {
 										removeLessonModalToggle()
-										return history.push('/dashboard/lesson-planner/LessonManager')
+										return history.push(`/dashboard/lesson-planner/${grade}`)
 									}
 									goBack()
 								}}>
@@ -147,38 +176,40 @@ const LessonInfoScreen = ({ match, history }) => {
 					</div>
 				</Modal>
 			</div>
-			<div
-				style={{
-					display: 'flex',
-					justifyContent: 'flex-end',
-					alignItems: 'center',
-					backgroundColor: 'var(--blue)'
-				}}>
-				<button
+			{!createLessonMode && (
+				<div
 					style={{
-						width: '10rem',
-						height: '4rem',
-						fontSize: '120%',
-						marginRight: '5%',
-						color: 'var(--blue)',
-						borderRadius: '5px'
-					}}
-					onClick={() => editLessonModeToggle()}>
-					{!isEditLessonMode ? 'Edit Lesson' : 'Lesson Display'}
-				</button>
-				<button
-					style={{
-						width: '10rem',
-						height: '4rem',
-						fontSize: '120%',
-						marginRight: '5%',
-						color: 'var(--blue)',
-						borderRadius: '5px'
-					}}
-					onClick={() => removeLessonModalToggle()}>
-					Delete Lesson
-				</button>
-			</div>
+						display: 'flex',
+						justifyContent: 'flex-end',
+						alignItems: 'center',
+						backgroundColor: 'var(--blue)'
+					}}>
+					<button
+						style={{
+							width: '10rem',
+							height: '4rem',
+							fontSize: '120%',
+							marginRight: '5%',
+							color: 'var(--blue)',
+							borderRadius: '5px'
+						}}
+						onClick={() => editLessonModeToggle()}>
+						{!isEditLessonMode ? 'Edit Lesson' : 'Lesson Display'}
+					</button>
+					<button
+						style={{
+							width: '10rem',
+							height: '4rem',
+							fontSize: '120%',
+							marginRight: '5%',
+							color: 'var(--blue)',
+							borderRadius: '5px'
+						}}
+						onClick={() => removeLessonModalToggle()}>
+						Delete Lesson
+					</button>
+				</div>
+			)}
 		</div>
 	)
 }

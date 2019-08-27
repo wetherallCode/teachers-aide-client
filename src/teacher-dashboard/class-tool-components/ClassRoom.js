@@ -10,7 +10,7 @@ const ClassRoom = ({ match }) => {
 	const { url } = match
 
 	const { periodName } = match.params
-
+	// console.log(periodName)
 	return (
 		<>
 			<div
@@ -19,14 +19,14 @@ const ClassRoom = ({ match }) => {
 					display: 'grid',
 					gridTemplateRows: '3fr 1fr',
 					gridGap: '1px',
-					height: '100vh',
+					height: '100vh'
 				}}>
 				<DeskSelector match={match} periodName={periodName} />
 				<ClassRoomTools period={periodName} />
 			</div>
 			<Route
 				path={`${url}/:deskNumber`}
-				render={(props) => <StudentInfo {...props} periodName={periodName} />}
+				render={props => <StudentInfo {...props} periodName={periodName} />}
 			/>
 		</>
 	)

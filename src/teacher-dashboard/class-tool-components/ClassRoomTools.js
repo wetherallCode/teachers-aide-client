@@ -9,26 +9,50 @@ const FIND_ELIGIBLE_STUDENTS_QUERY = gql`
 	query findEligibleStudents($period: periodName!) {
 		classRoster(period: $period) {
 			desk
+			firstName
+			daysAbsent
+			period
 		}
 	}
 `
 
 const ClassRoomTools = ({ period }) => {
+	const todaysDate = new Date().toISOString().substring(0, 10)
 	const [selectorSwitch, setSelectorSwitch] = useState(0)
 	if (selectorSwitch > 2) setSelectorSwitch(0)
 	if (selectorSwitch < 0) setSelectorSwitch(2)
 
 	const { data, loading, error } = useQuery(FIND_ELIGIBLE_STUDENTS_QUERY, {
-		variables: { period: period },
+		variables: { period: period }
 	})
 	if (loading) return null
 	if (error) console.log(error)
-
 	const { classRoster } = data
 
+	const absentStudentList = []
+	const absentStudent = classRoster.filter(
+		student =>
+			student !== null &&
+			student.daysAbsent !== null &&
+			student.daysAbsent.some(day => day === todaysDate)
+	)
+	console.log(classRoster)
+	console.log(absentStudent)
+	// console.log(absentStudentList)
+	// if (absentStudent.daysAbsent.filter(day => day === todaysDate)) {
+	// var isStudentAbsentToday = absentStudent.daysAbsent.filter(day => day === todaysDate)
+	// console.log(absentStudent.firstName)
+	// }
+
+	// absentStudent.forEach(student => absentStudentList.push(student.desk))
+	// absentStudentList.pop(student.desk)
+	// console.log(absentStudentList)
+
 	const eligibleStudentList = []
-	classRoster.forEach(({ desk }) => {
-		eligibleStudentList.unshift(desk)
+	classRoster.forEach(student => {
+		if (student.daysAbsent !== null && student.daysAbsent.includes(todaysDate)) {
+			console.log('not here today')
+		} else eligibleStudentList.unshift(student.desk)
 	})
 
 	return (
@@ -36,14 +60,14 @@ const ClassRoomTools = ({ period }) => {
 			style={{
 				backgroundColor: 'var(--blue)',
 				display: 'grid',
-				gridTemplateColumns: '1fr 4fr 1fr',
+				gridTemplateColumns: '1fr 4fr 1fr'
 			}}>
 			<div
 				style={{
 					display: 'grid',
 					justifyContent: 'center',
 					alignContent: 'center',
-					backgroundColor: 'var(--blue)',
+					backgroundColor: 'var(--blue)'
 				}}>
 				{eligibleStudentList.length > 2 && (
 					<RandomDeskSelector eligibleStudentList={eligibleStudentList} period={period} />
@@ -55,7 +79,7 @@ const ClassRoomTools = ({ period }) => {
 						display: 'flex',
 						justifyContent: 'space-around',
 						alignItems: 'flex-start',
-						textDecoration: 'none',
+						textDecoration: 'none'
 					}}
 					to='/dashboard/classroom/class-period-selector'>
 					<button
@@ -69,7 +93,7 @@ const ClassRoomTools = ({ period }) => {
 							fontSize: '150%',
 							border: '1px solid black',
 							boxShadow: '1px 1px 1px black',
-							textShadow: '3px 3px 3px var(--grey)',
+							textShadow: '3px 3px 3px var(--grey)'
 						}}>
 						Period {period}
 					</button>
@@ -82,7 +106,7 @@ const ClassRoomTools = ({ period }) => {
 					display: 'grid',
 					gridTemplateColumns: '(1fr 1fr)',
 					justifyContent: 'center',
-					backgroundColor: 'var(--blue)',
+					backgroundColor: 'var(--blue)'
 				}}>
 				<button
 					style={{
@@ -93,7 +117,7 @@ const ClassRoomTools = ({ period }) => {
 						textShadow: '3px 3px 3px var(--grey)',
 						color: 'var(--blue)',
 						backgroundColor: 'var(--white)',
-						borderRadius: '5px',
+						borderRadius: '5px'
 					}}
 					onClick={() => setSelectorSwitch(selectorSwitch + 1)}>
 					Up
@@ -107,7 +131,7 @@ const ClassRoomTools = ({ period }) => {
 						textShadow: '3px 3px 3px var(--grey)',
 						color: 'var(--blue)',
 						backgroundColor: 'var(--white)',
-						borderRadius: '5px',
+						borderRadius: '5px'
 					}}
 					onClick={() => setSelectorSwitch(selectorSwitch - 1)}>
 					Down

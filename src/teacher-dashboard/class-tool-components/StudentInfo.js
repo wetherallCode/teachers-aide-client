@@ -12,6 +12,8 @@ export const FIND_STUDENT_QUERY = gql`
 			firstName
 			lastName
 			responsibilityPoints
+			period
+			daysAbsent
 		}
 	}
 `
@@ -20,13 +22,13 @@ const StudentInfo = ({ match, periodName }) => {
 	const numberizedDeskNumber = parseInt(deskNumber, 10)
 
 	const { data, loading, error } = useQuery(FIND_STUDENT_QUERY, {
-		variables: { period: periodName, desk: numberizedDeskNumber },
+		variables: { period: periodName, desk: numberizedDeskNumber }
 	})
-
 	if (loading) return null
 	if (error) console.log(error)
 
 	const { findStudentByPeriodAndDesk } = data
+
 	return (
 		<>
 			{findStudentByPeriodAndDesk ? (
@@ -35,7 +37,7 @@ const StudentInfo = ({ match, periodName }) => {
 						display: 'grid',
 						gridTemplateRows: '2fr 3fr',
 						gridGap: '2px',
-						backgroundColor: 'var(--white)',
+						backgroundColor: 'var(--white)'
 					}}>
 					<StudentInfoDisplay student={findStudentByPeriodAndDesk} />
 					<StudentInfoMutator match={match} student={findStudentByPeriodAndDesk} />
@@ -45,7 +47,7 @@ const StudentInfo = ({ match, periodName }) => {
 					style={{
 						textDecoration: 'underline',
 						textAlign: 'center',
-						textShadow: '2px 2px 2x black',
+						textShadow: '2px 2px 2x black'
 					}}>
 					No Student
 				</h1>

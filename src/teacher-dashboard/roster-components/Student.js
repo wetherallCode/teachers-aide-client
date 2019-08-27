@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { gql } from 'apollo-boost'
-import { useQuery, useMutation, ApolloConsumer, useApolloClient } from '@apollo/react-hooks'
+import { useQuery, useMutation, useApolloClient } from '@apollo/react-hooks'
 import EditModeToggle from './EditModeToggle'
 import EditModeForm from './EditModeForm'
 import StudentHider from './StudentHider'
@@ -19,6 +19,7 @@ export const STUDENT_INFO_QUERY = gql`
 			responsibilityPoints
 			desk
 			isHiddenFromRoster
+			daysAbsent
 		}
 		isEditStudentMode @client
 		removeStudentScreen @client
@@ -40,6 +41,7 @@ const REMOVE_STUDENT_MUTATION = gql`
 Modal.setAppElement(document.getElementById('root'))
 
 const Student = ({ match, history }) => {
+	const client = useApolloClient()
 	const { studentInfo } = match.params
 
 	const { data, loading, error } = useQuery(STUDENT_INFO_QUERY, {
@@ -63,184 +65,207 @@ const Student = ({ match, history }) => {
 		teacher,
 		responsibilityPoints,
 		desk,
-		isHiddenFromRoster
+		isHiddenFromRoster,
+		daysAbsent
 	} = student
-	const client = useApolloClient
 	return (
-		<div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr' }}>
-			<ApolloConsumer>
-				{client => (
-					<div
-						style={{
-							color: 'var(--blue)',
-							padding: '1%',
-							border: '1px solid black',
-							width: '100%',
-							backgroundColor: 'var(--grey)'
-						}}>
-						{!removeStudentScreen ? (
-							<div>
-								{isEditStudentMode ? (
-									<div>
-										<EditModeToggle className='blueButton' isEditStudentMode={isEditStudentMode} />
-										<h1>Edit Student</h1>
-										<EditModeForm
-											clasName='button'
-											studentInfo={student}
-											history={history}
-											isEditStudentMode={isEditStudentMode}
-										/>
-									</div>
-								) : (
-									<div>
-										<Link className='blueButton' to={`/dashboard/roster-view/${period}`}>
-											<button
-												style={{
-													width: '99%',
-													height: '2rem',
-													backgroundColor: 'var(--blue)',
-													color: 'var(--white)',
-													fontSize: '200%',
-													textShadow: '1px 3px 1px black',
-													boxShadow: '1px 1px 1px black',
-													border: '1px solid var(--white)',
-													display: 'flex',
-													justifyContent: 'center'
-												}}>
-												Back to Roster
-											</button>
-										</Link>
-										<div>
-											<h1
-												style={
-													isHiddenFromRoster ? { color: 'var(--red)' } : { color: 'var(--blue)' }
-												}>
-												{firstName + ' ' + lastName}
-											</h1>
-											<h1 style={{ color: 'var(--red)', fontSize: '100%' }}>
-												{isHiddenFromRoster && 'Hidden'}{' '}
-											</h1>
-										</div>
-										<h2>{`Period: ${period}`}</h2>
-										<h2>{`Seat: ${desk}`}</h2>
-										<h2>{`Responsibility Points: ${responsibilityPoints}`}</h2>
-										<h2>{`Teacher: ${teacher}`}</h2>
-										<div
+		<>
+			<div
+				style={{
+					display: 'grid',
+					gridTemplateColumns: '1fr 1fr 1fr',
+					gridGap: '1%'
+				}}>
+				<div
+					style={{
+						color: 'var(--blue)',
+						padding: '1%',
+						border: '1px solid var(--blue)',
+						width: '100%',
+						backgroundColor: 'var(--grey)'
+					}}>
+					{!removeStudentScreen ? (
+						<div>
+							{isEditStudentMode ? (
+								<div>
+									<EditModeToggle className='blueButton' isEditStudentMode={isEditStudentMode} />
+									<h1>Edit Student</h1>
+									<EditModeForm
+										clasName='button'
+										studentInfo={student}
+										history={history}
+										isEditStudentMode={isEditStudentMode}
+									/>
+								</div>
+							) : (
+								<div>
+									<Link className='blueButton' to={`/dashboard/roster-view/${period}`}>
+										<button
 											style={{
-												display: 'flex',
-												flexDirection: 'row',
+												width: '99%',
+												height: '2rem',
+												backgroundColor: 'var(--blue)',
+												color: 'var(--white)',
+												fontSize: '200%',
 												textShadow: '1px 3px 1px black',
 												boxShadow: '1px 1px 1px black',
-												border: '1px solid var(--white)'
+												border: '1px solid var(--white)',
+												display: 'flex',
+												justifyContent: 'center'
 											}}>
-											<Link to={`/dashboard/classroom/class-period-selector/${period}/${desk}`}>
-												<button
-													style={{
-														width: '100%',
-														textShadow: '1px 3px 1px black'
-													}}
-													className='blueButton'>
-													Back to Class
-												</button>
-											</Link>
-											<EditModeToggle
-												className='blueButton'
-												isEditStudentMode={isEditStudentMode}
-											/>
-											<StudentHider studentInfo={student} />
-											<RemoveStudentToggle
-												className='redButton'
-												removeStudentScreen={removeStudentScreen}
-											/>
-										</div>
+											Back to Roster
+										</button>
+									</Link>
+									<div>
+										<h1
+											style={
+												isHiddenFromRoster ? { color: 'var(--red)' } : { color: 'var(--blue)' }
+											}>
+											{firstName + ' ' + lastName}
+										</h1>
+										<h1 style={{ color: 'var(--red)', fontSize: '100%' }}>
+											{isHiddenFromRoster && 'Hidden'}{' '}
+										</h1>
 									</div>
-								)}
-							</div>
-						) : (
-							<div>
-								<RemoveStudentToggle
-									style={{
-										backgroundColor: 'red',
-										border: '0.01px solid black',
-										width: '100px',
-										height: '50px',
-										color: '#var(--blue)',
-										textDecoration: 'none',
-										fontSize: '125%',
-										fontWeight: 'bolder',
-										boxShadow: '3px 3px 3px black',
-										textShadow: '2px 2px 2px #888'
-									}}
-									removeStudentScreen={removeStudentScreen}
-								/>
-								<Modal
-									style={{
-										overlay: {
-											backgroundColor: 'var(--darkGrey)'
-										},
-										content: {
-											// marginTop: '10%',
-											marginLeft: '20%',
-											width: '40rem',
-											height: '25rem'
-										}
-									}}
-									isOpen={removeStudentScreen}
-									onRequestClose={() =>
-										client.writeData({ data: { removeStudentScreen: !removeStudentScreen } })
-									}>
+									<h2>{`Period: ${period}`}</h2>
+									<h2>{`Seat: ${desk}`}</h2>
+									<h2>{`Responsibility Points: ${responsibilityPoints}`}</h2>
+									<h2>{`Teacher: ${teacher}`}</h2>
 									<div
 										style={{
 											display: 'flex',
-											flexDirection: 'column',
-											justifyContent: 'center',
-											alignItems: 'center'
+											flexDirection: 'row',
+											textShadow: '1px 3px 1px black',
+											boxShadow: '1px 1px 1px black',
+											border: '1px solid var(--white)'
 										}}>
-										<h1 style={{ color: 'var(--red)' }}>
-											Are You Sure You want to Delete {firstName}!!
-										</h1>
-										<button
-											className='blueButton'
-											style={{
-												width: '40rem',
-												height: '10rem',
-												fontSize: '170%',
-												marginBottom: '10%'
-											}}
-											onClick={() =>
-												client.writeData({ data: { removeStudentScreen: !removeStudentScreen } })
-											}>
-											Don't Delete!
-										</button>
-										<button
-											style={{
-												fontSize: '70%',
-												height: '30px',
-												width: '30rem',
-												textDecoration: 'none',
-												color: 'var(--white)',
-												backgroundColor: 'var(--red)'
-											}}
-											onClick={() => {
-												removeStudent()
-												const goBack = () => {
-													client.writeData({ data: { removeStudentScreen: !removeStudentScreen } })
-													return !isHiddenFromRoster
-														? history.push(`/dashboard/roster-view/${period}`)
-														: history.push(`/dashboard/allStudent`)
-												}
-												goBack()
-											}}>
-											Delete Student
-										</button>
+										<Link to={`/dashboard/classroom/class-period-selector/${period}/${desk}`}>
+											<button
+												style={{
+													width: '100%',
+													textShadow: '1px 3px 1px black'
+												}}
+												className='blueButton'>
+												Back to Class
+											</button>
+										</Link>
+										<EditModeToggle className='blueButton' isEditStudentMode={isEditStudentMode} />
+										<StudentHider studentInfo={student} />
+										<RemoveStudentToggle
+											className='redButton'
+											removeStudentScreen={removeStudentScreen}
+										/>
 									</div>
-								</Modal>
-							</div>
-						)}
+								</div>
+							)}
+						</div>
+					) : (
+						<div>
+							<RemoveStudentToggle
+								style={{
+									backgroundColor: 'red',
+									border: '0.01px solid black',
+									width: '100px',
+									height: '50px',
+									color: '#var(--blue)',
+									textDecoration: 'none',
+									fontSize: '125%',
+									fontWeight: 'bolder',
+									boxShadow: '3px 3px 3px black',
+									textShadow: '2px 2px 2px #888'
+								}}
+								removeStudentScreen={removeStudentScreen}
+							/>
+							<Modal
+								style={{
+									overlay: {
+										backgroundColor: 'var(--darkGrey)'
+									},
+									content: {
+										// marginTop: '10%',
+										marginLeft: '20%',
+										width: '40rem',
+										height: '25rem'
+									}
+								}}
+								isOpen={removeStudentScreen}
+								onRequestClose={() =>
+									client.writeData({ data: { removeStudentScreen: !removeStudentScreen } })
+								}>
+								<div
+									style={{
+										display: 'flex',
+										flexDirection: 'column',
+										justifyContent: 'center',
+										alignItems: 'center'
+									}}>
+									<h1 style={{ color: 'var(--red)' }}>
+										Are You Sure You want to Delete {firstName}!!
+									</h1>
+									<button
+										className='blueButton'
+										style={{
+											width: '40rem',
+											height: '10rem',
+											fontSize: '170%',
+											marginBottom: '10%'
+										}}
+										onClick={() =>
+											client.writeData({ data: { removeStudentScreen: !removeStudentScreen } })
+										}>
+										Don't Delete!
+									</button>
+									<button
+										style={{
+											fontSize: '70%',
+											height: '30px',
+											width: '30rem',
+											textDecoration: 'none',
+											color: 'var(--white)',
+											backgroundColor: 'var(--red)'
+										}}
+										onClick={() => {
+											removeStudent()
+											const goBack = () => {
+												client.writeData({ data: { removeStudentScreen: !removeStudentScreen } })
+												return !isHiddenFromRoster
+													? history.push(`/dashboard/roster-view/${period}`)
+													: history.push(`/dashboard/allStudent`)
+											}
+											goBack()
+										}}>
+										Delete Student
+									</button>
+								</div>
+							</Modal>
+						</div>
+					)}
+				</div>
+				<div
+					style={{
+						color: 'var(--blue)',
+						padding: '1%',
+						border: '1px solid var(--blue)',
+						width: '100%',
+						backgroundColor: 'var(--grey)',
+						display: 'grid',
+						gridTemplateRows: '1fr 5fr'
+					}}>
+					<div style={{ fontSize: '200%', textDecoration: 'underline', textAlign: 'center' }}>
+						Day's Absent
 					</div>
-				)}
-			</ApolloConsumer>
-		</div>
+					{daysAbsent !== null ? (
+						<div>
+							{daysAbsent.map((day, i) => (
+								<div key={i}>{day}</div>
+							))}
+						</div>
+					) : (
+						<div>No Absence</div>
+					)}
+				</div>
+			</div>
+		</>
 	)
 }
 

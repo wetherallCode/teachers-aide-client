@@ -63,7 +63,12 @@ const LessonLoader = () => {
 const UnitLoaderDisplay = ({ periods, gradeLevels }) => {
 	return (
 		<div
-			style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gridTemplateRows: '1fr 1fr' }}>
+			style={{
+				display: 'grid',
+				gridTemplateColumns: '1fr 1fr 1fr',
+				gridTemplateRows: '1fr 1fr',
+				height: '100vh'
+			}}>
 			<ClassLessonLoader period={periods[0]} gradeLevels={gradeLevels} />
 			<ClassLessonLoader period={periods[1]} gradeLevels={gradeLevels} />
 			<ClassLessonLoader period={periods[2]} gradeLevels={gradeLevels} />
@@ -197,7 +202,8 @@ const LessonSelector = ({ unitName, assignedDate, grade, period }) => {
 		onCompleted: () => {
 			setErrorLog(null)
 			setAssignedLesson('')
-		}
+		},
+		refetchQueries: ['findClassPeriod']
 	})
 
 	if (loading) return null
@@ -206,7 +212,7 @@ const LessonSelector = ({ unitName, assignedDate, grade, period }) => {
 	const { findLessonsByUnit } = data
 
 	return (
-		<>
+		<div>
 			<div style={{ display: 'flex', marginTop: '5%' }}>
 				<div style={{ marginRight: '2%', marginLeft: '2%', fontSize: '140%' }}>Lesson: </div>
 				<select
@@ -269,7 +275,7 @@ const LessonSelector = ({ unitName, assignedDate, grade, period }) => {
 				}}>
 				{errorLog !== null ? 'Class already assigned' : 'Create Class Period'}
 			</button>
-		</>
+		</div>
 	)
 }
 

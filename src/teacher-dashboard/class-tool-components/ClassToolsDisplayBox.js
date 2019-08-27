@@ -10,7 +10,7 @@ const ClassToolsDisplayBox = ({ selector }) => {
 						display: 'flex',
 						flexWrap: 'wrap',
 						justifyContent: 'space-evenly',
-						alignItems: 'flex-start',
+						alignItems: 'flex-start'
 					}}>
 					<button className='whiteButton'>Button</button>
 					<button className='whiteButton'>Button</button>
@@ -20,7 +20,7 @@ const ClassToolsDisplayBox = ({ selector }) => {
 							height: 'auto',
 							backgroundColor: 'var(--white)',
 							width: '90%',
-							overflow: 'auto',
+							overflow: 'auto'
 						}}>
 						button
 					</div>
@@ -38,7 +38,7 @@ const ClassToolsDisplayBox = ({ selector }) => {
 										fontSize: '400%',
 										height: '4rem',
 										backgroundColor: 'var(-white)',
-										textAlign: 'center',
+										textAlign: 'center'
 									}}>
 									<Timer.Minutes />:
 									<Timer.Seconds />
@@ -50,7 +50,7 @@ const ClassToolsDisplayBox = ({ selector }) => {
 										justifyContent: 'space-between',
 										alignItems: 'flex-start',
 										marginTop: '3.5%',
-										marginBottom: '10px',
+										marginBottom: '10px'
 									}}>
 									<button
 										className='whiteButton'
@@ -93,7 +93,7 @@ const ClassToolsDisplayBox = ({ selector }) => {
 						display: 'flex',
 						flexWrap: 'wrap',
 						justifyContent: 'space-evenly',
-						alignItems: 'flex-start',
+						alignItems: 'flex-start'
 					}}>
 					<button className='whiteButton' style={{ backgroundColor: 'var(--grey)' }}>
 						Button
@@ -109,7 +109,7 @@ const ClassToolsDisplayBox = ({ selector }) => {
 							height: 'auto',
 							backgroundColor: 'var(--white)',
 							width: '90%',
-							overflow: 'auto',
+							overflow: 'auto'
 						}}>
 						button
 					</div>
@@ -119,8 +119,9 @@ const ClassToolsDisplayBox = ({ selector }) => {
 					style={{
 						display: 'flex',
 						flexWrap: 'wrap',
+						backgroundColor: 'var(--white)',
 						justifyContent: 'space-evenly',
-						alignItems: 'flex-start',
+						alignItems: 'flex-start'
 					}}>
 					<button className='whiteButton'>Button</button>
 					<button className='whiteButton'>Button</button>
@@ -130,7 +131,7 @@ const ClassToolsDisplayBox = ({ selector }) => {
 							height: 'auto',
 							backgroundColor: 'var(--white)',
 							width: '90%',
-							overflow: 'auto',
+							overflow: 'auto'
 						}}>
 						button
 					</div>

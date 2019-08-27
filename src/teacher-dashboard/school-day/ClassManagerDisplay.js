@@ -32,10 +32,8 @@ const FIND_CLASS_PERIOD = gql`
 				workDue {
 					type
 					dueDate
-					readings {
-						pages
-						sections
-					}
+					readingPages
+					readingSections
 				}
 			}
 		}
@@ -149,8 +147,8 @@ const ClassManagerDisplay = ({ match }) => {
 							</div>
 							<div style={{ backgroundColor: 'var(--white)' }}>
 								<h3 style={{ textAlign: 'center', textDecoration: 'underline' }}>Readings</h3>
-								<div>{data.findClassPeriod.assignedLesson.readings.pages}</div>
-								<div>{data.findClassPeriod.assignedLesson.readings.sections}</div>
+								<div>{data.findClassPeriod.assignedLesson.readingPages}</div>
+								<div>{data.findClassPeriod.assignedLesson.readingSections}</div>
 							</div>
 							<div style={{ backgroundColor: 'var(--white)' }}>
 								<h3 style={{ textAlign: 'center', textDecoration: 'underline' }}>
@@ -173,7 +171,7 @@ const ClassManagerDisplay = ({ match }) => {
 											{' '}
 											<h3 style={{ textAlign: 'center', textDecoration: 'underline' }}>Homework</h3>
 											<div>{assignment.type}</div>
-											<div>{assignment.readings.pages + ': ' + assignment.readings.sections}</div>
+											<div>{assignment.readingPages + ': ' + assignment.readingSections}</div>
 											<div>{assignment.dueDate}</div>
 										</div>
 									)

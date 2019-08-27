@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, Route } from 'react-router-dom'
+import { Link, Route, Switch } from 'react-router-dom'
 import RosterNavBar from './roster-components/rosterNavigation'
 import Rosters from './roster-components/rosterView'
 import AllStudentRoster from './roster-components/AllStudentRoster'
@@ -12,6 +12,11 @@ import { gql } from 'apollo-boost'
 import { useQuery } from '@apollo/react-hooks'
 import UserLogin from './Login'
 import Logout from './Logout'
+import UnitManager from './lesson-planner/UnitManager'
+import LessonInfoScreen from './lesson-planner/LessonInfoScreen'
+import LessonBuilder from './lesson-planner/LessonBuilder'
+import { LessonCreator } from './lesson-planner/LessonCreator'
+import UnitCreator from './lesson-planner/UnitCreator'
 // import * as ApolloTypes from './__generated__/getAllStudents'
 export const ME_QUERY = gql`
 	query me {
@@ -19,6 +24,7 @@ export const ME_QUERY = gql`
 			name
 			_id
 		}
+		createLessonMode @client
 	}
 `
 
@@ -28,14 +34,15 @@ const DashBoardNavigation = ({ match }) => {
 		return <h1 style={{ color: 'var(--blue)', textAlign: 'center' }}>Redirecting to Login</h1>
 	if (error) console.error(error)
 
-	const { me } = data
+	const { me, createLessonMode } = data
+	// console.log(createLessonMode)
 
 	return (
 		<>
 			{!me ? (
 				<UserLogin />
 			) : (
-				<div>
+				<div id='test'>
 					<header className='Header' style={{ borderBottom: '3px solid var(--white)' }}>
 						<Link style={{ padding: '2%' }} to='/'>
 							MrWetherall.org
@@ -47,10 +54,10 @@ const DashBoardNavigation = ({ match }) => {
 							<Link style={{ margin: '1%' }} to={`${match.url}/classroom/class-period-selector`}>
 								Teacher's Aide
 							</Link>
-							<Link style={{ margin: '1%' }} to={`${match.url}/school-day/classManager/A`}>
+							<Link style={{ margin: '1%' }} to={`${match.url}/school-day/ClassManager/A`}>
 								Course Manager
 							</Link>
-							<Link style={{ margin: '1%' }} to={`${match.url}/lesson-planner`}>
+							<Link style={{ margin: '1%' }} to={`${match.url}/lesson-planner/EIGHTH`}>
 								Lesson Manager
 							</Link>
 							<Link style={{ margin: '1%' }} to={`${match.url}/logout`}>
@@ -64,14 +71,33 @@ const DashBoardNavigation = ({ match }) => {
 						<Route path={`${match.path}/roster-view/:periodName`} component={Rosters} />
 					</div>
 
+					<Route path={`${match.path}/school-day`} component={SchoolDay} />
 					<Route exact path='/dashboard/roster-view/allStudent' component={AllStudentRoster} />
 					<Route exact path='/dashboard/roster-profile/student/:studentInfo' component={Student} />
 					<Route path='/dashboard/rosters/addNewStudent' component={StudentInfoLoader} />
 
 					<Route path={`${match.path}/classroom/`} component={Classes} />
 					<Route path={`${match.path}/lesson-planner/`} component={LessonPlanner} />
+					<div
+						id='lessonPlanner'
+						style={{
+							display: 'grid',
+							gridTemplateColumns: '1fr 4fr'
+						}}>
+						<Route path={`${match.path}/lesson-planner/:grade`} component={UnitManager} />
+						<Switch>
+							{/* <Route
+								path={`${match.path}/lesson-lanner/:grade/createLesson`}
+								component={LessonCreator}
+							/> */}
+							<Route
+								path={`${match.path}/lesson-planner/:grade/:lessonId`}
+								component={LessonInfoScreen}
+								// render={() => (!createLessonMode ? <LessonInfoScreen /> : <LessonCreator />)}
+							/>
+						</Switch>
+					</div>
 
-					<Route path={`${match.path}/school-day`} component={SchoolDay} />
 					<Route path={`${match.path}/logout`} component={Logout} />
 				</div>
 			)}
