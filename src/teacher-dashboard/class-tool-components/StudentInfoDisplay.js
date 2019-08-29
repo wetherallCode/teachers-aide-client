@@ -14,28 +14,32 @@ const MARK_STUDENT_ABSENT = gql`
 		}
 	}
 `
-
+const UNDO_MARK_STUDENT_ABSENT = gql`
+	mutation unduMarkStudentAbsent($_id: ID!, $date: Date) {
+		unduMarkStudentAbsent(_id: $_id, date: $date) {
+			firstName
+			lastName
+			daysAbsent
+		}
+	}
+`
 const StudentInfoDisplay = ({ student }) => {
 	const todaysDate = new Date()
 	const date = new Date().toISOString().substring(0, 10)
 	const { firstName, lastName, responsibilityPoints, _id, period, daysAbsent } = student
 
 	const [attendanceToggle, setAttendanceToggle] = useState(false)
-	const [undoAbsentMark, setUndoAbsentMark] = useState(false)
+	const [markStudentAbsentToggle, setMarkStudentAbsent] = useState(false)
+
 	const [markStudentAbsent] = useMutation(MARK_STUDENT_ABSENT, {
 		variables: { _id: _id, date: date, assignedDate: date, period: period },
-		refetchQueries: ['FindStudent', 'findEligibleStudents']
+		refetchQueries: ['FindStudent', 'findEligibleStudents', 'attendanceRoster']
+	})
+	const [unduMarkStudentAbsent] = useMutation(UNDO_MARK_STUDENT_ABSENT, {
+		variables: { _id: _id, date: date },
+		refetchQueries: ['FindStudent', 'findEligibleStudents', 'attendanceRoster']
 	})
 
-	console.log(date)
-
-	// if (daysAbsent !== null) {
-	// 	var isStudentAbsentToday = daysAbsent.filter(day => day === fakeDate)
-	// }
-	// console.log(isStudentAbsentToday)
-
-	// student.daysAbsent !== null && isStudentAbsentToday && console.log(student.firstName)
-	// console.log(daysAbsent !== null && isStudentAbsentToday === true)
 	return (
 		<div
 			style={
@@ -81,7 +85,9 @@ const StudentInfoDisplay = ({ student }) => {
 								marginTop: '10%',
 								boxShadow: '1px 1px 1px black'
 							}}
-							onClick={() => setAttendanceToggle(!attendanceToggle)}>
+							onClick={() => {
+								setAttendanceToggle(true)
+							}}>
 							Attendance
 						</button>
 					</div>
@@ -93,21 +99,37 @@ const StudentInfoDisplay = ({ student }) => {
 								<TodaysDate date={todaysDate}></TodaysDate>
 							</div>
 						</>
-						<button
-							style={{
-								height: '2rem',
-								fontSize: '120%',
-								textShadow: '3px 3px 3px var(--grey)',
-								color: 'var(--blue)',
-								marginBottom: '10%'
-							}}
-							onClick={() => {
-								markStudentAbsent()
-								setAttendanceToggle(!attendanceToggle)
-								// setUndoAbsentMark(!undoAbsentMark)
-							}}>
-							{!undoAbsentMark ? 'Absent' : 'Undo'}
-						</button>
+						{daysAbsent !== null && daysAbsent.includes(date) ? (
+							<button
+								style={{
+									height: '2rem',
+									fontSize: '120%',
+									textShadow: '3px 3px 3px var(--grey)',
+									color: 'var(--blue)',
+									marginBottom: '10%'
+								}}
+								onClick={() => {
+									unduMarkStudentAbsent()
+									setAttendanceToggle(false)
+								}}>
+								Undo
+							</button>
+						) : (
+							<button
+								style={{
+									height: '2rem',
+									fontSize: '120%',
+									textShadow: '3px 3px 3px var(--grey)',
+									color: 'var(--blue)',
+									marginBottom: '10%'
+								}}
+								onClick={() => {
+									markStudentAbsent()
+									setAttendanceToggle(false)
+								}}>
+								Absent
+							</button>
+						)}
 						<button
 							style={{
 								height: '2rem',

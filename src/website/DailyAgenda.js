@@ -47,8 +47,6 @@ const DailyAgenda = ({ match }) => {
 	})
 	if (loading) return null
 	if (error) console.error(error)
-	console.log(data.findClassPeriod)
-	// const { assignedLesson } = data.findClassPeriod
 
 	return (
 		<>

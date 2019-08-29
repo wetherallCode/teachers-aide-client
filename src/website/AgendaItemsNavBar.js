@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const AgendaItemsNavBar = ({ match, lesson }) => {
-	console.log(lesson)
 	const [agendaButton, setAgendaButton] = useState(false)
 
 	return (

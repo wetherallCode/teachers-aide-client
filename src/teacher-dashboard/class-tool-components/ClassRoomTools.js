@@ -29,24 +29,13 @@ const ClassRoomTools = ({ period }) => {
 	if (error) console.log(error)
 	const { classRoster } = data
 
-	const absentStudentList = []
-	const absentStudent = classRoster.filter(
-		student =>
-			student !== null &&
-			student.daysAbsent !== null &&
-			student.daysAbsent.some(day => day === todaysDate)
-	)
-	console.log(classRoster)
-	console.log(absentStudent)
-	// console.log(absentStudentList)
-	// if (absentStudent.daysAbsent.filter(day => day === todaysDate)) {
-	// var isStudentAbsentToday = absentStudent.daysAbsent.filter(day => day === todaysDate)
-	// console.log(absentStudent.firstName)
-	// }
-
-	// absentStudent.forEach(student => absentStudentList.push(student.desk))
-	// absentStudentList.pop(student.desk)
-	// console.log(absentStudentList)
+	// const absentStudentList = []
+	// const absentStudent = classRoster.filter(
+	// 	student =>
+	// 		student !== null &&
+	// 		student.daysAbsent !== null &&
+	// 		student.daysAbsent.some(day => day === todaysDate)
+	// )
 
 	const eligibleStudentList = []
 	classRoster.forEach(student => {
@@ -54,7 +43,6 @@ const ClassRoomTools = ({ period }) => {
 			return null
 		} else eligibleStudentList.unshift(student.desk)
 	})
-	console.log(eligibleStudentList)
 
 	return (
 		<div

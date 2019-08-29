@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 const calledOnStudents = []
 
 const RandomDeskSelector = ({ eligibleStudentList, period }) => {
-	console.log(eligibleStudentList)
 	const calledOnStudentListSize = Math.ceil(eligibleStudentList.length * 0.4)
 
 	const randomizer = () => {

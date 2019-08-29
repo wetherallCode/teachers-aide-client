@@ -33,7 +33,6 @@ const ClassManagerNavigationDisplay = ({ match }) => {
 					textAlign: 'center',
 					display: 'grid',
 					gridTemplateRows: '1fr 7fr',
-					// border: '1px solid var(--blue)',
 					overflow: 'scroll'
 				}}>
 				<h1

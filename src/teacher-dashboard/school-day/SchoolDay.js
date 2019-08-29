@@ -1,14 +1,14 @@
 import React from 'react'
 import { Route, Link } from 'react-router-dom'
-import AssignmentCreator from '../lesson-planner/AssignmentCreator'
-import LessonCreator from '../lesson-planner/LessonCreator'
+// import AssignmentCreator from '../lesson-planner/AssignmentCreator'
+// import LessonCreator from '../lesson-planner/LessonCreator'
 import LessonLoader from './LessonLoader'
 import ClassManager from './ClassManager'
 import ClassManagerDisplay from './ClassManagerDisplay'
 
 const SchoolDay = ({ match }) => {
 	const { url, path } = match
-	console.log(url, path)
+
 	return (
 		<div>
 			<div
