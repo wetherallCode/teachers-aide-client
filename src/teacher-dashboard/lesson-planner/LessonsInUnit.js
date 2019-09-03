@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { gql } from 'apollo-boost'
-import { useQuery, useApolloClient } from 'react-apollo'
+import { useQuery, useApolloClient } from '@apollo/react-hooks'
 import { Link, Redirect } from 'react-router-dom'
 
 const FIND_LESSONS_BY_UNIT = gql`
@@ -19,8 +19,6 @@ const FIND_LESSONS_BY_UNIT = gql`
 `
 
 const LessonsInUnit = ({ unit, match, history }) => {
-	console.log(match.url)
-	console.log(history)
 	const client = useApolloClient()
 	const [unitExpander, setUnitExpander] = useState(false)
 	const { data, loading, error } = useQuery(FIND_LESSONS_BY_UNIT, {
@@ -29,11 +27,7 @@ const LessonsInUnit = ({ unit, match, history }) => {
 	if (loading) return <h1 className='loading'>Loading</h1>
 	if (error) console.error(error)
 
-	const { findLessonsByUnit, createLessonMode, isEditLessonMode } = data
-
-	// const togglecreateLessonMode = () => {
-	// 	client.writeData({ data: { createLessonMode: !createLessonMode } })
-	// }
+	const { findLessonsByUnit } = data
 
 	return (
 		<>
@@ -72,7 +66,6 @@ const LessonsInUnit = ({ unit, match, history }) => {
 								{lesson.lessonName}
 							</Link>
 						</div>
-						// <Link />
 					))}
 					<div
 						style={{
@@ -82,12 +75,8 @@ const LessonsInUnit = ({ unit, match, history }) => {
 							textDecoration: 'underline'
 						}}
 						onClick={() => {
-							// return <Redirect to={`${match.url}/0`} />
+							client.writeData({ data: { isEditLessonMode: false } })
 							client.writeData({ data: { createLessonMode: true } })
-							// const createLesson = () => {
-							// 	return history.push(`${match.url}/createLesson`)
-							// }
-							// createLesson()
 						}}>
 						Create Lesson
 					</div>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { gql } from 'apollo-boost'
-import { useQuery } from 'react-apollo'
+import { useQuery } from '@apollo/react-hooks'
 
 const FIND_ROSTER_QUERY = gql`
 	query attendanceRoster($period: periodName) {

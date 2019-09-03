@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { gql } from 'apollo-boost'
-import { useMutation } from 'react-apollo'
+import { useMutation } from '@apollo/react-hooks'
 
 const CREATE_UNIT = gql`
 	mutation CreateUnit($input: UnitInput) {

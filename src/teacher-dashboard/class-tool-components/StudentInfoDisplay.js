@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import TodaysDate from '../../website/TodaysDate'
 import { gql } from 'apollo-boost'
-import { useMutation } from 'react-apollo'
+import { useMutation } from '@apollo/react-hooks'
 
 const MARK_STUDENT_ABSENT = gql`
 	mutation markStudentAbsent($_id: ID!, $date: Date, $assignedDate: Date, $period: periodName) {
@@ -65,31 +65,44 @@ const StudentInfoDisplay = ({ student }) => {
 			}>
 			<>
 				{!attendanceToggle ? (
-					<div>
-						<Link to={`/dashboard/roster-profile/student/${_id}`}>
-							<div style={{ fontSize: '200%', textDecoration: 'underline', color: 'var(--white)' }}>
-								{firstName + ' ' + lastName}
-							</div>
-							<div style={{ fontSize: '150%', textDecoration: 'underline', color: 'var(--white)' }}>
-								Points: {responsibilityPoints}
-							</div>
-						</Link>
-						<button
+					<div style={{ display: 'grid', gridTemplateRows: '1fr 1fr' }}>
+						<div
 							style={{
-								fontSize: '130%',
-								textShadow: '3px 3px 3px var(--grey)',
-								borderRadius: '5px',
-								backgroundColor: 'var(--white)',
-								height: '3rem',
-								width: '10rem',
-								marginTop: '10%',
-								boxShadow: '1px 1px 1px black'
-							}}
-							onClick={() => {
-								setAttendanceToggle(true)
+								display: 'flex',
+								flexDirection: 'column',
+								justifyContent: 'center',
+								alignContent: 'center'
 							}}>
-							Attendance
-						</button>
+							<Link to={`/dashboard/roster-profile/student/${_id}`}>
+								<div
+									style={{ fontSize: '200%', textDecoration: 'underline', color: 'var(--white)' }}>
+									{firstName + ' ' + lastName}
+								</div>
+								<div
+									style={{ fontSize: '150%', textDecoration: 'underline', color: 'var(--white)' }}>
+									Points: {responsibilityPoints}
+								</div>
+							</Link>
+						</div>
+						<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+							<button
+								style={{
+									fontSize: '130%',
+									textShadow: '3px 3px 3px var(--grey)',
+									borderRadius: '5px',
+									backgroundColor: 'var(--white)',
+									color: 'var(--blue)',
+									height: '3rem',
+									width: '10rem',
+									marginTop: '10%',
+									boxShadow: '1px 1px 1px black'
+								}}
+								onClick={() => {
+									setAttendanceToggle(true)
+								}}>
+								Attendance
+							</button>
+						</div>
 					</div>
 				) : (
 					<div style={{ display: 'grid', gridTemplateRows: '1fr 2fr', alignItems: 'center' }}>

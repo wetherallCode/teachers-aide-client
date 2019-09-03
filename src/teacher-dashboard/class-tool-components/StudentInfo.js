@@ -3,7 +3,6 @@ import { gql } from 'apollo-boost'
 import { useQuery } from '@apollo/react-hooks'
 import StudentInfoDisplay from './StudentInfoDisplay'
 import StudentInfoMutator from './StudentInfoMutator'
-// import { Query } from 'react-apollo'
 
 export const FIND_STUDENT_QUERY = gql`
 	query FindStudent($period: periodName!, $desk: Int!) {

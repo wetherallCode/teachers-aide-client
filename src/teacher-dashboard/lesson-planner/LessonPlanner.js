@@ -1,12 +1,7 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { gql } from 'apollo-boost'
-// import { LessonCreator } from './LessonCreator'
-import LessonManager from './UnitManager'
-import UnitCreator from './UnitCreator'
-import LessonManagerDisplay from './LessonManagerDisplay'
-import { useQuery } from 'react-apollo'
-import UnitManager from './UnitManager'
+import { useQuery } from '@apollo/react-hooks'
 
 const QUERY_GRADELEVELENUMS = gql`
 	query getGradeLevelENUM {
@@ -76,16 +71,6 @@ const LessonPlannerNavBar = ({ match, gradeLevels }) => {
 						</Link>
 					))}
 				</div>
-			</div>
-
-			<div>
-				{/* <Route path={`${path}lessonCreator`} component={LessonCreator} /> */}
-				<div>
-					{/* <Route path={`${path}`} component={LessonManager} /> */}
-					{/* <Route path={`${path}/:grade`} component={UnitManager} /> */}
-				</div>
-
-				{/* <Route path={`${path}unitCreator`} component={UnitCreator} /> */}
 			</div>
 		</div>
 	)

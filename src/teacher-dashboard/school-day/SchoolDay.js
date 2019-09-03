@@ -51,7 +51,7 @@ const SchoolDay = ({ match }) => {
 							marginRight: '3%'
 						}}
 						to={`${url}/lessonLoader`}>
-						Class Creator
+						Lesson Loader
 					</Link>
 					{/* <Link
 						style={{

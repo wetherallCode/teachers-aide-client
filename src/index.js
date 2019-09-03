@@ -13,7 +13,7 @@ const defaultState = {
 	showHiddenStudents: false,
 	removeStudentScreen: false,
 	gradeBookToggle: false,
-	isEditLessonMode: false,
+	isEditLessonMode: true,
 	isEditLessonItemMode: false,
 	removeLessonModal: false,
 	userLogin: true,
@@ -22,10 +22,11 @@ const defaultState = {
 }
 
 const client = new ApolloClient({
-	uri: `/graphql`,
-	credentials: 'same-origin',
-	// uri: 'https://mrwetherall.herokuapp.com/graphql',
-	// credentials: 'include',
+	// uri: `https://mrwetherall.org/graphql`,
+	// credentials: 'same-origin',
+
+	uri: 'https://mrwetherall.herokuapp.com/graphql',
+	credentials: 'include',
 	clientState: {
 		defaults: defaultState,
 		resolvers: {}

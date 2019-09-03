@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
-// import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom'
 import { gql } from 'apollo-boost'
 import { useMutation, useQuery, useApolloClient } from '@apollo/react-hooks'
-import { Redirect } from 'react-router'
 
 const LESSON_CREATOR_MUTATION = gql`
 	mutation createLesson($input: LessonInput!) {
@@ -28,6 +26,7 @@ const LESSON_CREATOR_MUTATION = gql`
 				type
 				question
 			}
+			studyGuideQuestions
 			vocabWords {
 				word
 				partOfSpeech
@@ -159,14 +158,8 @@ const LessonCreatorForm = ({
 		question: ''
 	})
 
-	const editModeSocraticQuestionsList = []
-	isEditLessonMode &&
-		lesson.socraticQuestions.forEach(question => editModeSocraticQuestionsList.unshift(question))
-
 	// Socratic Question List
-	const [socraticQuestionsList, setSocraticQuestionsList] = useState(
-		lesson === undefined ? [] : editModeSocraticQuestionsList
-	)
+	const [socraticQuestionsList, setSocraticQuestionsList] = useState(lesson === undefined && [])
 
 	const [editedSocraticQuestion, setEditedSocraticQuestion] = useState({
 		type: socraticQuestionsTypeEnumNames[0],
@@ -180,8 +173,6 @@ const LessonCreatorForm = ({
 		definition: ''
 	})
 
-	const editModeVocabWordList = []
-	isEditLessonMode && lesson.vocabWords.forEach(word => editModeVocabWordList.unshift(word))
 	// Vocab Word List
 	const [vocabWordList, setVocabWordList] = useState([])
 
@@ -199,11 +190,11 @@ const LessonCreatorForm = ({
 		dueDate: new Date().toLocaleString().substring(0, 10)
 	})
 
-	// const editModeWorkDueList = []
-	// isEditLessonMode &&
-	// 	lesson.workDue.forEach((assignment) => editModeWorkDueList.unshift(assignment))
-
 	const [workDueList, setWorkDueList] = useState([])
+
+	const [studyGuideQuestionList, setStudyGuideQuestionList] = useState([])
+
+	const [studyGuideQuestions, setStudyGuideQuestions] = useState('')
 
 	const [createLesson, { data }] = useMutation(LESSON_CREATOR_MUTATION, {
 		variables: {
@@ -212,6 +203,7 @@ const LessonCreatorForm = ({
 				inUnit: unitName,
 				essentialQuestion: essentialQuestion,
 				socraticQuestions: socraticQuestionsList,
+				studyGuideQuestions: studyGuideQuestionList,
 				readings: readings,
 				vocabWords: vocabWordList,
 				warmup: warmUp,
@@ -220,10 +212,6 @@ const LessonCreatorForm = ({
 		},
 		refetchQueries: ['findLessonsByUnit']
 	})
-
-	// const goToLessonFinder = () => {
-	// 	return history.push(`/dashboard/lesson-planner/LessonManager/${data.createLesson._id}`)
-	// }
 
 	return (
 		<div
@@ -235,8 +223,7 @@ const LessonCreatorForm = ({
 				overflow: 'scroll',
 				borderBottom: '1px solid var(--blue)'
 			}}>
-			{/* {data && goToLessonFinder()} */}
-			{isEditLessonMode !== undefined && (
+			{
 				<form
 					style={{ autocomplete: 'off' }}
 					onSubmit={e => {
@@ -276,8 +263,6 @@ const LessonCreatorForm = ({
 							<h2
 								style={{
 									textAlign: 'center',
-									// backgroundColor: 'var(--blue)',
-									// color: 'var(--white)',
 									marginLeft: '2rem',
 									marginRigh: '2rem'
 								}}>
@@ -285,31 +270,6 @@ const LessonCreatorForm = ({
 							</h2>
 						</div>
 					</div>
-					{/* <div
-						style={{
-							display: 'grid',
-							gridTemplateColumns: '1fr 6fr',
-							alignItems: 'center',
-							borderBottom: '1px solid var(--blue)'
-						}}>
-						<h2>Unit: </h2>
-						<div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', alignItems: 'center' }}>
-							<input
-								style={{
-									height: '1.5rem',
-									backgroundColor: 'transparent',
-									color: 'var(--blue)',
-									fontSize: '120%'
-								}}
-								type='text'
-								name='unit'
-								placeholder='Unit Name'
-								value={unit}
-								onChange={e => setUnit(e.target.value)}
-							/>
-							<h2 style={{ textAlign: 'center' }}>{unit}</h2>
-						</div>
-					</div> */}
 					<div
 						style={{
 							display: 'grid',
@@ -333,6 +293,45 @@ const LessonCreatorForm = ({
 								onChange={e => setWarmUp(e.target.value)}
 							/>
 							<h2 style={{ textAlign: 'center' }}>{warmUp}</h2>
+						</div>
+					</div>
+					<div
+						style={{
+							display: 'grid',
+							gridTemplateColumns: '1fr 2fr 4fr',
+							alignItems: 'center',
+							borderBottom: '1px solid var(--blue)'
+						}}>
+						<h2>Study Guide Questions: </h2>
+						<div
+							style={{
+								display: 'grid',
+								gridTemplateRows: '1fr 1fr',
+								alignItems: 'center'
+							}}>
+							<div>
+								<input
+									type='text'
+									value={studyGuideQuestions}
+									onChange={e => setStudyGuideQuestions(e.target.value)}></input>
+								<div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+									<button
+										className='blueButton'
+										style={{ width: '100%', fontSize: '120%' }}
+										onClick={e => {
+											e.preventDefault()
+											setStudyGuideQuestionList(list => [studyGuideQuestions].concat(list))
+											setStudyGuideQuestions('')
+										}}>
+										Add Study Guide Question
+									</button>
+								</div>
+							</div>
+							<div>
+								{studyGuideQuestionList.map((question, i) => (
+									<div>{question}</div>
+								))}
+							</div>
 						</div>
 					</div>
 					<div
@@ -533,110 +532,25 @@ const LessonCreatorForm = ({
 								</button>
 							</div>
 						</div>
-						{!isEditLessonMode ? (
-							<div>
-								{socraticQuestionsList.reverse().map((question, i) => {
-									return (
-										<div
-											style={{
-												textAlign: 'center',
-												display: 'flex',
-												flexDirection: 'row',
-												justifyContent: 'center',
-												alignItems: 'center'
-											}}
-											key={i}>
-											{!isEditLessonItemMode ? (
-												<>
-													<h2>{question.question}</h2>
 
-													{socraticQuestionsList.length !== 0 && (
-														<>
-															<button
-																style={{
-																	height: '1.5rem',
-																	width: '3rem',
-																	marginLeft: '1%',
-																	backgroundColor: 'var(--blue)',
-																	color: 'var(--white)'
-																}}
-																onClick={e => {
-																	console.log(question)
-																	e.preventDefault()
-																	// console.log('Before edit mode button: ' + isEditLessonItemMode)
-																	setIsEditLessonItemMode()
-																	console.log('after edit mode button: ' + isEditLessonItemMode)
-																}}>
-																Edit
-															</button>
-															<button
-																style={{
-																	height: '1.5rem',
-																	width: '3rem',
-																	marginLeft: '1%',
-																	backgroundColor: 'var(--red)',
-																	color: 'var(--white)'
-																}}
-																onClick={e => {
-																	e.preventDefault()
-																	console.log(question)
-																	setSocraticQuestionsList(question =>
-																		[socraticQuestions].splice(question, 1)
-																	)
-																	console.log(socraticQuestionsList)
-																}}>
-																Delete
-															</button>
-														</>
-													)}
-												</>
-											) : (
-												<div style={{ display: 'grid', gridTemplateRows: '1fr 1fr' }}>
-													<div>
-														<h2>{question.question}</h2>
-													</div>
-													<div>
-														<select
-															style={{
-																height: '2rem',
-																width: '50%',
-																backgroundColor: 'transparent',
-																color: 'var(--blue)',
-																fontSize: '120%'
-															}}
-															onChange={e =>
-																setEditedSocraticQuestion({
-																	...editedSocraticQuestion,
-																	type: e.target.value
-																})
-															}>
-															{socraticQuestionsTypeEnumNames.map(questionType => (
-																<option key={questionType} value={questionType}>
-																	{questionType}
-																</option>
-															))}
-														</select>
-														<input
-															style={{
-																height: '1.5rem',
-																width: '80%',
-																backgroundColor: 'transparent',
-																color: 'var(--blue)',
-																fontSize: '120%'
-															}}
-															type='text'
-															name='Edited Socratic Question'
-															placeholder='Edit Mode'
-															value={editedSocraticQuestion.question}
-															onChange={e => {
-																setEditedSocraticQuestion({
-																	...editedSocraticQuestion,
-																	question: e.target.value
-																})
-																console.log(editedSocraticQuestion)
-															}}
-														/>
+						<div>
+							{socraticQuestionsList.reverse().map((question, i) => {
+								return (
+									<div
+										style={{
+											textAlign: 'center',
+											display: 'flex',
+											flexDirection: 'row',
+											justifyContent: 'center',
+											alignItems: 'center'
+										}}
+										key={i}>
+										{!isEditLessonItemMode ? (
+											<>
+												<h2>{question.question}</h2>
 
+												{socraticQuestionsList.length !== 0 && (
+													<>
 														<button
 															style={{
 																height: '1.5rem',
@@ -646,16 +560,13 @@ const LessonCreatorForm = ({
 																color: 'var(--white)'
 															}}
 															onClick={e => {
+																console.log(question)
 																e.preventDefault()
+																// console.log('Before edit mode button: ' + isEditLessonItemMode)
 																setIsEditLessonItemMode()
-																setSocraticQuestionsList(question =>
-																	[socraticQuestions].splice(question, 1)
-																)
-																setSocraticQuestionsList(question =>
-																	[editedSocraticQuestion].concat(question)
-																)
+																console.log('after edit mode button: ' + isEditLessonItemMode)
 															}}>
-															Replace
+															Edit
 														</button>
 														<button
 															style={{
@@ -667,16 +578,104 @@ const LessonCreatorForm = ({
 															}}
 															onClick={e => {
 																e.preventDefault()
+																console.log(question)
 																setSocraticQuestionsList(question =>
 																	[socraticQuestions].splice(question, 1)
 																)
+																console.log(socraticQuestionsList)
 															}}>
 															Delete
 														</button>
-													</div>
+													</>
+												)}
+											</>
+										) : (
+											<div style={{ display: 'grid', gridTemplateRows: '1fr 1fr' }}>
+												<div>
+													<h2>{question.question}</h2>
 												</div>
-											)}
-											{/* <button
+												<div>
+													<select
+														style={{
+															height: '2rem',
+															width: '50%',
+															backgroundColor: 'transparent',
+															color: 'var(--blue)',
+															fontSize: '120%'
+														}}
+														onChange={e =>
+															setEditedSocraticQuestion({
+																...editedSocraticQuestion,
+																type: e.target.value
+															})
+														}>
+														{socraticQuestionsTypeEnumNames.map(questionType => (
+															<option key={questionType} value={questionType}>
+																{questionType}
+															</option>
+														))}
+													</select>
+													<input
+														style={{
+															height: '1.5rem',
+															width: '80%',
+															backgroundColor: 'transparent',
+															color: 'var(--blue)',
+															fontSize: '120%'
+														}}
+														type='text'
+														name='Edited Socratic Question'
+														placeholder='Edit Mode'
+														value={editedSocraticQuestion.question}
+														onChange={e => {
+															setEditedSocraticQuestion({
+																...editedSocraticQuestion,
+																question: e.target.value
+															})
+															console.log(editedSocraticQuestion)
+														}}
+													/>
+
+													<button
+														style={{
+															height: '1.5rem',
+															width: '3rem',
+															marginLeft: '1%',
+															backgroundColor: 'var(--blue)',
+															color: 'var(--white)'
+														}}
+														onClick={e => {
+															e.preventDefault()
+															setIsEditLessonItemMode()
+															setSocraticQuestionsList(question =>
+																[socraticQuestions].splice(question, 1)
+															)
+															setSocraticQuestionsList(question =>
+																[editedSocraticQuestion].concat(question)
+															)
+														}}>
+														Replace
+													</button>
+													<button
+														style={{
+															height: '1.5rem',
+															width: '3rem',
+															marginLeft: '1%',
+															backgroundColor: 'var(--red)',
+															color: 'var(--white)'
+														}}
+														onClick={e => {
+															e.preventDefault()
+															setSocraticQuestionsList(question =>
+																[socraticQuestions].splice(question, 1)
+															)
+														}}>
+														Delete
+													</button>
+												</div>
+											</div>
+										)}
+										{/* <button
 											style={{
 												height: '1.5rem',
 												width: '3rem',
@@ -700,13 +699,10 @@ const LessonCreatorForm = ({
 											}}>
 											Delete
 										</button> */}
-										</div>
-									)
-								})}
-							</div>
-						) : (
-							<h1>This is where I can edit individual Questions</h1>
-						)}
+									</div>
+								)
+							})}
+						</div>
 					</div>
 
 					<div
@@ -941,7 +937,7 @@ const LessonCreatorForm = ({
 						Submit Lesson
 					</button>
 				</form>
-			)}
+			}
 		</div>
 	)
 }

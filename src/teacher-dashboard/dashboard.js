@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, Route, Switch } from 'react-router-dom'
+import { Link, Route } from 'react-router-dom'
 import RosterNavBar from './roster-components/rosterNavigation'
 import Rosters from './roster-components/rosterView'
 import AllStudentRoster from './roster-components/AllStudentRoster'
@@ -14,9 +14,7 @@ import UserLogin from './Login'
 import Logout from './Logout'
 import UnitManager from './lesson-planner/UnitManager'
 import LessonInfoScreen from './lesson-planner/LessonInfoScreen'
-import LessonBuilder from './lesson-planner/LessonBuilder'
-import { LessonCreator } from './lesson-planner/LessonCreator'
-import UnitCreator from './lesson-planner/UnitCreator'
+
 // import * as ApolloTypes from './__generated__/getAllStudents'
 export const ME_QUERY = gql`
 	query me {
@@ -34,7 +32,7 @@ const DashBoardNavigation = ({ match }) => {
 		return <h1 style={{ color: 'var(--blue)', textAlign: 'center' }}>Redirecting to Login</h1>
 	if (error) console.error(error)
 
-	const { me, createLessonMode } = data
+	const { me } = data
 	// console.log(createLessonMode)
 
 	return (
@@ -85,17 +83,11 @@ const DashBoardNavigation = ({ match }) => {
 							gridTemplateColumns: '1fr 4fr'
 						}}>
 						<Route path={`${match.path}/lesson-planner/:grade`} component={UnitManager} />
-						<Switch>
-							{/* <Route
-								path={`${match.path}/lesson-lanner/:grade/createLesson`}
-								component={LessonCreator}
-							/> */}
-							<Route
-								path={`${match.path}/lesson-planner/:grade/:lessonId`}
-								component={LessonInfoScreen}
-								// render={() => (!createLessonMode ? <LessonInfoScreen /> : <LessonCreator />)}
-							/>
-						</Switch>
+
+						<Route
+							path={`${match.path}/lesson-planner/:grade/:lessonId`}
+							component={LessonInfoScreen}
+						/>
 					</div>
 
 					<Route path={`${match.path}/logout`} component={Logout} />

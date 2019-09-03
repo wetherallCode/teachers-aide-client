@@ -1,22 +1,23 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom'
 import { gql } from 'apollo-boost'
 import { useQuery, useApolloClient, useMutation } from '@apollo/react-hooks'
 import LessonInfo from './LessonInfo'
-import LessonEditMode from './LessonEditMode'
 import Modal from 'react-modal'
 import { LessonCreator } from './LessonCreator'
-// import LessonBuilder from './LessonBuilder'
+import LessonEditor from './lesson-editor/LessonEditor'
 
 export const FIND_LESSON_QUERY = gql`
 	query findLesson($_id: ID!) {
 		findLesson(_id: $_id) {
+			_id
 			lessonName
 			inUnit {
 				name
 			}
 			warmup
 			essentialQuestion {
+				type
+				textStructure
 				question
 			}
 			readings {
@@ -24,8 +25,10 @@ export const FIND_LESSON_QUERY = gql`
 				sections
 			}
 			socraticQuestions {
+				type
 				question
 			}
+			studyGuideQuestions
 			vocabWords {
 				word
 				partOfSpeech
@@ -60,7 +63,7 @@ const LessonInfoScreen = ({ match, history }) => {
 	})
 	if (loading) return <h1 className='loading'>Loading</h1>
 	if (error) console.error(error)
-
+	console.log(data)
 	return (
 		<LessonInfoDisplay
 			match={match}
@@ -102,7 +105,8 @@ const LessonInfoDisplay = ({ match, history, data, lessonId, grade }) => {
 							// gridTemplateRows: '4fr 1fr'
 					  }
 					: {
-							border: '3px solid var(--white)',
+							borderLeft: '3px solid var(--white)',
+							borderRight: '3px solid var(--white)',
 							borderBottom: '3px solid var(--blue)',
 							width: '100%',
 							display: 'grid',
@@ -117,9 +121,11 @@ const LessonInfoDisplay = ({ match, history, data, lessonId, grade }) => {
 						<LessonInfo lesson={findLesson} />
 					)}
 				</div>
-				<div>
-					{findLesson !== undefined && isEditLessonMode && <LessonEditMode lesson={findLesson} />}
-				</div>
+				<>
+					{findLesson !== undefined && isEditLessonMode && !createLessonMode && (
+						<LessonEditor lesson={findLesson} match={match} />
+					)}
+				</>
 				<Modal
 					style={{
 						overlay: {

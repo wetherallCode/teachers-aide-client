@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
 import { gql } from 'apollo-boost'
-import TodaysDate from '../../website/TodaysDate'
-import { useQuery } from 'react-apollo'
+import { useQuery } from '@apollo/react-hooks'
 import Attendance from './Attendance'
-// import Moment from 'react-moment'
 
 const FIND_CLASS_PERIOD = gql`
 	query findClassPeriod($assignedDate: Date, $period: periodName) {
@@ -36,6 +34,7 @@ const FIND_CLASS_PERIOD = gql`
 					readingPages
 					readingSections
 				}
+				studyGuideQuestions
 			}
 			period
 			assignedDate
@@ -66,9 +65,9 @@ const ClassManagerDisplay = ({ match }) => {
 				}}>
 				Scheduled Lesson for{' '}
 				{lessonPlanDate.substring(5, 7) +
-					'-' +
+					'/' +
 					lessonPlanDate.substring(8, 10) +
-					'-' +
+					'/' +
 					lessonPlanDate.substring(0, 4)}
 			</div>
 			<div
@@ -207,10 +206,16 @@ const ClassManagerDisplay = ({ match }) => {
 							color: 'var(--blue)',
 							fontSize: '130%'
 						}}>
-						No Lesson Has Been Assigned for this date: {lessonPlanDate}
+						No Lesson Has Been Assigned for this date:{' '}
+						{lessonPlanDate.substring(5, 7) +
+							'/' +
+							lessonPlanDate.substring(8, 10) +
+							'/' +
+							lessonPlanDate.substring(0, 4)}
 					</div>
 				</div>
 			)}
+			<div>Study Guide</div>
 			<Attendance date={lessonPlanDate} period={periods}></Attendance>
 		</div>
 	)
