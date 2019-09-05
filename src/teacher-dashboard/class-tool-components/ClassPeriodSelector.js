@@ -27,8 +27,7 @@ const ClassPeriodSelector = ({ match }) => {
 				textAlign: 'center',
 				display: 'grid',
 				gridTemplateRows: '1fr 7fr',
-				borderBottom: '1px solid black',
-				overflow: 'scroll'
+				borderBottom: '1px solid var(--blue)'
 			}}>
 			<div>
 				<div
@@ -61,8 +60,6 @@ const ClassPeriodItems = ({ items, match }) => {
 	return (
 		<div
 			style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr 1fr 1fr' }}>
-			{/* <h3>A Day</h3>
-			<h3>B Day</h3> */}
 			{items.map((period, index) => (
 				<Link
 					key={period}
@@ -83,8 +80,8 @@ const ClassPeriodItems = ({ items, match }) => {
 							textDecoration: 'none',
 							color: 'var(--white)',
 							backgroundColor: 'var(--blue)',
-							boxShadow: '3px 3px 3px var(--darkgray)',
-							overflow: 'scroll'
+							boxShadow: '1px 1px 1px 1px gray',
+							borderRadius: '5px'
 						}}>
 						Period {period}
 					</button>

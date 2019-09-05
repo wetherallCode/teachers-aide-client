@@ -34,7 +34,7 @@ const WebsiteDisplay = ({ match }) => {
 					display: 'grid',
 					justifyContent: 'center',
 					alignItems: 'center',
-					gridTemplateColumns: '3fr 1fr',
+					gridTemplateColumns: '2fr 1fr',
 					backgroundColor: 'var(--blue)',
 					color: 'var(--white)',
 					height: '3rem',
@@ -55,7 +55,7 @@ const WebsiteDisplay = ({ match }) => {
 					style={{
 						display: 'flex',
 						justifyContent: 'flex-end',
-						paddingRight: '2%'
+						paddingRight: '1%'
 					}}>
 					<TodaysDate date={new Date()} />
 				</div>

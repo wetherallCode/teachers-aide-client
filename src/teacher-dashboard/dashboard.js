@@ -52,7 +52,7 @@ const DashBoardNavigation = ({ match }) => {
 							<Link style={{ margin: '1%' }} to={`${match.url}/classroom/class-period-selector`}>
 								Teacher's Aide
 							</Link>
-							<Link style={{ margin: '1%' }} to={`${match.url}/school-day/ClassManager/A`}>
+							<Link style={{ margin: '1%' }} to={`${match.url}/school-day/ClassManager/A_12`}>
 								Course Manager
 							</Link>
 							<Link style={{ margin: '1%' }} to={`${match.url}/lesson-planner/EIGHTH`}>
