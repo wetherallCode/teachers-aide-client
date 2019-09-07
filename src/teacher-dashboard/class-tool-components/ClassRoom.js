@@ -3,8 +3,6 @@ import { Route } from 'react-router'
 import DeskSelector from './DeskSelector'
 import ClassRoomTools from './ClassRoomTools'
 import StudentInfo from './StudentInfo'
-import { useQuery } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost'
 
 const ClassRoom = ({ match }) => {
 	const { url } = match

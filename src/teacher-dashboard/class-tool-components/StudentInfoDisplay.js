@@ -5,8 +5,8 @@ import { gql } from 'apollo-boost'
 import { useMutation } from '@apollo/react-hooks'
 
 const MARK_STUDENT_ABSENT = gql`
-	mutation markStudentAbsent($_id: ID!, $date: Date, $assignedDate: Date, $period: periodName) {
-		markStudentAbsent(_id: $_id, date: $date, assignedDate: $assignedDate, period: $period) {
+	mutation markStudentAbsent($_id: ID!, $date: Date) {
+		markStudentAbsent(_id: $_id, date: $date) {
 			_id
 			firstName
 			lastName
@@ -23,11 +23,32 @@ const UNDO_MARK_STUDENT_ABSENT = gql`
 		}
 	}
 `
+
+const MARK_STUDENT_LATE = gql`
+	mutation markStudentLate($_id: ID!, $date: Date) {
+		markStudentLate(_id: $_id, date: $date) {
+			firstName
+			lastName
+			daysLate
+		}
+	}
+`
+
+const UNDO_MARK_STUDENT_LATE = gql`
+	mutation unduMarkStudentLate($_id: ID!, $date: Date) {
+		unduMarkStudentLate(_id: $_id, date: $date) {
+			firstName
+			lastName
+			daysLate
+		}
+	}
+`
+
 const StudentInfoDisplay = ({ student }) => {
 	const todaysDate = new Date()
 	const date = new Date().toISOString().substring(0, 10)
-	const { firstName, lastName, responsibilityPoints, _id, period, daysAbsent } = student
-
+	const { firstName, lastName, responsibilityPoints, _id, period, daysAbsent, daysLate } = student
+	console.log(student.daysLate)
 	const [attendanceToggle, setAttendanceToggle] = useState(false)
 	const [markStudentAbsentToggle, setMarkStudentAbsent] = useState(false)
 
@@ -36,6 +57,14 @@ const StudentInfoDisplay = ({ student }) => {
 		refetchQueries: ['FindStudent', 'findEligibleStudents', 'attendanceRoster']
 	})
 	const [unduMarkStudentAbsent] = useMutation(UNDO_MARK_STUDENT_ABSENT, {
+		variables: { _id: _id, date: date },
+		refetchQueries: ['FindStudent', 'findEligibleStudents', 'attendanceRoster']
+	})
+	const [markStudentLate] = useMutation(MARK_STUDENT_LATE, {
+		variables: { _id: _id, date: date },
+		refetchQueries: ['FindStudent', 'findEligibleStudents', 'attendanceRoster']
+	})
+	const [unduMarkStudentLate] = useMutation(UNDO_MARK_STUDENT_LATE, {
 		variables: { _id: _id, date: date },
 		refetchQueries: ['FindStudent', 'findEligibleStudents', 'attendanceRoster']
 	})
@@ -125,7 +154,7 @@ const StudentInfoDisplay = ({ student }) => {
 									unduMarkStudentAbsent()
 									setAttendanceToggle(false)
 								}}>
-								Undo
+								Undo Absence
 							</button>
 						) : (
 							<button
@@ -143,16 +172,37 @@ const StudentInfoDisplay = ({ student }) => {
 								Absent
 							</button>
 						)}
-						<button
-							style={{
-								height: '2rem',
-								fontSize: '120%',
-								textShadow: '3px 3px 3px var(--grey)',
-								color: 'var(--blue)',
-								marginBottom: '10%'
-							}}>
-							Late
-						</button>
+						{daysLate !== null && daysLate.includes(date) ? (
+							<button
+								style={{
+									height: '2rem',
+									fontSize: '120%',
+									textShadow: '3px 3px 3px var(--grey)',
+									color: 'var(--blue)',
+									marginBottom: '10%'
+								}}
+								onClick={() => {
+									unduMarkStudentLate()
+									setAttendanceToggle(false)
+								}}>
+								Undu Lateness
+							</button>
+						) : (
+							<button
+								style={{
+									height: '2rem',
+									fontSize: '120%',
+									textShadow: '3px 3px 3px var(--grey)',
+									color: 'var(--blue)',
+									marginBottom: '10%'
+								}}
+								onClick={() => {
+									markStudentLate()
+									setAttendanceToggle(false)
+								}}>
+								Late
+							</button>
+						)}
 						<button
 							style={{
 								height: '2rem',

@@ -22,7 +22,7 @@
 		"eject": "react-scripts eject",
 		"codegen:watch": "npx apollo client:codegen --target=typescript --watch",
 		"check": "npx apollo client:check",
-		"push": "git push master origin"
+		"push": "git push origin master"
 	},
 	"eslintConfig": {
 		"extends": "react-app"

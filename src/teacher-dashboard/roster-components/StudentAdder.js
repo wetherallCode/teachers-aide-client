@@ -81,7 +81,7 @@ const StudentAdder = ({ periodName, isRosterMode, unUsedDesk, roster }) => {
 				isHiddenFromRoster
 			}
 		},
-		refetchQueries: ['rosterList', 'getAllStudents']
+		refetchQueries: ['rosterList', 'getAllStudents', 'FindStudent']
 	})
 
 	if (error) {

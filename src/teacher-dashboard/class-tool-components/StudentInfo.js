@@ -13,6 +13,7 @@ export const FIND_STUDENT_QUERY = gql`
 			responsibilityPoints
 			period
 			daysAbsent
+			daysLate
 		}
 	}
 `
