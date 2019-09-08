@@ -12,13 +12,12 @@ const HIDE_STUDENT_MUTATION = gql`
 `
 
 const StudentHider = ({ studentInfo }) => {
-	const { _id, isHiddenFromRoster } = studentInfo
 	const [hideStudentFromRoster] = useMutation(HIDE_STUDENT_MUTATION, {
 		variables: {
 			_id: studentInfo._id,
-			isHiddenFromRoster: !studentInfo.isHiddenFromRoster,
+			isHiddenFromRoster: !studentInfo.isHiddenFromRoster
 		},
-		refetchQueries: ['getStudentInfo'],
+		refetchQueries: ['getStudentInfo']
 	})
 
 	return (

@@ -137,19 +137,16 @@ const LessonCreatorForm = ({
 		client.writeData({ data: { isEditLessonItemMode: !isEditLessonItemMode } })
 
 	// Create Lesson Name
-	const [lessonName, setLessonName] = useState(lesson === undefined ? '' : lesson.lessonName)
+	const [lessonName, setLessonName] = useState(lesson.lessonName)
 
 	// Create Warm Up
-	const [warmUp, setWarmUp] = useState(lesson === undefined ? '' : lesson.warmUp)
+	const [warmUp, setWarmUp] = useState(lesson.warmUp)
 
 	// Create the Essential Question
 	const [essentialQuestion, setEssentialQuestion] = useState({
-		type: lesson === undefined ? essentialQuestionTypes[0] : lesson.essentialQuestion.type,
-		textStructure:
-			lesson === undefined
-				? essentialQuestionTextStructures[0]
-				: lesson.essentialQuestion.textStructure,
-		question: lesson === undefined ? '' : lesson.essentialQuestion.question
+		type: lesson.essentialQuestion.type,
+		textStructure: lesson.essentialQuestion.textStructure,
+		question: lesson.essentialQuestion.question
 	})
 
 	// Create a Socratic Question
@@ -159,12 +156,8 @@ const LessonCreatorForm = ({
 	})
 
 	// Socratic Question List
-	const [socraticQuestionsList, setSocraticQuestionsList] = useState(lesson === undefined && [])
-
-	const [editedSocraticQuestion, setEditedSocraticQuestion] = useState({
-		type: socraticQuestionsTypeEnumNames[0],
-		question: ''
-	})
+	const [socraticQuestionsList, setSocraticQuestionsList] = useState([])
+	console.log(socraticQuestionsList)
 
 	// Create a Vocabulary Word
 	const [vocabWord, setVocabWord] = useState({
@@ -175,11 +168,12 @@ const LessonCreatorForm = ({
 
 	// Vocab Word List
 	const [vocabWordList, setVocabWordList] = useState([])
+	console.log(vocabWordList)
 
 	// Reading Section
 	const [readings, setReadings] = useState({
-		pages: lesson === undefined ? '' : lesson.readings.pages,
-		sections: lesson === undefined ? '' : lesson.readings.sections
+		pages: lesson.readings.pages,
+		sections: lesson.readings.sections
 	})
 
 	// Homework Due Dates
@@ -191,6 +185,7 @@ const LessonCreatorForm = ({
 	})
 
 	const [workDueList, setWorkDueList] = useState([])
+	console.log(workDueList)
 
 	const [studyGuideQuestionList, setStudyGuideQuestionList] = useState([])
 
@@ -545,160 +540,7 @@ const LessonCreatorForm = ({
 											alignItems: 'center'
 										}}
 										key={i}>
-										{!isEditLessonItemMode ? (
-											<>
-												<h2>{question.question}</h2>
-
-												{socraticQuestionsList.length !== 0 && (
-													<>
-														<button
-															style={{
-																height: '1.5rem',
-																width: '3rem',
-																marginLeft: '1%',
-																backgroundColor: 'var(--blue)',
-																color: 'var(--white)'
-															}}
-															onClick={e => {
-																console.log(question)
-																e.preventDefault()
-																// console.log('Before edit mode button: ' + isEditLessonItemMode)
-																setIsEditLessonItemMode()
-																console.log('after edit mode button: ' + isEditLessonItemMode)
-															}}>
-															Edit
-														</button>
-														<button
-															style={{
-																height: '1.5rem',
-																width: '3rem',
-																marginLeft: '1%',
-																backgroundColor: 'var(--red)',
-																color: 'var(--white)'
-															}}
-															onClick={e => {
-																e.preventDefault()
-																console.log(question)
-																setSocraticQuestionsList(question =>
-																	[socraticQuestions].splice(question, 1)
-																)
-																console.log(socraticQuestionsList)
-															}}>
-															Delete
-														</button>
-													</>
-												)}
-											</>
-										) : (
-											<div style={{ display: 'grid', gridTemplateRows: '1fr 1fr' }}>
-												<div>
-													<h2>{question.question}</h2>
-												</div>
-												<div>
-													<select
-														style={{
-															height: '2rem',
-															width: '50%',
-															backgroundColor: 'transparent',
-															color: 'var(--blue)',
-															fontSize: '120%'
-														}}
-														onChange={e =>
-															setEditedSocraticQuestion({
-																...editedSocraticQuestion,
-																type: e.target.value
-															})
-														}>
-														{socraticQuestionsTypeEnumNames.map(questionType => (
-															<option key={questionType} value={questionType}>
-																{questionType}
-															</option>
-														))}
-													</select>
-													<input
-														style={{
-															height: '1.5rem',
-															width: '80%',
-															backgroundColor: 'transparent',
-															color: 'var(--blue)',
-															fontSize: '120%'
-														}}
-														type='text'
-														name='Edited Socratic Question'
-														placeholder='Edit Mode'
-														value={editedSocraticQuestion.question}
-														onChange={e => {
-															setEditedSocraticQuestion({
-																...editedSocraticQuestion,
-																question: e.target.value
-															})
-															console.log(editedSocraticQuestion)
-														}}
-													/>
-
-													<button
-														style={{
-															height: '1.5rem',
-															width: '3rem',
-															marginLeft: '1%',
-															backgroundColor: 'var(--blue)',
-															color: 'var(--white)'
-														}}
-														onClick={e => {
-															e.preventDefault()
-															setIsEditLessonItemMode()
-															setSocraticQuestionsList(question =>
-																[socraticQuestions].splice(question, 1)
-															)
-															setSocraticQuestionsList(question =>
-																[editedSocraticQuestion].concat(question)
-															)
-														}}>
-														Replace
-													</button>
-													<button
-														style={{
-															height: '1.5rem',
-															width: '3rem',
-															marginLeft: '1%',
-															backgroundColor: 'var(--red)',
-															color: 'var(--white)'
-														}}
-														onClick={e => {
-															e.preventDefault()
-															setSocraticQuestionsList(question =>
-																[socraticQuestions].splice(question, 1)
-															)
-														}}>
-														Delete
-													</button>
-												</div>
-											</div>
-										)}
-										{/* <button
-											style={{
-												height: '1.5rem',
-												width: '3rem',
-												marginLeft: '1%',
-												backgroundColor: 'var(--blue)',
-												color: 'var(--white)',
-											}}
-											onClick={(e) => {
-												e.preventDefault()
-												setIsEditLessonItemMode(!isEditLessonItemMode)
-											}}>
-											Edit
-										</button>
-										<button
-											style={{
-												height: '1.5rem',
-												width: '3rem',
-												marginLeft: '1%',
-												backgroundColor: 'var(--red)',
-												color: 'var(--white)',
-											}}>
-											Delete
-										</button> */}
+										<h2>{question.question}</h2>
 									</div>
 								)
 							})}

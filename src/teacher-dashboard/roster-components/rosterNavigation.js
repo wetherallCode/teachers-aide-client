@@ -75,7 +75,7 @@ const RosterNavBar = ({ match }) => {
 const RosterNavBarItems = ({ items, match }) => {
 	return (
 		<>
-			{items.map((period, index) => (
+			{items.sort().map((period, index) => (
 				<Link
 					key={period}
 					to={`/dashboard/roster-view/${period}`}

@@ -24,7 +24,7 @@ const SchoolDay = ({ match }) => {
 					borderBottom: '3px solid var(--white)'
 				}}>
 				<Link
-					to={`${match.url}/ClassManager/A`}
+					to={`${match.url}/ClassManager/A_12`}
 					style={{
 						display: 'flex',
 						alignItems: 'center',

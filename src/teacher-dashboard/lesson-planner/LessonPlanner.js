@@ -26,7 +26,7 @@ const LessonPlanner = ({ match }) => {
 }
 
 const LessonPlannerNavBar = ({ match, gradeLevels }) => {
-	const { url, path } = match
+	const { url } = match
 
 	return (
 		<div>

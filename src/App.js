@@ -4,10 +4,6 @@ import './App.css'
 import DashBoardNavigation from './teacher-dashboard/dashboard'
 import StudentDashboard from './student-dashboard/StudentDashboard'
 import WebSite from './website/WebSite'
-import TodaysDate from './website/TodaysDate'
-import WebSitePeriodSelector from './website/WebSitePeriodSelector'
-import DailyAgenda from './website/DailyAgenda'
-// import { ApolloConsumer } from '@apollo/react-hooks'
 
 const App = () => {
 	return (

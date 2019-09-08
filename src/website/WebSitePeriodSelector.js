@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { gql } from 'apollo-boost'
 import { useQuery } from '@apollo/react-hooks'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const GET_PERIOD_NAMES = gql`
 	query getPeriodNames {
@@ -26,29 +26,33 @@ const WebSitePeriodSelector = () => {
 const WebSitePeriodSelectorDisplay = ({ periods }) => {
 	const [periodSelector, setPeriodSelector] = useState(false)
 
+	const sortByPeriod = (a, b) => a - b
 	return (
 		<>
 			<div onClick={() => setPeriodSelector(!periodSelector)}>
 				{!periodSelector ? 'Select Class' : ''}
 			</div>
 			{periodSelector && (
-				<div style={{ display: 'flex', justifyContent: 'space-around' }}>
-					{periods.map(period => {
+				<>
+					{periods.sort().map(period => {
 						return (
 							<Link
 								key={period}
 								to={`/website/${period}`}
 								style={{
-									paddingLeft: '2%',
-									width: '8rem',
+									marginLeft: '1%',
+									width: '6rem',
 									color: 'var(--white)',
 									textDecoration: 'none'
-								}}>
-								{`Period ${period}`}
+								}}
+								onClick={() => setPeriodSelector(!periodSelector)}
+								onMouseOver={event => (event.target.style.fontSize = '110%')}
+								onMouseOut={event => (event.target.style.fontSize = '100%')}>
+								{`${period.substring(0, 1)} ${period.substring(2, 3)}-${period.substring(3, 4)}`}
 							</Link>
 						)
 					})}
-				</div>
+				</>
 			)}
 		</>
 	)

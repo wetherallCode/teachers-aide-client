@@ -20,6 +20,8 @@ export const STUDENT_INFO_QUERY = gql`
 			desk
 			isHiddenFromRoster
 			daysAbsent
+			daysLate
+			learningStyle
 		}
 		isEditStudentMode @client
 		removeStudentScreen @client
@@ -66,8 +68,11 @@ const Student = ({ match, history }) => {
 		responsibilityPoints,
 		desk,
 		isHiddenFromRoster,
-		daysAbsent
+		daysAbsent,
+		daysLate,
+		learningStyle
 	} = student
+	console.log(student)
 	return (
 		<>
 			<div
@@ -131,6 +136,7 @@ const Student = ({ match, history }) => {
 									<h2>{`Seat: ${desk}`}</h2>
 									<h2>{`Responsibility Points: ${responsibilityPoints}`}</h2>
 									<h2>{`Teacher: ${teacher}`}</h2>
+									<h2>{`Learning Style: ${learningStyle}`}</h2>
 									<div
 										style={{
 											display: 'flex',

@@ -12,15 +12,15 @@ const AgendaItemsNavBar = ({ match, lesson }) => {
 	const todaysDate = new Date().toISOString().substring(0, 10)
 	const [oldLessonToggle, setOldLessonToggle] = useState(false)
 	const [oldLessonDate, setOldLessonDate] = useState(todaysDate)
-	console.log(lesson.assignedLesson.studyGuideQuestions)
+
 	return (
 		<div
 			style={{
+				height: '120vh',
 				backgroundColor: 'var(--blue)',
 				color: 'var(--white)',
 				fontSize: '150%',
 				borderRight: '3px solid var(--white)',
-				height: '85vh',
 				display: 'flex',
 				flexDirection: 'column',
 				justifyContent: 'flex-start',
@@ -28,10 +28,15 @@ const AgendaItemsNavBar = ({ match, lesson }) => {
 				paddingTop: '8%',
 				overflow: 'scroll'
 			}}>
+			<div style={{ fontSize: '130%', marginBottom: '10%', textDecoration: 'underline' }}>
+				{match.params.courseName.substring(0, 1)} Day{' '}
+				{/* <div style={{ fontSize: '120%', marginTop: '3%', marginBottom: '6%' }}> */}
+				Period {match.params.courseName.substring(2, 3)}-{match.params.courseName.substring(3, 4)}{' '}
+			</div>
 			<button
 				style={{
 					width: '80%',
-					height: '8%',
+					height: '6%',
 					textDecoration: 'underline',
 					fontSize: '130%',
 					color: 'var(--blue)',
@@ -57,37 +62,31 @@ const AgendaItemsNavBar = ({ match, lesson }) => {
 					}}>
 					<Link
 						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}
-						onClick={() => console.log('click')}
 						to={`${match.url}/warmUp`}>
 						Warm Up
 					</Link>
 					<Link
 						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}
-						onClick={() => console.log('click')}
 						to={`${match.url}/essentialQuestion`}>
 						Essential Question
 					</Link>
 					<Link
 						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}
-						onClick={() => console.log('click')}
 						to={`${match.url}/readings`}>
 						Reading
 					</Link>
 					<Link
 						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}
-						onClick={() => console.log('click')}
 						to={`${match.url}/vocabWords`}>
 						Vocabulary
 					</Link>
 					<Link
 						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}
-						onClick={() => console.log('click')}
 						to={`${match.url}/socraticQuestions`}>
 						Socratic Questions
 					</Link>
 					<Link
 						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}
-						onClick={() => console.log('click')}
 						to={`${match.url}/workDue`}>
 						Homework
 					</Link>
@@ -97,7 +96,7 @@ const AgendaItemsNavBar = ({ match, lesson }) => {
 				<button
 					style={{
 						width: '80%',
-						height: '8%',
+						height: '6%',
 						textDecoration: 'underline',
 						fontSize: '130%',
 						color: 'var(--blue)',
@@ -132,7 +131,7 @@ const AgendaItemsNavBar = ({ match, lesson }) => {
 			<button
 				style={{
 					width: '80%',
-					height: '8%',
+					height: '6%',
 					textDecoration: 'underline',
 					fontSize: '130%',
 					color: 'var(--blue)',
@@ -177,7 +176,7 @@ const AgendaItemsNavBar = ({ match, lesson }) => {
 			<button
 				style={{
 					width: '80%',
-					height: '8%',
+					height: '6%',
 					textDecoration: 'underline',
 					fontSize: '130%',
 					color: 'var(--blue)',

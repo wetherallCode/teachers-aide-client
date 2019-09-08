@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Route, Link } from 'react-router-dom'
 import TodaysDate from './TodaysDate'
 import WebSitePeriodSelector from './WebSitePeriodSelector'
@@ -34,18 +34,17 @@ const WebsiteDisplay = ({ match }) => {
 					display: 'grid',
 					justifyContent: 'center',
 					alignItems: 'center',
-					gridTemplateColumns: '2fr 1fr',
+					gridTemplateColumns: '7fr 3fr',
 					backgroundColor: 'var(--blue)',
 					color: 'var(--white)',
 					height: '3rem',
-					fontSize: '150%',
+					fontSize: '140%',
 					borderBottom: '3px solid var(--white)'
 				}}>
 				<div
 					style={{
 						display: 'flex',
 						alignItems: 'center',
-						height: '100%',
 						width: '100%',
 						paddingLeft: '2%'
 					}}>
@@ -67,21 +66,6 @@ const WebsiteDisplay = ({ match }) => {
 				}}>
 				<Route path='/website/:courseName' component={DailyAgenda} />
 			</div>
-
-			{/* <DailyAgenda /> */}
-
-			{/* <div
-				style={{
-					backgroundColor: 'var(--blue)',
-					color: 'var(--white)',
-					borderTop: '3px solid var(--white)',
-					fontSize: '70%',
-					display: 'flex',
-					justifyContent: 'center',
-					alignItems: 'center'
-				}}>
-				<p>Website designed, coded, and maintained by Mr. Wetherall</p>
-			</div> */}
 		</>
 	)
 }

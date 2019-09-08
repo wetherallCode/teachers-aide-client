@@ -13,7 +13,7 @@ const defaultState = {
 	showHiddenStudents: false,
 	removeStudentScreen: false,
 	gradeBookToggle: false,
-	isEditLessonMode: true,
+	isEditLessonMode: false,
 	isEditLessonItemMode: false,
 	removeLessonModal: false,
 	userLogin: true,

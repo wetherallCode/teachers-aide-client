@@ -55,6 +55,7 @@ const DailyAgenda = ({ match }) => {
 	})
 	if (loading) return null
 	if (error) console.error(error)
+	console.log(data)
 
 	return (
 		<>
@@ -66,7 +67,7 @@ const DailyAgenda = ({ match }) => {
 							color: 'var(--white)',
 							fontSize: '150%',
 							borderRight: '3px solid var(--white)',
-							height: '85vh',
+							height: '100vh',
 							display: 'flex',
 							flexDirection: 'column',
 							justifyContent: 'flex-start',
@@ -74,6 +75,12 @@ const DailyAgenda = ({ match }) => {
 							paddingTop: '8%',
 							overflow: 'scroll'
 						}}>
+						<div style={{ fontSize: '130%', marginBottom: '10%', textDecoration: 'underline' }}>
+							{match.params.courseName.substring(0, 1)} Day{' '}
+							{/* <div style={{ fontSize: '120%', marginTop: '3%', marginBottom: '6%' }}> */}
+							Period {match.params.courseName.substring(2, 3)}-
+							{match.params.courseName.substring(3, 4)}{' '}
+						</div>
 						<button
 							style={{
 								width: '80%',
@@ -85,7 +92,7 @@ const DailyAgenda = ({ match }) => {
 								textShadow: '1px 1px 8px var(--darkGrey)',
 								borderRadius: '5px',
 								boxShadow: '1px 1px 1px black',
-								marginTop: '10%'
+								marginTop: '2%'
 							}}
 							onClick={() => setOldLessonToggle(!oldLessonToggle)}>
 							Old Lessons
@@ -136,16 +143,6 @@ const DailyAgenda = ({ match }) => {
 						</button>
 						{classRoomResources && <ResourceButton />}
 					</div>
-					{/* <div
-						style={{
-							display: 'flex',
-							justifyContent: 'center',
-							height: '75vh',
-							alignItems: 'center',
-							fontSize: '200%'
-						}}>
-						<div>No Lesson Assigned for Today!</div>
-					</div> */}
 					<Route
 						path={`${match.path}/:oldLessonDate`}
 						// render={props => <OldLesson {...props} date={oldLessonDate}></OldLesson>}>
@@ -153,9 +150,14 @@ const DailyAgenda = ({ match }) => {
 					/>
 				</div>
 			) : (
-				<div style={{ display: 'grid', gridTemplateColumns: '1fr 3fr' }}>
+				<div
+					style={{
+						display: 'grid',
+						gridTemplateColumns: '1fr 3fr',
+						height: '100vh',
+						overflow: 'auto'
+					}}>
 					<AgendaItemsNavBar match={match} lesson={data.findClassPeriod} />
-
 					<Route
 						path={`${match.path}/warmUp`}
 						render={() => (
@@ -164,8 +166,10 @@ const DailyAgenda = ({ match }) => {
 									color: 'var(--blue)',
 									display: 'flex',
 									flexDirection: 'column',
-									justifyContent: 'center',
-									alignItems: 'center'
+									justifyContent: 'flex-start',
+									marginTop: '5%',
+									alignItems: 'center',
+									overflow: 'scroll'
 								}}>
 								<h1
 									style={{
@@ -178,7 +182,7 @@ const DailyAgenda = ({ match }) => {
 									style={{
 										textAlign: 'center',
 										fontSize: '250%',
-										marginTop: '10%',
+										marginTop: '2%',
 										marginBottom: '25%'
 									}}>
 									{data.findClassPeriod.assignedLesson.warmup}
@@ -194,8 +198,10 @@ const DailyAgenda = ({ match }) => {
 									color: 'var(--blue)',
 									display: 'flex',
 									flexDirection: 'column',
-									justifyContent: 'center',
-									alignItems: 'center'
+									justifyContent: 'flex-start',
+									marginTop: '5%',
+									alignItems: 'center',
+									overflow: 'auto'
 								}}>
 								<h1
 									style={{
@@ -208,7 +214,7 @@ const DailyAgenda = ({ match }) => {
 									style={{
 										textAlign: 'center',
 										fontSize: '250%',
-										marginTop: '10%',
+										marginTop: '2%',
 										marginBottom: '25%'
 									}}>
 									{data.findClassPeriod.assignedLesson.essentialQuestion.question}
@@ -224,14 +230,15 @@ const DailyAgenda = ({ match }) => {
 									color: 'var(--blue)',
 									display: 'flex',
 									flexDirection: 'column',
-									justifyContent: 'center',
-									alignItems: 'center'
+									justifyContent: 'flex-start',
+									marginTop: '5%',
+									alignItems: 'center',
+									overflow: 'scroll'
 								}}>
 								<h1
 									style={{
 										textDecoration: 'underline',
-										fontSize: '300%',
-										marginTop: '2%'
+										fontSize: '300%'
 									}}>
 									Today's Assigned Reading
 								</h1>
@@ -239,11 +246,13 @@ const DailyAgenda = ({ match }) => {
 									style={{
 										textAlign: 'center',
 										fontSize: '250%',
-										// marginTop: '%',
+										marginTop: '2%',
 										marginBottom: '20%'
 									}}>
-									<div>Read page: {data.findClassPeriod.assignedLesson.readings.pages}</div>
-									<div>Sections: {data.findClassPeriod.assignedLesson.readings.sections}</div>
+									<div>
+										Read page {data.findClassPeriod.assignedLesson.readings.pages}:{' '}
+										{data.findClassPeriod.assignedLesson.readings.sections}
+									</div>
 								</div>
 							</div>
 						)}
@@ -255,9 +264,16 @@ const DailyAgenda = ({ match }) => {
 								style={{
 									color: 'var(--blue)',
 									display: 'grid',
-									gridTemplateRows: '1fr 4fr'
+									gridTemplateRows: '1fr 6fr',
+									borderRight: '3px solid var(--white)'
 								}}>
-								<div>
+								<div
+									style={{
+										borderBottom: '3px solid var(--blue)',
+										display: 'flex',
+										justifyContent: 'center',
+										alignItems: 'center'
+									}}>
 									<h1
 										style={{
 											textDecoration: 'underline',
@@ -270,12 +286,30 @@ const DailyAgenda = ({ match }) => {
 								<div
 									style={{
 										fontSize: '200%',
-										paddingLeft: '3%'
+										// paddingLeft: '3%',
+										overflow: 'scroll',
+										height: '100vh'
 										// marginBottom: '20%'
 									}}>
 									{data.findClassPeriod.assignedLesson.vocabWords.map((word, i) => (
-										<div key={i}>
-											{word.word}: {word.definition}.
+										<div
+											key={i}
+											style={{
+												paddingLeft: '3%',
+												height: '10%',
+												display: 'flex',
+												justifyContent: 'flex-start',
+												alignItems: 'center'
+											}}
+											onMouseOver={e => {
+												e.target.style.backgroundColor = 'var(--blue)'
+												e.target.style.color = 'var(--white)'
+											}}
+											onMouseOut={e => {
+												e.target.style.backgroundColor = 'var(--white)'
+												e.target.style.color = 'var(--blue)'
+											}}>
+											{word.word}: {word.definition}
 										</div>
 									))}
 								</div>
@@ -305,10 +339,26 @@ const DailyAgenda = ({ match }) => {
 									style={{
 										fontSize: '200%',
 										paddingLeft: '3%'
-										// marginBottom: '20%'
 									}}>
 									{data.findClassPeriod.assignedLesson.socraticQuestions.map((question, i) => (
-										<div key={i}>{question.question}</div>
+										<div
+											key={i}
+											style={{
+												height: '20%',
+												display: 'flex',
+												justifyContent: 'flex-start',
+												alignItems: 'center'
+											}}
+											onMouseOver={e => {
+												e.target.style.backgroundColor = 'var(--blue)'
+												e.target.style.color = 'var(--white)'
+											}}
+											onMouseOut={e => {
+												e.target.style.backgroundColor = 'var(--white)'
+												e.target.style.color = 'var(--blue)'
+											}}>
+											{question.question}
+										</div>
 									))}
 								</div>
 							</div>
@@ -338,7 +388,7 @@ const DailyAgenda = ({ match }) => {
 										justifyContent: 'flex-start'
 									}}>
 									{data.findClassPeriod.assignedLesson.workDue.map((assignment, i) => (
-										<ol
+										<ul
 											key={i}
 											style={{
 												fontSize: '170%',
@@ -355,7 +405,9 @@ const DailyAgenda = ({ match }) => {
 															answer the following Open Ended Question:
 														</div>
 														<ul>
-															<li style={{ marginTop: '1%' }}>{assignment.question}</li>
+															<li style={{ marginTop: '1%' }}>
+																{data.findClassPeriod.assignedLesson.essentialQuestion.question}
+															</li>
 															<li style={{ marginTop: '1%' }}>
 																Due on {assignment.dueDate.substring(6, 10)}
 															</li>
@@ -363,7 +415,7 @@ const DailyAgenda = ({ match }) => {
 													</>
 												</li>
 											)}
-											<br />
+
 											{assignment.type === 'THINKING_GUIDE' && (
 												<li
 												// style={{ borderBottom: '1px solid var(--blue)', width: '85%' }}
@@ -381,7 +433,7 @@ const DailyAgenda = ({ match }) => {
 													</>
 												</li>
 											)}
-										</ol>
+										</ul>
 									))}
 								</div>
 							</div>
@@ -394,7 +446,8 @@ const DailyAgenda = ({ match }) => {
 								style={{
 									color: 'var(--blue)',
 									display: 'grid',
-									gridTemplateRows: '1fr 4fr'
+									gridTemplateRows: '1fr 6fr',
+									overflow: 'scroll'
 								}}>
 								<div>
 									<h1
@@ -410,7 +463,6 @@ const DailyAgenda = ({ match }) => {
 									style={{
 										fontSize: '200%',
 										paddingLeft: '3%'
-										// marginBottom: '20%'
 									}}>
 									<ol>
 										{data.findClassPeriod.assignedLesson.studyGuideQuestions.map((question, i) => (

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { gql } from 'apollo-boost'
 import { useQuery } from '@apollo/react-hooks'
 
@@ -38,6 +38,7 @@ const FIND_CLASS_PERIOD = gql`
 
 const OldLesson = ({ match }) => {
 	const { oldLessonDate, courseName } = match.params
+	const [vocabWordToggle, setVocabWordToggle] = useState(false)
 	const { data, loading, error } = useQuery(FIND_CLASS_PERIOD, {
 		variables: { assignedDate: oldLessonDate, period: courseName }
 	})
@@ -47,14 +48,14 @@ const OldLesson = ({ match }) => {
 	return (
 		<>
 			{data.findClassPeriod ? (
-				<div style={{ display: 'grid', gridTemplateRows: '1fr 5fr' }}>
+				<div style={{ display: 'grid', gridTemplateRows: '1fr 7fr', overflow: 'scroll' }}>
 					<div
 						style={{
-							fontSize: '250%',
+							fontSize: '200%',
+							borderBottom: '3px solid var(--blue)',
 							display: 'flex',
 							justifyContent: 'center',
-							alignItems: 'center',
-							textDecoration: 'underline'
+							alignItems: 'center'
 						}}>
 						<div>
 							Lesson for{' '}
@@ -65,42 +66,41 @@ const OldLesson = ({ match }) => {
 								oldLessonDate.substring(0, 4)}
 						</div>
 					</div>
-					<div style={{ marginLeft: '2%' }}>
-						<div style={{ fontSize: '160%', marginTop: '2%' }}>
+					<div style={{ marginLeft: '2%', overflow: 'scroll' }}>
+						<div style={{ fontSize: '160%', marginTop: '4%' }}>
 							Essential Question: {data.findClassPeriod.assignedLesson.essentialQuestion.question}
 						</div>
-						<div style={{ fontSize: '160%', marginTop: '2%' }}>
+						<div style={{ fontSize: '160%', marginTop: '4%' }}>
 							Read Page {data.findClassPeriod.assignedLesson.readings.pages}:{' '}
 							{data.findClassPeriod.assignedLesson.readings.sections}
 						</div>
-
-						<div style={{ fontSize: '160%', marginTop: '2%' }}>
-							{data.findClassPeriod.assignedLesson.vocabWords.map((word, i) => (
-								<div key={i}>
-									Vocabulary Words:
-									<div>
-										{word.word}: {word.definition}
-									</div>
-								</div>
-							))}
+						<div style={{ fontSize: '160%', marginTop: '4%' }}>
+							Assignments Due:
+							<ul>
+								{data.findClassPeriod.assignedLesson.workDue.map((assignment, i) => (
+									<li key={i}>
+										{assignment.type === 'OEQ' && (
+											<>
+												Open Ended Question:{' '}
+												{data.findClassPeriod.assignedLesson.essentialQuestion.question}
+												<div>{assignment.dueDate}</div>
+											</>
+										)}
+										{assignment.type === 'THINKING_GUIDE' && (
+											<div>
+												Critical Thinking Guide:
+												{assignment.readingPages + ' ' + assignment.readingSections}
+											</div>
+										)}
+									</li>
+								))}
+							</ul>
 						</div>
-						<div style={{ fontSize: '160%', marginTop: '2%' }}>
-							{data.findClassPeriod.assignedLesson.workDue.map((assignment, i) => (
-								<div key={i}>
-									Assignments Due:
-									{assignment.type === 'OEQ' && (
-										<div>
-											Open Ended Question:{' '}
-											{data.findClassPeriod.assignedLesson.essentialQuestion.question}
-											<div>{assignment.dueDate}</div>
-										</div>
-									)}
-									{assignment.type === 'THINKING_GUIDE' && (
-										<div>
-											Critical Thinking Guide:
-											{assignment.readingPages + ' ' + assignment.readingSections}
-										</div>
-									)}
+						<div style={{ fontSize: '160%', marginTop: '4%' }}>
+							<div>Vocabulary Words: </div>
+							{data.findClassPeriod.assignedLesson.vocabWords.map((word, i) => (
+								<div key={i} style={{ marginLeft: '3%', marginTop: '2%' }}>
+									{word.word}: {word.definition}
 								</div>
 							))}
 						</div>

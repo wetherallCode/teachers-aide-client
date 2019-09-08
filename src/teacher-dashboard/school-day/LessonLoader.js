@@ -70,10 +70,10 @@ const UnitLoaderDisplay = ({ periods, gradeLevels }) => {
 				height: '100vh'
 			}}>
 			<ClassLessonLoader period={periods[0]} gradeLevels={gradeLevels} />
-			<ClassLessonLoader period={periods[1]} gradeLevels={gradeLevels} />
 			<ClassLessonLoader period={periods[2]} gradeLevels={gradeLevels} />
-			<ClassLessonLoader period={periods[3]} gradeLevels={gradeLevels} />
 			<ClassLessonLoader period={periods[4]} gradeLevels={gradeLevels} />
+			<ClassLessonLoader period={periods[1]} gradeLevels={gradeLevels} />
+			<ClassLessonLoader period={periods[3]} gradeLevels={gradeLevels} />
 			<ClassLessonLoader period={periods[5]} gradeLevels={gradeLevels} />
 		</div>
 	)
@@ -82,7 +82,7 @@ const UnitLoaderDisplay = ({ periods, gradeLevels }) => {
 const ClassLessonLoader = ({ period, gradeLevels }) => {
 	const [gradeLevelSelect, setGradeLevelSelect] = useState(gradeLevels[0])
 	const [unitNameSelect, setUnitNameSelect] = useState('')
-	const [lessonLoaderToggle, setLessonLoaderToggle] = useState(false)
+	// const [lessonLoaderToggle, setLessonLoaderToggle] = useState(false)
 	const [assignedDate, setAssignedDate] = useState(new Date().toLocaleString().substring(0, 10))
 
 	const { data, loading, error } = useQuery(GET_UNIT_NAMES, {

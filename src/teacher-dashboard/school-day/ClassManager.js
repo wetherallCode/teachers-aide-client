@@ -62,7 +62,7 @@ const ClassManagerNavBarItems = ({ match, items }) => {
 	const { url } = match
 	return (
 		<>
-			{items.map((item, i) => (
+			{items.sort().map((item, i) => (
 				<Link
 					key={i}
 					to={`${url}/${item}`}
