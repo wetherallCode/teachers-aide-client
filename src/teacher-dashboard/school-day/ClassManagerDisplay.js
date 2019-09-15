@@ -30,9 +30,9 @@ const FIND_CLASS_PERIOD = gql`
 				}
 				workDue {
 					type
-					dueDate
 					readingPages
 					readingSections
+					dueDate
 				}
 				studyGuideQuestions
 			}
@@ -178,7 +178,6 @@ const ClassManagerDisplay = ({ match }) => {
 												</h3>
 												<div>{assignment.type}</div>
 												<div>{assignment.readingPages + ': ' + assignment.readingSections}</div>
-												<div>{assignment.dueDate}</div>
 											</div>
 										)
 									})}

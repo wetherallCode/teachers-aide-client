@@ -38,7 +38,6 @@ export const FIND_LESSON_QUERY = gql`
 				type
 				readingPages
 				readingSections
-				dueDate
 			}
 		}
 		isEditLessonMode @client

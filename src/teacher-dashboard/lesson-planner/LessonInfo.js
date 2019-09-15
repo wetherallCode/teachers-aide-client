@@ -104,7 +104,7 @@ const LessonInfoDisplay = ({ lesson }) => {
 					<div style={{ fontSize: '150%' }}>Assignment Due Dates</div>
 					<ol>
 						{workDue.map((assignment, i) => {
-							return <li key={i}>{assignment.type + ' is due on: ' + assignment.dueDate}</li>
+							return <li key={i}>{assignment.type + ' is due next class'}</li>
 						})}
 					</ol>
 				</div>

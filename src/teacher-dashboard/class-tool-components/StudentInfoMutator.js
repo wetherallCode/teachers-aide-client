@@ -11,7 +11,7 @@ const UPDATE_RESPONSIBILTY_POINTS = gql`
 `
 
 const StudentInfoMutator = ({ match, periodName, student }) => {
-	const [BehaviorPointsToggle, setBehaviorPointsToggle] = useState(false)
+	const [BehaviorPointsToggle, setBehaviorPointsToggle] = useState(true)
 
 	const { _id } = student
 
@@ -61,6 +61,14 @@ const StudentInfoMutator = ({ match, periodName, student }) => {
 							updateResponsibilityPoints({
 								variables: { _id: _id, responsibilityPoints: 1 }
 							})
+						}}
+						onMouseDown={e => {
+							e.target.style.backgroundColor = 'var(--white)'
+							e.target.style.color = 'var(--blue)'
+						}}
+						onMouseUp={e => {
+							e.target.style.backgroundColor = 'var(--blue)'
+							e.target.style.color = 'var(--white)'
 						}}>
 						+1
 					</button>
@@ -70,6 +78,14 @@ const StudentInfoMutator = ({ match, periodName, student }) => {
 							updateResponsibilityPoints({
 								variables: { _id: _id, responsibilityPoints: 2 }
 							})
+						}}
+						onMouseDown={e => {
+							e.target.style.backgroundColor = 'var(--white)'
+							e.target.style.color = 'var(--blue)'
+						}}
+						onMouseUp={e => {
+							e.target.style.backgroundColor = 'var(--blue)'
+							e.target.style.color = 'var(--white)'
 						}}>
 						+2
 					</button>
@@ -79,6 +95,14 @@ const StudentInfoMutator = ({ match, periodName, student }) => {
 							updateResponsibilityPoints({
 								variables: { _id: _id, responsibilityPoints: -1 }
 							})
+						}}
+						onMouseDown={e => {
+							e.target.style.backgroundColor = 'var(--white)'
+							e.target.style.color = 'var(--red)'
+						}}
+						onMouseUp={e => {
+							e.target.style.backgroundColor = 'var(--red)'
+							e.target.style.color = 'var(--white)'
 						}}>
 						-1
 					</button>
@@ -88,6 +112,14 @@ const StudentInfoMutator = ({ match, periodName, student }) => {
 							updateResponsibilityPoints({
 								variables: { _id: _id, responsibilityPoints: -2 }
 							})
+						}}
+						onMouseDown={e => {
+							e.target.style.backgroundColor = 'var(--white)'
+							e.target.style.color = 'var(--red)'
+						}}
+						onMouseUp={e => {
+							e.target.style.backgroundColor = 'var(--red)'
+							e.target.style.color = 'var(--white)'
 						}}>
 						-2
 					</button>

@@ -51,7 +51,12 @@ const StudentListInRosterView = ({ classRoster }) => {
 								<Link
 									style={{ textDecoration: 'none', color: 'var(--blue)' }}
 									to={`/dashboard/roster-profile/student/${student._id}`}>
-									{`${numberMaker++} ${student.lastName}, ${student.firstName} `}
+									{
+										<div style={{ display: 'flex' }}>
+											<div>{`${numberMaker++} ${student.lastName}, ${student.firstName} `}</div>
+											<div style={{ marginLeft: '2%' }}>{student.responsibilityPoints}</div>
+										</div>
+									}
 								</Link>
 							</div>
 						</div>
