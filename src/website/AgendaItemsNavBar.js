@@ -5,7 +5,7 @@ import ResourceButton from './ResourceButton'
 const AgendaItemsNavBar = ({ match, lesson }) => {
 	const [agendaButton, setAgendaButton] = useState(false)
 
-	const [studyGuideButton, setStudyGuideButton] = useState(false)
+	// const [studyGuideButton, setStudyGuideButton] = useState(false)
 
 	const [classRoomResources, setClassRoomResources] = useState(false)
 
@@ -62,8 +62,8 @@ const AgendaItemsNavBar = ({ match, lesson }) => {
 					}}>
 					<Link
 						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}
-						to={`${match.url}/warmUp`}>
-						Warm Up
+						to={`${match.url}/studyGuide`}>
+						Study Guide
 					</Link>
 					<Link
 						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}
@@ -92,7 +92,7 @@ const AgendaItemsNavBar = ({ match, lesson }) => {
 					</Link>
 				</div>
 			)}
-			{lesson.assignedLesson.studyGuideQuestions && (
+			{/* {lesson.assignedLesson.studyGuideQuestions && (
 				<button
 					style={{
 						width: '80%',
@@ -111,8 +111,8 @@ const AgendaItemsNavBar = ({ match, lesson }) => {
 					}}>
 					Study Guide
 				</button>
-			)}
-			{studyGuideButton && (
+			)} */}
+			{/* {studyGuideButton && (
 				<div
 					style={{
 						display: 'flex',
@@ -127,7 +127,7 @@ const AgendaItemsNavBar = ({ match, lesson }) => {
 						Study Guide
 					</Link>
 				</div>
-			)}
+			)} */}
 			<button
 				style={{
 					width: '80%',

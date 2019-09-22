@@ -55,7 +55,6 @@ const DailyAgenda = ({ match }) => {
 	})
 	if (loading) return null
 	if (error) console.error(error)
-	console.log(data)
 
 	return (
 		<>
@@ -76,10 +75,8 @@ const DailyAgenda = ({ match }) => {
 							overflow: 'scroll'
 						}}>
 						<div style={{ fontSize: '130%', marginBottom: '10%', textDecoration: 'underline' }}>
-							{match.params.courseName.substring(0, 1)} Day{' '}
-							{/* <div style={{ fontSize: '120%', marginTop: '3%', marginBottom: '6%' }}> */}
-							Period {match.params.courseName.substring(2, 3)}-
-							{match.params.courseName.substring(3, 4)}{' '}
+							{match.params.courseName.substring(0, 1)} Day Period{' '}
+							{match.params.courseName.substring(2, 3)}-{match.params.courseName.substring(3, 4)}{' '}
 						</div>
 						<button
 							style={{
@@ -159,7 +156,7 @@ const DailyAgenda = ({ match }) => {
 					}}>
 					<AgendaItemsNavBar match={match} lesson={data.findClassPeriod} />
 					<Route
-						path={`${match.path}/warmUp`}
+						path={`${match.path}/studyGuide`}
 						render={() => (
 							<div
 								style={{
@@ -176,16 +173,21 @@ const DailyAgenda = ({ match }) => {
 										textDecoration: 'underline',
 										fontSize: '300%'
 									}}>
-									Warm Up
+									Study Guide
 								</h1>
 								<div
 									style={{
-										textAlign: 'center',
 										fontSize: '250%',
-										marginTop: '2%',
-										marginBottom: '25%'
+
+										marginLeft: '2%'
 									}}>
-									{data.findClassPeriod.assignedLesson.warmup}
+									{data.findClassPeriod.assignedLesson.studyGuideQuestions.map((question, i) => {
+										return (
+											<div key={i} style={{ fontSize: '80%', marginTop: '2%' }}>
+												{i + 1}. {question}
+											</div>
+										)
+									})}
 								</div>
 							</div>
 						)}

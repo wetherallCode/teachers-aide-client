@@ -64,13 +64,17 @@ const LessonInfoScreen = ({ match, history }) => {
 	if (error) console.error(error)
 	console.log(data)
 	return (
-		<LessonInfoDisplay
-			match={match}
-			history={history}
-			data={data}
-			lessonId={lessonId}
-			grade={grade}
-		/>
+		<>
+			{data !== undefined && (
+				<LessonInfoDisplay
+					match={match}
+					history={history}
+					data={data}
+					lessonId={lessonId}
+					grade={grade}
+				/>
+			)}
+		</>
 	)
 }
 

@@ -137,16 +137,16 @@ const LessonCreatorForm = ({
 		client.writeData({ data: { isEditLessonItemMode: !isEditLessonItemMode } })
 
 	// Create Lesson Name
-	const [lessonName, setLessonName] = useState(lesson.lessonName)
+	const [lessonName, setLessonName] = useState('')
 
 	// Create Warm Up
-	const [warmUp, setWarmUp] = useState(lesson.warmUp)
+	const [warmUp, setWarmUp] = useState('')
 
 	// Create the Essential Question
 	const [essentialQuestion, setEssentialQuestion] = useState({
-		type: lesson.essentialQuestion.type,
-		textStructure: lesson.essentialQuestion.textStructure,
-		question: lesson.essentialQuestion.question
+		type: essentialQuestionTypes[0],
+		textStructure: essentialQuestionTextStructures[0],
+		question: ''
 	})
 
 	// Create a Socratic Question
@@ -157,7 +157,6 @@ const LessonCreatorForm = ({
 
 	// Socratic Question List
 	const [socraticQuestionsList, setSocraticQuestionsList] = useState([])
-	console.log(socraticQuestionsList)
 
 	// Create a Vocabulary Word
 	const [vocabWord, setVocabWord] = useState({
@@ -168,12 +167,11 @@ const LessonCreatorForm = ({
 
 	// Vocab Word List
 	const [vocabWordList, setVocabWordList] = useState([])
-	console.log(vocabWordList)
 
 	// Reading Section
 	const [readings, setReadings] = useState({
-		pages: lesson.readings.pages,
-		sections: lesson.readings.sections
+		pages: '',
+		sections: ''
 	})
 
 	// Homework Due Dates
@@ -185,10 +183,9 @@ const LessonCreatorForm = ({
 	})
 
 	const [workDueList, setWorkDueList] = useState([])
-	console.log(workDueList)
 
 	const [studyGuideQuestionList, setStudyGuideQuestionList] = useState([])
-
+	console.log(studyGuideQuestionList)
 	const [studyGuideQuestions, setStudyGuideQuestions] = useState('')
 
 	const [createLesson, { data }] = useMutation(LESSON_CREATOR_MUTATION, {
@@ -198,7 +195,7 @@ const LessonCreatorForm = ({
 				inUnit: unitName,
 				essentialQuestion: essentialQuestion,
 				socraticQuestions: socraticQuestionsList,
-				studyGuideQuestions: studyGuideQuestionList,
+				studyGuideQuestions: studyGuideQuestionList.reverse(),
 				readings: readings,
 				vocabWords: vocabWordList,
 				warmup: warmUp,
@@ -323,8 +320,8 @@ const LessonCreatorForm = ({
 								</div>
 							</div>
 							<div>
-								{studyGuideQuestionList.map((question, i) => (
-									<div>{question}</div>
+								{studyGuideQuestionList.reverse().map((question, i) => (
+									<div key={i}>{question}</div>
 								))}
 							</div>
 						</div>
@@ -468,7 +465,6 @@ const LessonCreatorForm = ({
 							paddingBottom: '1%'
 						}}>
 						<h2>Socratic Questions</h2>
-
 						<div
 							style={{
 								display: 'grid',
@@ -488,8 +484,8 @@ const LessonCreatorForm = ({
 									onChange={e =>
 										setSocraticQuestions({ ...socraticQuestions, type: e.target.value })
 									}>
-									{socraticQuestionsTypeEnumNames.map(questionType => (
-										<option key={questionType} value={questionType}>
+									{socraticQuestionsTypeEnumNames.map((questionType, i) => (
+										<option key={i} value={questionType}>
 											{questionType}
 										</option>
 									))}
@@ -529,7 +525,8 @@ const LessonCreatorForm = ({
 						</div>
 
 						<div>
-							{socraticQuestionsList.reverse().map((question, i) => {
+							{socraticQuestionsList.map((question, i) => {
+								console.log(question)
 								return (
 									<div
 										style={{
@@ -540,7 +537,7 @@ const LessonCreatorForm = ({
 											alignItems: 'center'
 										}}
 										key={i}>
-										<h2>{question.question}</h2>
+										{question.question}
 									</div>
 								)
 							})}

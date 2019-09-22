@@ -38,7 +38,7 @@ const FIND_CLASS_PERIOD = gql`
 
 const OldLesson = ({ match }) => {
 	const { oldLessonDate, courseName } = match.params
-	const [vocabWordToggle, setVocabWordToggle] = useState(false)
+
 	const { data, loading, error } = useQuery(FIND_CLASS_PERIOD, {
 		variables: { assignedDate: oldLessonDate, period: courseName }
 	})
@@ -97,6 +97,14 @@ const OldLesson = ({ match }) => {
 							</ul>
 						</div>
 						<div style={{ fontSize: '160%', marginTop: '4%' }}>
+							<div>Study Guide: </div>
+							<ol>
+								{data.findClassPeriod.assignedLesson.studyGuideQuestions.map((question, i) => {
+									return <li key={i}>{question}</li>
+								})}
+							</ol>
+						</div>
+						<div style={{ fontSize: '160%', marginTop: '4%' }}>
 							<div>Vocabulary Words: </div>
 							{data.findClassPeriod.assignedLesson.vocabWords.map((word, i) => (
 								<div key={i} style={{ marginLeft: '3%', marginTop: '2%' }}>
@@ -107,7 +115,7 @@ const OldLesson = ({ match }) => {
 					</div>
 				</div>
 			) : (
-				<div>No lesson Scheduled for this day.</div>
+				<div>No lesson Scheduled for this day</div>
 			)}
 		</>
 	)
