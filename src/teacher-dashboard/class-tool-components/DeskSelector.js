@@ -1,5 +1,4 @@
 import React from 'react'
-// import { Route, Link } from 'react-router-dom'
 import Desk from './Desk'
 
 const DeskSelector = ({ match, periodName }) => {
@@ -12,7 +11,7 @@ const DeskSelector = ({ match, periodName }) => {
 				gridTemplateRows: '1fr 1fr 1fr 1fr',
 				gridTemplateColumns: '1fr 1fr 1fr',
 				paddingBottom: '4%',
-				border: '1px solid var(--blue)',
+				border: '1px solid var(--blue)'
 
 				// paddingTop: '2%',
 			}}>

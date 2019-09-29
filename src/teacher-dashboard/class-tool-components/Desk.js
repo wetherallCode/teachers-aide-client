@@ -28,13 +28,6 @@ const Desk = ({ match, deskNumber, periodName }) => {
 	const todaysDate = new Date().toISOString().substring(0, 10)
 
 	const { findStudentByPeriodAndDesk } = data
-	// console.log(todaysDate)
-	// findStudentByPeriodAndDesk !== null &&
-	// 	findStudentByPeriodAndDesk.daysAbsent !== null &&
-	// 	findStudentByPeriodAndDesk.daysAbsent.includes(todaysDate) &&
-	// 	console.log(findStudentByPeriodAndDesk.firstName)
-
-	// console.log(new Date().toLocaleString().substring(0, 10))
 	return (
 		<>
 			{findStudentByPeriodAndDesk && !findStudentByPeriodAndDesk.isHiddenFromRoster ? (

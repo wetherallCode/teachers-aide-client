@@ -25,6 +25,11 @@ const ResourceButton = () => {
 				href='https://docs.google.com/document/d/1DRpVrV5492Jy1khLkr5H4NOnpMnRsn5p5GctrRgW1xk/edit'>
 				Open Ended Question Rubric
 			</a>
+			<a
+				style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}
+				href='https://docs.google.com/document/d/1ljVfsZtHYIcnEdO_cjnNMvFwHpuByGW50s10gu7woKA/edit?usp=sharing'>
+				Government Cheat Sheet
+			</a>
 		</div>
 	)
 }
