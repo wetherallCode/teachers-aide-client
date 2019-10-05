@@ -115,7 +115,17 @@ const OldLesson = ({ match }) => {
 					</div>
 				</div>
 			) : (
-				<div>No lesson Scheduled for this day</div>
+				<div
+					style={{
+						display: 'flex',
+						justifyContent: 'center',
+						alignItems: 'center',
+						height: '100vh'
+					}}>
+					<div style={{ fontSize: '250%', marginBottom: '20%' }}>
+						No lesson Scheduled for this day
+					</div>
+				</div>
 			)}
 		</>
 	)
