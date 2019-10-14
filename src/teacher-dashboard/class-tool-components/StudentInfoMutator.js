@@ -96,11 +96,11 @@ const StudentInfoMutator = ({ match, periodName, student }) => {
 							e.target.style.color = 'var(--red)'
 						}}
 						onMouseUp={e => {
-							e.target.style.backgroundColor = 'var(--red)'
+							e.target.style.backgroundColor = 'var(--blue)'
 							e.target.style.color = 'var(--white)'
 						}}
 						onTouchEnd={e => {
-							e.target.style.backgroundColor = 'var(--red)'
+							e.target.style.backgroundColor = 'var(--blue)'
 							e.target.style.color = 'var(--white)'
 						}}>
 						+2
