@@ -66,8 +66,16 @@ const StudentInfoMutator = ({ match, periodName, student }) => {
 							e.target.style.backgroundColor = 'var(--white)'
 							e.target.style.color = 'var(--blue)'
 						}}
+						onTouchStart={e => {
+							e.target.style.backgroundColor = 'var(--white)'
+							e.target.style.color = 'var(--red)'
+						}}
 						onMouseUp={e => {
-							e.target.style.backgroundColor = 'var(--blue)'
+							e.target.style.backgroundColor = 'var(--red)'
+							e.target.style.color = 'var(--white)'
+						}}
+						onTouchEnd={e => {
+							e.target.style.backgroundColor = 'var(--red)'
 							e.target.style.color = 'var(--white)'
 						}}>
 						+1
@@ -83,8 +91,16 @@ const StudentInfoMutator = ({ match, periodName, student }) => {
 							e.target.style.backgroundColor = 'var(--white)'
 							e.target.style.color = 'var(--blue)'
 						}}
+						onTouchStart={e => {
+							e.target.style.backgroundColor = 'var(--white)'
+							e.target.style.color = 'var(--red)'
+						}}
 						onMouseUp={e => {
-							e.target.style.backgroundColor = 'var(--blue)'
+							e.target.style.backgroundColor = 'var(--red)'
+							e.target.style.color = 'var(--white)'
+						}}
+						onTouchEnd={e => {
+							e.target.style.backgroundColor = 'var(--red)'
 							e.target.style.color = 'var(--white)'
 						}}>
 						+2
@@ -100,7 +116,15 @@ const StudentInfoMutator = ({ match, periodName, student }) => {
 							e.target.style.backgroundColor = 'var(--white)'
 							e.target.style.color = 'var(--red)'
 						}}
+						onTouchStart={e => {
+							e.target.style.backgroundColor = 'var(--white)'
+							e.target.style.color = 'var(--red)'
+						}}
 						onMouseUp={e => {
+							e.target.style.backgroundColor = 'var(--red)'
+							e.target.style.color = 'var(--white)'
+						}}
+						onTouchEnd={e => {
 							e.target.style.backgroundColor = 'var(--red)'
 							e.target.style.color = 'var(--white)'
 						}}>
@@ -117,7 +141,15 @@ const StudentInfoMutator = ({ match, periodName, student }) => {
 							e.target.style.backgroundColor = 'var(--white)'
 							e.target.style.color = 'var(--red)'
 						}}
+						onTouchStart={e => {
+							e.target.style.backgroundColor = 'var(--white)'
+							e.target.style.color = 'var(--red)'
+						}}
 						onMouseUp={e => {
+							e.target.style.backgroundColor = 'var(--red)'
+							e.target.style.color = 'var(--white)'
+						}}
+						onTouchEnd={e => {
 							e.target.style.backgroundColor = 'var(--red)'
 							e.target.style.color = 'var(--white)'
 						}}>
