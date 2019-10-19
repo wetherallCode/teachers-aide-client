@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { gql } from 'apollo-boost'
 import { useQuery } from '@apollo/react-hooks'
 
@@ -48,7 +48,7 @@ const OldLesson = ({ match }) => {
 	return (
 		<>
 			{data.findClassPeriod ? (
-				<div style={{ display: 'grid', gridTemplateRows: '1fr 7fr', overflow: 'scroll' }}>
+				<div style={{ display: 'grid', gridTemplateRows: '1fr 7fr' }}>
 					<div
 						style={{
 							fontSize: '200%',

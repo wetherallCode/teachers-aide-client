@@ -66,7 +66,7 @@ const DailyAgenda = ({ match }) => {
 							color: 'var(--white)',
 							fontSize: '150%',
 							borderRight: '3px solid var(--white)',
-							height: '100%',
+							height: '100vh',
 							display: 'flex',
 							flexDirection: 'column',
 							justifyContent: 'flex-start',
@@ -81,7 +81,7 @@ const DailyAgenda = ({ match }) => {
 						<button
 							style={{
 								width: '80%',
-								height: '8vh',
+								height: '8%',
 								textDecoration: 'underline',
 								fontSize: '130%',
 								color: 'var(--blue)',
@@ -99,7 +99,7 @@ const DailyAgenda = ({ match }) => {
 								<input
 									style={{
 										width: '70%',
-										height: '5vh',
+										height: '5%',
 										marginTop: '10%',
 										fontSize: '100%',
 										color: 'var(--blue)'
@@ -123,7 +123,7 @@ const DailyAgenda = ({ match }) => {
 						<button
 							style={{
 								width: '80%',
-								height: '8vh',
+								height: '8%',
 								textDecoration: 'underline',
 								fontSize: '130%',
 								color: 'var(--blue)',
