@@ -19,7 +19,7 @@ const SocraticQuestionPicker = data => {
 						onClick={() => {
 							return questionPicker && setQuestionPicker(questionPicker - 1)
 						}}>
-						{questionPicker !== 0 && 'Previous Question'}
+						{questionPicker !== 0 && 'Previous'}
 					</button>
 
 					<h3 style={{ color: 'var(--white)' }}>Questions</h3>
@@ -35,8 +35,7 @@ const SocraticQuestionPicker = data => {
 							)
 						}}>
 						{questionPicker <
-							data.data.findClassPeriod.assignedLesson.socraticQuestions.length - 1 &&
-							'Next Question'}
+							data.data.findClassPeriod.assignedLesson.socraticQuestions.length - 1 && 'Next'}
 					</button>
 					<div
 						style={{
