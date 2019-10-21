@@ -28,7 +28,6 @@ const ClassRoomTools = ({ period }) => {
 	if (loading) return null
 	if (error) console.log(error)
 	const { classRoster } = data
-
 	// const absentStudentList = []
 	// const absentStudent = classRoster.filter(
 	// 	student =>
@@ -87,7 +86,7 @@ const ClassRoomTools = ({ period }) => {
 						Period {period}
 					</button>
 				</Link>
-				<ClassToolsDisplayBox selector={selectorSwitch} />
+				<ClassToolsDisplayBox selector={selectorSwitch} period={period} />
 			</div>
 
 			<div

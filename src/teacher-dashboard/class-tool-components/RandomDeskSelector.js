@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom'
 const calledOnStudents = []
 
 const RandomDeskSelector = ({ eligibleStudentList, period }) => {
-	const calledOnStudentListSize = Math.ceil(eligibleStudentList.length * 0.4)
+	const calledOnStudentListSize = Math.ceil(eligibleStudentList.length * 0.6)
+	console.log(calledOnStudentListSize)
 
 	const randomizer = () => {
 		const student = Math.floor(Math.random() * 24 + 1)

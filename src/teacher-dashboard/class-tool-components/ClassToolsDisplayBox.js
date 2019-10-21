@@ -1,30 +1,35 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Timer from 'react-compound-timer'
+import { gql } from 'apollo-boost'
+import { useQuery } from '@apollo/react-hooks'
+import SocraticQuestionPicker from './SocraticQuestionPicker'
 
-const ClassToolsDisplayBox = ({ selector }) => {
+const GET_LESSONS_CLASSWORK = gql`
+	query findClassPeriod($assignedDate: Date, $period: periodName) {
+		findClassPeriod(assignedDate: $assignedDate, period: $period) {
+			_id
+			assignedLesson {
+				socraticQuestions {
+					question
+				}
+			}
+		}
+	}
+`
+
+const ClassToolsDisplayBox = ({ selector, period }) => {
+	const date = new Date().toISOString().substring(0, 10)
+
+	const { data, loading, error } = useQuery(GET_LESSONS_CLASSWORK, {
+		variables: { period: period, assignedDate: date }
+	})
+	if (loading) return null
+	if (error) console.log(error)
+
 	return (
 		<>
 			{selector === 0 ? (
-				<div
-					style={{
-						display: 'flex',
-						flexWrap: 'wrap',
-						justifyContent: 'space-evenly',
-						alignItems: 'flex-start'
-					}}>
-					<button className='whiteButton'>Button</button>
-					<button className='whiteButton'>Button</button>
-					<button className='whiteButton'>Button</button>
-					<div
-						style={{
-							height: 'auto',
-							backgroundColor: 'var(--white)',
-							width: '90%',
-							overflow: 'auto'
-						}}>
-						button
-					</div>
-				</div>
+				<SocraticQuestionPicker data={data} />
 			) : selector === 1 ? (
 				<Timer
 					initialTime={0}

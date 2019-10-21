@@ -66,7 +66,7 @@ const OldLesson = ({ match }) => {
 								oldLessonDate.substring(0, 4)}
 						</div>
 					</div>
-					<div style={{ marginLeft: '2%', overflow: 'scroll' }}>
+					<div style={{ marginLeft: '2%' }}>
 						<div style={{ fontSize: '160%', marginTop: '4%' }}>
 							Essential Question: {data.findClassPeriod.assignedLesson.essentialQuestion.question}
 						</div>

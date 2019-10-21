@@ -48,7 +48,7 @@ const StudentInfoDisplay = ({ student }) => {
 	const todaysDate = new Date()
 	const date = new Date().toISOString().substring(0, 10)
 	const { firstName, lastName, responsibilityPoints, _id, period, daysAbsent, daysLate } = student
-	console.log(student.daysLate)
+
 	const [attendanceToggle, setAttendanceToggle] = useState(false)
 	const [markStudentAbsentToggle, setMarkStudentAbsent] = useState(false)
 
