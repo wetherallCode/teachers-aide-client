@@ -5,8 +5,7 @@ const calledOnStudents = []
 
 const RandomDeskSelector = ({ eligibleStudentList, period }) => {
 	const calledOnStudentListSize = Math.ceil(eligibleStudentList.length * 0.6)
-	console.log(calledOnStudentListSize)
-
+	console.log(calledOnStudents)
 	const randomizer = () => {
 		const student = Math.floor(Math.random() * 24 + 1)
 
@@ -23,9 +22,9 @@ const RandomDeskSelector = ({ eligibleStudentList, period }) => {
 		} else return randomizer()
 	}
 
-	let rando = randomizer()
+	let randomStudent = randomizer()
 
-	return <RandomDeskSelectorDisplay student={rando} period={period} />
+	return <RandomDeskSelectorDisplay student={randomStudent} period={period} />
 }
 const RandomDeskSelectorDisplay = ({ period, student }) => {
 	return (

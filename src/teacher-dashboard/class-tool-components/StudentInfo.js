@@ -14,9 +14,11 @@ export const FIND_STUDENT_QUERY = gql`
 			period
 			daysAbsent
 			daysLate
+			desk
 		}
 	}
 `
+
 const StudentInfo = ({ match, periodName }) => {
 	const { deskNumber } = match.params
 	const numberizedDeskNumber = parseInt(deskNumber, 10)
@@ -40,7 +42,11 @@ const StudentInfo = ({ match, periodName }) => {
 						backgroundColor: 'var(--white)'
 					}}>
 					<StudentInfoDisplay student={findStudentByPeriodAndDesk} />
-					<StudentInfoMutator match={match} student={findStudentByPeriodAndDesk} />
+					<StudentInfoMutator
+						match={match}
+						student={findStudentByPeriodAndDesk}
+						periodName={periodName}
+					/>
 				</div>
 			) : (
 				<h1

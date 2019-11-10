@@ -28,13 +28,6 @@ const ClassRoomTools = ({ period }) => {
 	if (loading) return null
 	if (error) console.log(error)
 	const { classRoster } = data
-	// const absentStudentList = []
-	// const absentStudent = classRoster.filter(
-	// 	student =>
-	// 		student !== null &&
-	// 		student.daysAbsent !== null &&
-	// 		student.daysAbsent.some(day => day === todaysDate)
-	// )
 
 	const eligibleStudentList = []
 	classRoster.forEach(student => {

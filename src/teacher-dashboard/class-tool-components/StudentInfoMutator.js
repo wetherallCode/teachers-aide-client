@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import { gql } from 'apollo-boost'
-import { useMutation } from '@apollo/react-hooks'
+import { useMutation, useApolloClient } from '@apollo/react-hooks'
 
-const UPDATE_RESPONSIBILTY_POINTS = gql`
+const UPDATE_RESPONSIBILITY_POINTS = gql`
 	mutation updateResponsibilityPoints($_id: ID!, $responsibilityPoints: Int!) {
 		updateResponsibilityPoints(_id: $_id, responsibilityPoints: $responsibilityPoints) {
+			_id
 			responsibilityPoints
 		}
 	}
@@ -13,10 +14,44 @@ const UPDATE_RESPONSIBILTY_POINTS = gql`
 const StudentInfoMutator = ({ match, periodName, student }) => {
 	const [BehaviorPointsToggle, setBehaviorPointsToggle] = useState(true)
 
-	const { _id } = student
+	const { _id, desk } = student
 
-	const [updateResponsibilityPoints] = useMutation(UPDATE_RESPONSIBILTY_POINTS, {
-		refetchQueries: ['FindStudent']
+	const [updateResponsibilityPoints] = useMutation(UPDATE_RESPONSIBILITY_POINTS, {
+		update(
+			client,
+			{
+				data: { updateResponsibilityPoints }
+			}
+		) {
+			const { findStudentByPeriodAndDesk } = client.readQuery({
+				query: gql`
+					query FindStudent($period: periodName!, $desk: Int!) {
+						findStudentByPeriodAndDesk(period: $period, desk: $desk) {
+							_id
+							responsibilityPoints
+						}
+					}
+				`,
+				variables: { period: periodName, desk: desk }
+			})
+
+			const { responsibilityPoints, __typename } = findStudentByPeriodAndDesk
+
+			client.writeQuery({
+				query: gql`
+					query FindStudent($period: periodName!, $desk: Int!) {
+						findStudentByPeriodAndDesk(period: $period, desk: $desk) {
+							_id
+							responsibilityPoints
+						}
+					}
+				`,
+				variables: { period: periodName, desk: student.desk },
+				data: {
+					findStudentByPeriodAndDesk: { _id: _id, __typename, responsibilityPoints }
+				}
+			})
+		}
 	})
 
 	return (
