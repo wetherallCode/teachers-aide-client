@@ -5,7 +5,7 @@ import { useQuery } from '@apollo/react-hooks'
 import SocraticQuestionPicker from './SocraticQuestionPicker'
 
 const GET_LESSONS_CLASSWORK = gql`
-	query findClassPeriod($assignedDate: Date, $period: periodName) {
+	query findClassPeriodForClassToolsDisplayBox($assignedDate: Date, $period: periodName) {
 		findClassPeriod(assignedDate: $assignedDate, period: $period) {
 			_id
 			assignedLesson {

@@ -73,6 +73,8 @@ const Student = ({ match, history }) => {
 		// 	})
 		// }
 	})
+	if (loading) return <h1>Loading</h1>
+	if (error) console.log(error)
 
 	const { student, isEditStudentMode, removeStudentScreen } = data
 	const {

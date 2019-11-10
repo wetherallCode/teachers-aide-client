@@ -3,13 +3,14 @@ import { useQuery } from '@apollo/react-hooks'
 import { Link } from 'react-router-dom'
 import { gql } from 'apollo-boost'
 
-const GET_PERIOD_NAMES = gql`
-	query getPeriodNames {
+export const GET_PERIOD_NAMES = gql`
+	query getPeriodNamesForClassPeriodSelector {
 		periodName: __type(name: "periodName") {
 			enumValues {
 				name
 			}
 		}
+		gradeBookToggle @client
 	}
 `
 const ClassPeriodSelector = ({ match }) => {

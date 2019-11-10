@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
 import { gql } from 'apollo-boost'
 import { useMutation } from '@apollo/react-hooks'
-
-const EDIT_LESSON = gql`
-	mutation editLesson($_id: ID!, $input: LessonInput!) {
-		editLesson(_id: $_id, input: $input) {
-			_id
-			lessonName
-		}
-	}
-`
+import { EDIT_LESSON_MUTATION } from './LessonEditor'
+// const EDIT_LESSON = gql`
+// 	mutation editLessonName($_id: ID!, $input: LessonInput!) {
+// 		editLesson(_id: $_id, input: $input) {
+// 			_id
+// 			lessonName
+// 		}
+// 	}
+// `
 
 const EditLessonEssentialQuestion = ({
 	lesson,
@@ -24,7 +24,7 @@ const EditLessonEssentialQuestion = ({
 		textStructure: lesson.essentialQuestion.textStructure,
 		question: lesson.essentialQuestion.question
 	})
-	const [editLesson] = useMutation(EDIT_LESSON, {
+	const [editLesson] = useMutation(EDIT_LESSON_MUTATION, {
 		variables: {
 			_id: lesson._id,
 			input: {

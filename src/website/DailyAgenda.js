@@ -8,7 +8,7 @@ import ResourceButton from './ResourceButton'
 import OldLesson from './OldLesson'
 
 const FIND_CLASS_PERIOD = gql`
-	query findClassPeriod($assignedDate: Date, $period: periodName) {
+	query findClassPeriodForDailyAgenda($assignedDate: Date, $period: periodName) {
 		findClassPeriod(assignedDate: $assignedDate, period: $period) {
 			assignedLesson {
 				_id

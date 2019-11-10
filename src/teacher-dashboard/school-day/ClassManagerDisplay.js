@@ -4,7 +4,7 @@ import { useQuery } from '@apollo/react-hooks'
 import Attendance from './Attendance'
 
 const FIND_CLASS_PERIOD = gql`
-	query findClassPeriod($assignedDate: Date, $period: periodName) {
+	query findClassPeriodForClassManagerDisplay($assignedDate: Date, $period: periodName) {
 		findClassPeriod(assignedDate: $assignedDate, period: $period) {
 			assignedLesson {
 				_id

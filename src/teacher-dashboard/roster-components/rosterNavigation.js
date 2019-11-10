@@ -3,11 +3,11 @@ import React from 'react'
 import { useQuery, useApolloClient } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
 import { Link } from 'react-router-dom'
-
+// import { GET_PERIOD_NAMES } from '../class-tool-components/ClassPeriodSelector'
 // import * as ApolloTypes from './__generated__/getAllStudents'
 
 export const GET_PERIOD_NAMES = gql`
-	query getPeriodNames {
+	query getPeriodNamesForRosterNavigation {
 		periodName: __type(name: "periodName") {
 			enumValues {
 				name

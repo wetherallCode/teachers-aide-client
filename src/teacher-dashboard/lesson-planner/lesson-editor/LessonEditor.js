@@ -6,7 +6,7 @@ import { useQuery } from '@apollo/react-hooks'
 import EditLessonEssentialQuestion from './EditLessonEssentialQuestion'
 import EditWarmUpQuestion from './EditWarmUpQuestion'
 
-const EDIT_LESSON = gql`
+export const EDIT_LESSON_MUTATION = gql`
 	mutation editLesson($_id: ID!, $input: LessonInput!) {
 		editLesson(_id: $_id, input: $input) {
 			_id

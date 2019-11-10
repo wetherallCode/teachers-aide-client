@@ -4,7 +4,7 @@ import { useQuery } from '@apollo/react-hooks'
 import { Link } from 'react-router-dom'
 
 const GET_PERIOD_NAMES = gql`
-	query getPeriodNames {
+	query getPeriodNamesgetPeriodNamesForWebSitePeriodSelector {
 		periodName: __type(name: "periodName") {
 			enumValues {
 				name

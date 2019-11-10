@@ -33,7 +33,7 @@ const StudentInfoMutator = ({ match, periodName, student }) => {
 
 			client.writeQuery({
 				query: gql`
-					query FindStudent($period: periodName!, $desk: Int!) {
+					query updateResponsibilityPointsCacheUpdate($period: periodName!, $desk: Int!) {
 						findStudentByPeriodAndDesk(period: $period, desk: $desk) {
 							_id
 							responsibilityPoints

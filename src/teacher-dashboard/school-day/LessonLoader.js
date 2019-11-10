@@ -18,7 +18,7 @@ const GET_PERIOD_NAMES = gql`
 `
 
 const GET_UNIT_NAMES = gql`
-	query findUnitNames($gradeLevel: GradeLevelEnum) {
+	query findUnitNamesForLessonLoader($gradeLevel: GradeLevelEnum) {
 		findUnitsByGrade(gradeLevel: $gradeLevel) {
 			name
 		}

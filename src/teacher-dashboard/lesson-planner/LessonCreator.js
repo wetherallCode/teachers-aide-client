@@ -75,7 +75,7 @@ const LESSON_CREATOR_ENUM_NAMES_QUERY = gql`
 `
 
 const GET_UNIT_NAMES = gql`
-	query findUnitNames($gradeLevel: GradeLevelEnum) {
+	query findUnitNamesForLessonCreator($gradeLevel: GradeLevelEnum) {
 		findUnitsByGrade(gradeLevel: $gradeLevel) {
 			name
 		}

@@ -76,7 +76,7 @@ const StudentInfoDisplay = ({ student, periodName }) => {
 
 			client.writeQuery({
 				query: gql`
-					query findStudentToUpdate($period: periodName!, $desk: Int!) {
+					query markStudentAbsentCacheUpdate($period: periodName!, $desk: Int!) {
 						findStudentByPeriodAndDesk(period: $period, desk: $desk) {
 							_id
 							daysAbsent
@@ -106,7 +106,7 @@ const StudentInfoDisplay = ({ student, periodName }) => {
 
 			client.writeQuery({
 				query: gql`
-					query findStudentToUpdate($period: periodName!, $desk: Int!) {
+					query unduMarkStudentAbsentCacheUpdate($period: periodName!, $desk: Int!) {
 						findStudentByPeriodAndDesk(period: $period, desk: $desk) {
 							_id
 							daysAbsent
@@ -136,7 +136,7 @@ const StudentInfoDisplay = ({ student, periodName }) => {
 
 			client.writeQuery({
 				query: gql`
-					query findStudentToUpdate($period: periodName!, $desk: Int!) {
+					query markStudentLateCacheUpdate($period: periodName!, $desk: Int!) {
 						findStudentByPeriodAndDesk(period: $period, desk: $desk) {
 							_id
 							daysLate
@@ -166,7 +166,7 @@ const StudentInfoDisplay = ({ student, periodName }) => {
 			const { daysLate, responsibilityPoints, __typename } = findStudentByPeriodAndDesk
 			client.writeQuery({
 				query: gql`
-					query findStudentToUpdate($period: periodName!, $desk: Int!) {
+					query unduMarkStudentLateCacheUpdate($period: periodName!, $desk: Int!) {
 						findStudentByPeriodAndDesk(period: $period, desk: $desk) {
 							_id
 							daysLate

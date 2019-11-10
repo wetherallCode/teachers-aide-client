@@ -3,7 +3,7 @@ import { gql } from 'apollo-boost'
 import { useQuery } from '@apollo/react-hooks'
 
 const FIND_CLASS_PERIOD = gql`
-	query findClassPeriod($assignedDate: Date, $period: periodName) {
+	query findClassPeriodForOldLesson($assignedDate: Date, $period: periodName) {
 		findClassPeriod(assignedDate: $assignedDate, period: $period) {
 			assignedLesson {
 				_id
