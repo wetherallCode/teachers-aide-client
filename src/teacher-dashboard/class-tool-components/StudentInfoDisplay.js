@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import TodaysDate from '../../website/TodaysDate'
 import { gql } from 'apollo-boost'
 import { useMutation } from '@apollo/react-hooks'
+import { FIND_STUDENT_QUERY } from './StudentInfo'
 
 const MARK_STUDENT_ABSENT = gql`
 	mutation markStudentAbsent($_id: ID!, $date: Date) {
@@ -17,6 +18,7 @@ const MARK_STUDENT_ABSENT = gql`
 const UNDO_MARK_STUDENT_ABSENT = gql`
 	mutation unduMarkStudentAbsent($_id: ID!, $date: Date) {
 		unduMarkStudentAbsent(_id: $_id, date: $date) {
+			_id
 			firstName
 			lastName
 			daysAbsent
@@ -27,6 +29,7 @@ const UNDO_MARK_STUDENT_ABSENT = gql`
 const MARK_STUDENT_LATE = gql`
 	mutation markStudentLate($_id: ID!, $date: Date) {
 		markStudentLate(_id: $_id, date: $date) {
+			_id
 			firstName
 			lastName
 			daysLate
@@ -37,6 +40,7 @@ const MARK_STUDENT_LATE = gql`
 const UNDO_MARK_STUDENT_LATE = gql`
 	mutation unduMarkStudentLate($_id: ID!, $date: Date) {
 		unduMarkStudentLate(_id: $_id, date: $date) {
+			_id
 			firstName
 			lastName
 			daysLate
@@ -45,6 +49,7 @@ const UNDO_MARK_STUDENT_LATE = gql`
 `
 
 const StudentInfoDisplay = ({ student }) => {
+	console.log(FIND_STUDENT_QUERY)
 	const todaysDate = new Date()
 	const date = new Date().toISOString().substring(0, 10)
 	const { firstName, lastName, responsibilityPoints, _id, period, daysAbsent, daysLate } = student

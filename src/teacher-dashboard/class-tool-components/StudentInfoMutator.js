@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { gql } from 'apollo-boost'
 import { useMutation, useApolloClient } from '@apollo/react-hooks'
+import { FIND_STUDENT_QUERY } from './StudentInfo'
 
 const UPDATE_RESPONSIBILITY_POINTS = gql`
 	mutation updateResponsibilityPoints($_id: ID!, $responsibilityPoints: Int!) {
@@ -24,14 +25,7 @@ const StudentInfoMutator = ({ match, periodName, student }) => {
 			}
 		) {
 			const { findStudentByPeriodAndDesk } = client.readQuery({
-				query: gql`
-					query FindStudent($period: periodName!, $desk: Int!) {
-						findStudentByPeriodAndDesk(period: $period, desk: $desk) {
-							_id
-							responsibilityPoints
-						}
-					}
-				`,
+				query: FIND_STUDENT_QUERY,
 				variables: { period: periodName, desk: desk }
 			})
 
@@ -46,7 +40,7 @@ const StudentInfoMutator = ({ match, periodName, student }) => {
 						}
 					}
 				`,
-				variables: { period: periodName, desk: student.desk },
+				variables: { period: periodName, desk: desk },
 				data: {
 					findStudentByPeriodAndDesk: { _id: _id, __typename, responsibilityPoints }
 				}
