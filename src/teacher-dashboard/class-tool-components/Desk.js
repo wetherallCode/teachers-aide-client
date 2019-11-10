@@ -1,20 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useQuery } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost'
+import { FIND_STUDENT_QUERY } from './StudentInfo'
 
-const FIND_STUDENT_QUERY = gql`
-	query FindStudent($period: periodName!, $desk: Int!) {
-		findStudentByPeriodAndDesk(period: $period, desk: $desk) {
-			_id
-			firstName
-			lastName
-			responsibilityPoints
-			isHiddenFromRoster
-			daysAbsent
-		}
-	}
-`
 
 const Desk = ({ match, deskNumber, periodName }) => {
 	const { data, loading, error } = useQuery(FIND_STUDENT_QUERY, {

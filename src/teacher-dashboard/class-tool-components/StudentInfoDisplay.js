@@ -12,6 +12,7 @@ const MARK_STUDENT_ABSENT = gql`
 			firstName
 			lastName
 			period
+			daysAbsent
 		}
 	}
 `
@@ -33,6 +34,7 @@ const MARK_STUDENT_LATE = gql`
 			firstName
 			lastName
 			daysLate
+			responsibilityPoints
 		}
 	}
 `
@@ -44,12 +46,13 @@ const UNDO_MARK_STUDENT_LATE = gql`
 			firstName
 			lastName
 			daysLate
+			responsibilityPoints
 		}
 	}
 `
 
-const StudentInfoDisplay = ({ student }) => {
-	console.log(FIND_STUDENT_QUERY)
+const StudentInfoDisplay = ({ student, periodName }) => {
+	const { desk } = student
 	const todaysDate = new Date()
 	const date = new Date().toISOString().substring(0, 10)
 	const { firstName, lastName, responsibilityPoints, _id, period, daysAbsent, daysLate } = student
@@ -59,19 +62,124 @@ const StudentInfoDisplay = ({ student }) => {
 
 	const [markStudentAbsent] = useMutation(MARK_STUDENT_ABSENT, {
 		variables: { _id: _id, date: date, assignedDate: date, period: period },
-		refetchQueries: ['FindStudent', 'findEligibleStudents', 'attendanceRoster']
+		update(
+			client,
+			{
+				data: { markStudentAbsent }
+			}
+		) {
+			const { findStudentByPeriodAndDesk } = client.readQuery({
+				query: FIND_STUDENT_QUERY,
+				variables: { period: periodName, desk: desk }
+			})
+			const { daysAbsent, __typename } = findStudentByPeriodAndDesk
+
+			client.writeQuery({
+				query: gql`
+					query findStudentToUpdate($period: periodName!, $desk: Int!) {
+						findStudentByPeriodAndDesk(period: $period, desk: $desk) {
+							_id
+							daysAbsent
+						}
+					}
+				`,
+				variables: { period: periodName, desk: desk },
+				data: {
+					findStudentByPeriodAndDesk: { _id: _id, __typename, daysAbsent }
+				}
+			})
+		}
 	})
 	const [unduMarkStudentAbsent] = useMutation(UNDO_MARK_STUDENT_ABSENT, {
 		variables: { _id: _id, date: date },
-		refetchQueries: ['FindStudent', 'findEligibleStudents', 'attendanceRoster']
+		update(
+			client,
+			{
+				data: { unduMarkStudentAbsent }
+			}
+		) {
+			const { findStudentByPeriodAndDesk } = client.readQuery({
+				query: FIND_STUDENT_QUERY,
+				variables: { period: periodName, desk: desk }
+			})
+			const { daysAbsent, __typename } = findStudentByPeriodAndDesk
+
+			client.writeQuery({
+				query: gql`
+					query findStudentToUpdate($period: periodName!, $desk: Int!) {
+						findStudentByPeriodAndDesk(period: $period, desk: $desk) {
+							_id
+							daysAbsent
+						}
+					}
+				`,
+				variables: { period: periodName, desk: desk },
+				data: {
+					findStudentByPeriodAndDesk: { _id: _id, __typename, daysAbsent }
+				}
+			})
+		}
 	})
 	const [markStudentLate] = useMutation(MARK_STUDENT_LATE, {
 		variables: { _id: _id, date: date },
-		refetchQueries: ['FindStudent', 'findEligibleStudents', 'attendanceRoster']
+		update(
+			client,
+			{
+				data: { markStudentLate }
+			}
+		) {
+			const { findStudentByPeriodAndDesk } = client.readQuery({
+				query: FIND_STUDENT_QUERY,
+				variables: { period: periodName, desk: desk }
+			})
+			const { daysLate, responsibilityPoints, __typename } = findStudentByPeriodAndDesk
+
+			client.writeQuery({
+				query: gql`
+					query findStudentToUpdate($period: periodName!, $desk: Int!) {
+						findStudentByPeriodAndDesk(period: $period, desk: $desk) {
+							_id
+							daysLate
+							responsibilityPoints
+						}
+					}
+				`,
+				variables: { period: periodName, desk: desk },
+				data: {
+					findStudentByPeriodAndDesk: { _id: _id, __typename, daysLate, responsibilityPoints }
+				}
+			})
+		}
 	})
 	const [unduMarkStudentLate] = useMutation(UNDO_MARK_STUDENT_LATE, {
 		variables: { _id: _id, date: date },
-		refetchQueries: ['FindStudent', 'findEligibleStudents', 'attendanceRoster']
+		update(
+			client,
+			{
+				data: { unduMarkStudentLate }
+			}
+		) {
+			const { findStudentByPeriodAndDesk } = client.readQuery({
+				query: FIND_STUDENT_QUERY,
+				variables: { period: periodName, desk: desk }
+			})
+			const { daysLate, responsibilityPoints, __typename } = findStudentByPeriodAndDesk
+			client.writeQuery({
+				query: gql`
+					query findStudentToUpdate($period: periodName!, $desk: Int!) {
+						findStudentByPeriodAndDesk(period: $period, desk: $desk) {
+							_id
+							daysLate
+							responsibilityPoints
+						}
+					}
+				`,
+				variables: { period: periodName, desk: desk },
+				data: {
+					findStudentByPeriodAndDesk: { _id: _id, __typename, daysLate, responsibilityPoints }
+				}
+			})
+		}
 	})
 
 	return (

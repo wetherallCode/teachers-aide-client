@@ -4,6 +4,7 @@ import { useMutation, useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
 import { GET_PERIOD_NAMES } from './rosterNavigation'
 import { Link } from 'react-router-dom'
+import { GET_CLASS_ROSTER } from './rosterView'
 
 // import * as ApolloTypes from './__generated__/addStudent'
 // import GET_ALL_STUDENTS_QUERY from './dashboard'
@@ -67,8 +68,6 @@ const StudentAdder = ({ periodName, isRosterMode, unUsedDesk, roster }) => {
 		teacher,
 		isHiddenFromRoster
 	} = newStudent
-
-	console.log(newStudent)
 	const [addStudent, { error }] = useMutation(ADD_STUDENTS_MUTATION, {
 		variables: {
 			input: {
@@ -81,7 +80,23 @@ const StudentAdder = ({ periodName, isRosterMode, unUsedDesk, roster }) => {
 				isHiddenFromRoster
 			}
 		},
-		refetchQueries: ['rosterList', 'getAllStudents', 'FindStudent']
+		// refetchQueries: ['rosterList', 'getAllStudents', 'FindStudent']
+		update(
+			client,
+			{
+				data: { addStudent }
+			}
+		) {
+			const { classRoster } = client.readQuery({
+				query: GET_CLASS_ROSTER,
+				variables: { period: periodName }
+			})
+			client.writeQuery({
+				query: GET_CLASS_ROSTER,
+				variables: { period: periodName },
+				data: { classRoster: [...classRoster, addStudent] }
+			})
+		}
 	})
 
 	if (error) {

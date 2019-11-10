@@ -41,7 +41,7 @@ const StudentInfo = ({ match, periodName }) => {
 						gridGap: '2px',
 						backgroundColor: 'var(--white)'
 					}}>
-					<StudentInfoDisplay student={findStudentByPeriodAndDesk} />
+					<StudentInfoDisplay student={findStudentByPeriodAndDesk} periodName={periodName} />
 					<StudentInfoMutator
 						match={match}
 						student={findStudentByPeriodAndDesk}

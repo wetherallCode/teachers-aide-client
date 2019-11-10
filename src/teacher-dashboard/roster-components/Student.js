@@ -7,6 +7,7 @@ import EditModeForm from './EditModeForm'
 import StudentHider from './StudentHider'
 import RemoveStudentToggle from './RemoveStudentToggle'
 import Modal from 'react-modal'
+import { GET_CLASS_ROSTER } from './rosterView'
 
 export const STUDENT_INFO_QUERY = gql`
 	query getStudentInfo($_id: ID!) {
@@ -49,15 +50,29 @@ const Student = ({ match, history }) => {
 	const { data, loading, error } = useQuery(STUDENT_INFO_QUERY, {
 		variables: { _id: studentInfo }
 	})
+
 	const [removeStudent] = useMutation(REMOVE_STUDENT_MUTATION, {
 		variables: {
 			_id: studentInfo
 		},
 		refetchQueries: ['rosterList', 'getAllStudents', 'roster']
+		// update(
+		// 	client,
+		// 	{
+		// 		data: { addStudent }
+		// 	}
+		// ) {
+		// 	const { classRoster } = client.readQuery({
+		// 		query: GET_CLASS_ROSTER,
+		// 		variables: { period: periodName }
+		// 	})
+		// 	client.writeQuery({
+		// 		query: GET_CLASS_ROSTER,
+		// 		variables: { period: periodName },
+		// 		data: { classRoster: [...classRoster, addStudent] }
+		// 	})
+		// }
 	})
-
-	if (loading) return <h1>Loading</h1>
-	if (error) console.log(error)
 
 	const { student, isEditStudentMode, removeStudentScreen } = data
 	const {
@@ -72,7 +87,7 @@ const Student = ({ match, history }) => {
 		daysLate,
 		learningStyle
 	} = student
-	console.log(student)
+
 	return (
 		<>
 			<div
