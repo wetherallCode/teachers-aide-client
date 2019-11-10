@@ -38,8 +38,8 @@ const EditLessonEssentialQuestion = ({
 				warmup: lesson.warmup,
 				workDue: workDueList
 			}
-		}
-		// refetchQueries: ['findLesson']
+		},
+		refetchQueries: ['findLesson']
 	})
 	return (
 		<div style={{ display: 'grid', gridTemplateRows: '1fr 1fr' }}>
