@@ -30,6 +30,7 @@ const ClassRoomTools = ({ period }) => {
 	const { classRoster } = data
 
 	const eligibleStudentList = []
+
 	classRoster.forEach(student => {
 		if (student.daysAbsent !== null && student.daysAbsent.includes(todaysDate)) {
 			return null

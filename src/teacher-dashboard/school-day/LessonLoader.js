@@ -196,14 +196,14 @@ const LessonSelector = ({ unitName, assignedDate, grade, period }) => {
 		variables: { inUnit: unitName }
 	})
 	const displayError = error => setErrorLog(error)
-	console.log(errorLog)
+
 	const [createClassPeriod] = useMutation(CREATE_CLASS_PERIOD, {
 		onError: displayError,
 		onCompleted: () => {
 			setErrorLog(null)
 			setAssignedLesson('')
 		},
-		refetchQueries: ['findClassPeriod']
+		refetchQueries: ['findClassPeriod', 'findClassPeriodForDailyAgenda']
 	})
 
 	if (loading) return null

@@ -62,12 +62,8 @@ const StudentInfoDisplay = ({ student, periodName }) => {
 
 	const [markStudentAbsent] = useMutation(MARK_STUDENT_ABSENT, {
 		variables: { _id: _id, date: date, assignedDate: date, period: period },
-		update(
-			client,
-			{
-				data: { markStudentAbsent }
-			}
-		) {
+		refetchQueries: ['findEligibleStudents'],
+		update(client, { data: { markStudentAbsent } }) {
 			const { findStudentByPeriodAndDesk } = client.readQuery({
 				query: FIND_STUDENT_QUERY,
 				variables: { period: periodName, desk: desk }
@@ -92,12 +88,8 @@ const StudentInfoDisplay = ({ student, periodName }) => {
 	})
 	const [unduMarkStudentAbsent] = useMutation(UNDO_MARK_STUDENT_ABSENT, {
 		variables: { _id: _id, date: date },
-		update(
-			client,
-			{
-				data: { unduMarkStudentAbsent }
-			}
-		) {
+		refetchQueries: ['findEligibleStudents'],
+		update(client, { data: { unduMarkStudentAbsent } }) {
 			const { findStudentByPeriodAndDesk } = client.readQuery({
 				query: FIND_STUDENT_QUERY,
 				variables: { period: periodName, desk: desk }
@@ -122,12 +114,7 @@ const StudentInfoDisplay = ({ student, periodName }) => {
 	})
 	const [markStudentLate] = useMutation(MARK_STUDENT_LATE, {
 		variables: { _id: _id, date: date },
-		update(
-			client,
-			{
-				data: { markStudentLate }
-			}
-		) {
+		update(client, { data: { markStudentLate } }) {
 			const { findStudentByPeriodAndDesk } = client.readQuery({
 				query: FIND_STUDENT_QUERY,
 				variables: { period: periodName, desk: desk }
@@ -153,12 +140,7 @@ const StudentInfoDisplay = ({ student, periodName }) => {
 	})
 	const [unduMarkStudentLate] = useMutation(UNDO_MARK_STUDENT_LATE, {
 		variables: { _id: _id, date: date },
-		update(
-			client,
-			{
-				data: { unduMarkStudentLate }
-			}
-		) {
+		update(client, { data: { unduMarkStudentLate } }) {
 			const { findStudentByPeriodAndDesk } = client.readQuery({
 				query: FIND_STUDENT_QUERY,
 				variables: { period: periodName, desk: desk }

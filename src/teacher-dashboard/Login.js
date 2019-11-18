@@ -25,7 +25,7 @@ const UserLogin = ({ history }) => {
 	const [loginPassword, setLoginPassword] = useState('')
 
 	const [errorLog, setErrorLog] = useState(null)
-	console.log(errorLog)
+
 	const { data } = useQuery(USER_LOGIN_MODAL_TOGGLE)
 
 	const displayError = error => setErrorLog(error)

@@ -5,6 +5,7 @@ import { gql } from 'apollo-boost'
 import { GET_PERIOD_NAMES } from './rosterNavigation'
 import { Link } from 'react-router-dom'
 import { GET_CLASS_ROSTER } from './rosterView'
+import { FIND_STUDENT_QUERY } from '../class-tool-components/StudentInfo'
 
 // import * as ApolloTypes from './__generated__/addStudent'
 // import GET_ALL_STUDENTS_QUERY from './dashboard'
@@ -80,7 +81,7 @@ const StudentAdder = ({ periodName, isRosterMode, unUsedDesk, roster }) => {
 				isHiddenFromRoster
 			}
 		},
-		// refetchQueries: ['rosterList', 'getAllStudents', 'FindStudent']
+		refetchQueries: ['rosterList', 'getAllStudents', 'FindStudent'],
 		update(
 			client,
 			{

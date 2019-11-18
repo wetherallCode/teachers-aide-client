@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { gql } from 'apollo-boost'
 import { useQuery } from '@apollo/react-hooks'
 import Attendance from './Attendance'
+import ClassPeriodCreator from './ClassPeriodCreator'
 
 const FIND_CLASS_PERIOD = gql`
 	query findClassPeriodForClassManagerDisplay($assignedDate: Date, $period: periodName) {
@@ -44,6 +46,8 @@ const FIND_CLASS_PERIOD = gql`
 
 const ClassManagerDisplay = ({ match }) => {
 	const [lessonPlanDate, setLessonPlanDate] = useState(new Date().toISOString().substring(0, 10))
+	const [createClassPeriod, setCreateClassPeriod] = useState(false)
+
 	const { periods } = match.params
 
 	const { data, loading, error } = useQuery(FIND_CLASS_PERIOD, {
@@ -101,21 +105,42 @@ const ClassManagerDisplay = ({ match }) => {
 
 			{data.findClassPeriod !== null ? (
 				<div>
-					<div style={{ margin: '5%' }}>
+					<div
+						style={{
+							color: 'var(--white)',
+							backgroundColor: 'var(--blue)',
+							height: '3rem',
+							fontSize: '150%',
+							display: 'grid',
+							gridTemplateColumns: '1fr 4fr',
+							margin: '5%'
+							// justifyContent: 'flex-start',
+							// alignItems: 'center'
+						}}>
+						{/* <TodaysDate date={lessonPlanDate} /> */}
 						<div
 							style={{
-								color: 'var(--white)',
-								backgroundColor: 'var(--blue)',
-								height: '3rem',
-								fontSize: '150%',
+								marginLeft: '10%',
 								display: 'flex',
 								justifyContent: 'flex-start',
 								alignItems: 'center'
 							}}>
-							{/* <TodaysDate date={lessonPlanDate} /> */}
-							<div style={{ marginLeft: '2%' }}>Lesson Plan</div>
+							Lesson Plan
 						</div>
 						<div
+							style={{
+								backgroundColor: 'var(--white)',
+								color: 'var(--blue)',
+								border: '3px solid var(--blue)',
+								display: 'flex',
+								justifyContent: 'flex-end',
+								alignItems: 'center',
+								paddingRight: '2%'
+							}}>
+							<div>{data.findClassPeriod.assignedLesson.lessonName}</div>
+						</div>
+
+						{/* <div
 							style={{
 								color: 'var(--blue)',
 								textAlign: 'center',
@@ -183,38 +208,90 @@ const ClassManagerDisplay = ({ match }) => {
 									})}
 								</div>
 							</div>
-						</div>
+						</div>*/}
 					</div>
 				</div>
 			) : (
 				<div
 					style={{
-						display: 'flex',
-						flexDirection: 'column',
-						justifyContent: 'center',
-						alignItems: 'center',
-						height: '40vh',
-						marginTop: '5%',
-						marginLeft: '15%',
-						marginRight: '15%',
-						marginBottom: '15%',
-						border: '3px solid var(--blue)'
+						color: 'var(--white)',
+						backgroundColor: 'var(--blue)',
+						height: '3rem',
+						fontSize: '150%',
+						display: 'grid',
+						gridTemplateColumns: '1fr 4fr',
+						margin: '5%'
+						// justifyContent: 'flex-start',
+						// alignItems: 'center'
 					}}>
+					{/* <TodaysDate date={lessonPlanDate} /> */}
 					<div
 						style={{
-							color: 'var(--blue)',
-							fontSize: '130%'
+							marginLeft: '10%',
+							display: 'flex',
+							justifyContent: 'flex-start',
+							alignItems: 'center'
 						}}>
-						No Lesson Has Been Assigned for this date:{' '}
-						{lessonPlanDate.substring(5, 7) +
-							'/' +
-							lessonPlanDate.substring(8, 10) +
-							'/' +
-							lessonPlanDate.substring(0, 4)}
+						Lesson Plan
+					</div>
+					<div
+						style={{
+							backgroundColor: 'var(--white)',
+							color: 'var(--blue)',
+							border: '3px solid var(--blue)',
+							display: 'flex',
+							justifyContent: 'flex-end',
+							alignItems: 'center',
+							paddingRight: '2%'
+						}}>
+						<div onClick={() => setCreateClassPeriod(true)}>
+							No Lesson Scheduled - Click to Create
+						</div>
 					</div>
 				</div>
 			)}
-			<div>Study Guide</div>
+			<>
+				{createClassPeriod && (
+					<div style={{ margin: '5%', border: '3px solid var(--blue)', height: '30vh' }}>
+						<div
+							style={{
+								fontSize: '150%',
+								display: 'grid',
+								gridTemplateRows: '1fr 4fr'
+							}}>
+							<div
+								style={{
+									color: 'var(--white)',
+									backgroundColor: 'var(--blue)',
+									display: 'grid',
+									gridTemplateColumns: '2fr 5fr',
+									height: '3rem',
+									paddingLeft: '1.5%'
+								}}>
+								<div
+									style={{
+										display: 'flex',
+										justifyContent: 'flex-start',
+										alignItems: 'center'
+									}}>
+									Create Class Period
+								</div>
+								<div
+									style={{
+										display: 'flex',
+										justifyContent: 'flex-end',
+										alignItems: 'center',
+										marginRight: '2%'
+									}}
+									onClick={() => setCreateClassPeriod(false)}>
+									Cancel
+								</div>
+							</div>
+							<ClassPeriodCreator></ClassPeriodCreator>
+						</div>
+					</div>
+				)}
+			</>
 			<Attendance date={lessonPlanDate} period={periods}></Attendance>
 		</div>
 	)

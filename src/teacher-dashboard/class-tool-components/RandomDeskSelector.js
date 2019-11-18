@@ -1,11 +1,22 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { gql } from 'apollo-boost'
+import { useQuery } from '@apollo/react-hooks'
 
 const calledOnStudents = []
 
+const CALLED_ON_STUDENT_LIST = gql`
+	query calledOnStudentList {
+		calledOnStudentList @client
+	}
+`
+
 const RandomDeskSelector = ({ eligibleStudentList, period }) => {
+	// const { data, loading, error } = useQuery(CALLED_ON_STUDENT_LIST)
+	// console.log(data)
+
 	const calledOnStudentListSize = Math.ceil(eligibleStudentList.length * 0.6)
-	console.log(calledOnStudents)
+
 	const randomizer = () => {
 		const student = Math.floor(Math.random() * 24 + 1)
 

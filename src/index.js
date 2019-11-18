@@ -18,7 +18,8 @@ const defaultState = {
 	removeLessonModal: false,
 	userLogin: true,
 	createLessonMode: false,
-	addUnitMode: false
+	addUnitMode: false,
+	calledOnStudentsList: []
 }
 
 const client = new ApolloClient({
@@ -32,6 +33,7 @@ const client = new ApolloClient({
 		resolvers: {}
 	}
 })
+console.log(client)
 
 render(
 	<ApolloProvider client={client}>
