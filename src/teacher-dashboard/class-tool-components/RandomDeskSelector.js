@@ -1,8 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+const calledOnStudents = []
+
 const RandomDeskSelector = ({ eligibleStudentList, period }) => {
-	const calledOnStudents = []
 	const calledOnStudentListSize = Math.ceil(eligibleStudentList.length * 0.6)
 
 	const randomizer = () => {
