@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { Route, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import RandomDeskSelector from './RandomDeskSelector'
 import { gql } from 'apollo-boost'
 import { useQuery } from '@apollo/react-hooks'
 import ClassToolsDisplayBox from './ClassToolsDisplayBox'
+import RandomStudentSelector from './RandomStudentSelector'
 
 const FIND_ELIGIBLE_STUDENTS_QUERY = gql`
 	query findEligibleStudents($period: periodName!) {
@@ -15,8 +16,15 @@ const FIND_ELIGIBLE_STUDENTS_QUERY = gql`
 		}
 	}
 `
+export const FIND_STUDENT_QUERY = gql`
+	query findStudentsNames($period: periodName!, $desk: Int!) {
+		findStudentByPeriodAndDesk(period: $period, desk: $desk) {
+			firstName
+		}
+	}
+`
 
-const ClassRoomTools = ({ period }) => {
+const ClassRoomTools = ({ period, match }) => {
 	const todaysDate = new Date().toISOString().substring(0, 10)
 	const [selectorSwitch, setSelectorSwitch] = useState(0)
 	if (selectorSwitch > 2) setSelectorSwitch(0)
@@ -52,7 +60,12 @@ const ClassRoomTools = ({ period }) => {
 					backgroundColor: 'var(--blue)'
 				}}>
 				{eligibleStudentList.length > 2 && (
-					<RandomDeskSelector eligibleStudentList={eligibleStudentList} period={period} />
+					<RandomStudentSelector
+						eligibleStudentList={eligibleStudentList}
+						period={period}
+						match={match}
+					/>
+					// <RandomDeskSelector eligibleStudentList={eligibleStudentList} period={period} />
 				)}
 			</div>
 			<div style={{ display: 'grid', gridTemplateRows: '1fr 3fr' }}>

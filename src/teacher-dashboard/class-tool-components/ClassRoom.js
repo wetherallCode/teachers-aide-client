@@ -6,9 +6,8 @@ import StudentInfo from './StudentInfo'
 
 const ClassRoom = ({ match }) => {
 	const { url } = match
-
 	const { periodName } = match.params
-	// console.log(periodName)
+
 	return (
 		<>
 			<div
@@ -20,7 +19,7 @@ const ClassRoom = ({ match }) => {
 					height: '100vh'
 				}}>
 				<DeskSelector match={match} periodName={periodName} />
-				<ClassRoomTools period={periodName} />
+				<ClassRoomTools period={periodName} match={match} />
 			</div>
 			<Route
 				path={`${url}/:deskNumber`}
