@@ -15,13 +15,15 @@ const useRollingArray = maxLength => {
 	]
 }
 
-const RandomStudentSelector = ({ eligibleStudentList, period, match }) => {
-	console.log(match)
-	const [selectedStudents, registerNewStudent] = useRollingArray(eligibleStudentList.length * 0.6)
-	console.log('SelectedStudents: ', selectedStudents)
+const RandomStudentSelector = ({ eligibleStudentList, period }) => {
+	const [selectedStudents, registerNewStudent] = useRollingArray(
+		Math.floor(eligibleStudentList.length * 0.6)
+	)
+
 	const [currentStudent, setCurrentStudent] = useState(
 		Math.floor(Math.random() * eligibleStudentList.length + 1)
 	)
+
 	const selectNewStudent = useCallback(() => {
 		// Rather than randomising until we get a new student, instead
 		// generate the list of available students by excluding the
@@ -29,14 +31,12 @@ const RandomStudentSelector = ({ eligibleStudentList, period, match }) => {
 		const availableStudents = eligibleStudentList.filter(
 			student => !selectedStudents.includes(student)
 		)
-		console.log('Available Student List: ', availableStudents)
 		const randomStudent = availableStudents[Math.floor(Math.random() * availableStudents.length)]
 		// Add the new student to our rolling array
 		registerNewStudent(randomStudent)
 		// Update the react component;
 		setCurrentStudent(randomStudent)
-	}, [selectedStudents, currentStudent])
-	console.log('Current Student: ', currentStudent)
+	}, [selectedStudents, eligibleStudentList, registerNewStudent])
 
 	return (
 		<Link to={`/dashboard/classroom/class-period-selector/${period}/${currentStudent}`}>

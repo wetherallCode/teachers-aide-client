@@ -30,10 +30,11 @@ const StudentInfo = ({ match, periodName }) => {
 	if (error) console.log(error)
 
 	const { findStudentByPeriodAndDesk } = data
+	console.log(findStudentByPeriodAndDesk === null)
 
 	return (
 		<>
-			{findStudentByPeriodAndDesk ? (
+			{findStudentByPeriodAndDesk !== null ? (
 				<div
 					style={{
 						display: 'grid',
@@ -49,14 +50,16 @@ const StudentInfo = ({ match, periodName }) => {
 					/>
 				</div>
 			) : (
-				<h1
+				<div
 					style={{
-						textDecoration: 'underline',
-						textAlign: 'center',
-						textShadow: '2px 2px 2x black'
+						display: 'grid',
+						gridTemplateRows: '2fr 3fr',
+						gridGap: '2px',
+						backgroundColor: 'var(--white)'
 					}}>
-					No Student
-				</h1>
+					<div style={{ backgroundColor: 'var(--blue)' }}></div>
+					<div style={{ backgroundColor: 'var(--grey)' }}></div>
+				</div>
 			)}
 		</>
 	)

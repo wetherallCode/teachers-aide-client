@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { useQuery } from '@apollo/react-hooks'
 import { FIND_STUDENT_QUERY } from './StudentInfo'
 
-
 const Desk = ({ match, deskNumber, periodName }) => {
 	const { data, loading, error } = useQuery(FIND_STUDENT_QUERY, {
 		variables: { period: periodName, desk: deskNumber }
@@ -52,7 +51,7 @@ const Desk = ({ match, deskNumber, periodName }) => {
 					</button>
 				</Link>
 			) : (
-				<Link className='classroom-desks' to={`${url}`}>
+				<Link className='classroom-desks' to={`${url}/${deskNumber}`}>
 					<button
 						style={{
 							width: '100%',
