@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import TodaysDate from '../../website/TodaysDate'
 import { gql } from 'apollo-boost'
@@ -52,13 +52,22 @@ const UNDO_MARK_STUDENT_LATE = gql`
 `
 
 const StudentInfoDisplay = ({ student, periodName }) => {
-	const { desk } = student
-	const todaysDate = new Date()
-	const date = new Date().toISOString().substring(0, 10)
-	const { firstName, lastName, responsibilityPoints, _id, period, daysAbsent, daysLate } = student
-
 	const [attendanceToggle, setAttendanceToggle] = useState(false)
 	const [markStudentAbsentToggle, setMarkStudentAbsent] = useState(false)
+
+	const {
+		firstName,
+		lastName,
+		responsibilityPoints,
+		_id,
+		period,
+		daysAbsent,
+		daysLate,
+		desk
+	} = student
+
+	const todaysDate = new Date()
+	const date = new Date().toISOString().substring(0, 10)
 
 	const [markStudentAbsent] = useMutation(MARK_STUDENT_ABSENT, {
 		variables: { _id: _id, date: date, assignedDate: date, period: period },

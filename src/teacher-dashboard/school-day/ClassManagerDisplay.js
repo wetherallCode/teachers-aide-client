@@ -1,13 +1,21 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { gql } from 'apollo-boost'
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery, useMutation } from '@apollo/react-hooks'
 import Attendance from './Attendance'
 import ClassPeriodCreator from './ClassPeriodCreator'
+import AssignmentRemover from './AssignmentRemover'
+import Modal from 'react-responsive-modal'
 
 const FIND_CLASS_PERIOD = gql`
 	query findClassPeriodForClassManagerDisplay($assignedDate: Date, $period: periodName) {
+		periodName: __type(name: "periodName") {
+			enumValues {
+				name
+			}
+		}
 		findClassPeriod(assignedDate: $assignedDate, period: $period) {
+			_id
 			assignedLesson {
 				_id
 				lessonName
@@ -30,23 +38,25 @@ const FIND_CLASS_PERIOD = gql`
 					partOfSpeech
 					definition
 				}
-				workDue {
-					type
-					readingPages
-					readingSections
-					dueDate
-				}
 				studyGuideQuestions
 			}
 			period
 			assignedDate
+			assignedHomework {
+				assignedDate
+				dueDate
+				assignmentType
+				readingPages
+				readingSections
+			}
 		}
 	}
 `
 
 const ClassManagerDisplay = ({ match }) => {
 	const [lessonPlanDate, setLessonPlanDate] = useState(new Date().toISOString().substring(0, 10))
-	const [createClassPeriod, setCreateClassPeriod] = useState(false)
+	const [createClassPeriod, setCreateClassPeriod] = useState(true)
+	const [removeLesson, setRemoveLesson] = useState(false)
 
 	const { periods } = match.params
 
@@ -137,78 +147,39 @@ const ClassManagerDisplay = ({ match }) => {
 								alignItems: 'center',
 								paddingRight: '2%'
 							}}>
-							<div>{data.findClassPeriod.assignedLesson.lessonName}</div>
-						</div>
-
-						{/* <div
-							style={{
-								color: 'var(--blue)',
-								textAlign: 'center',
-								fontSize: '150%'
-							}}>
-							<div
-								id='lessonGrid'
+							<div>{data.findClassPeriod.assignedLesson.lessonName} </div>
+							<Modal
 								style={{
-									display: 'grid',
-									gridTemplateRows: '1fr 1fr ',
-									gridTemplateColumns: '1fr 1fr 1fr 1fr',
-									backgroundColor: 'var(--blue)',
-									border: '3px solid var(--blue)',
-									gridGap: '3px'
+									overlay: {
+										backgroundColor: 'var(--darkGrey)'
+									},
+									content: {
+										// marginTop: '10%',
+										marginLeft: '20%',
+										width: '40rem',
+										height: '25rem'
+									}
+								}}
+								isOpen={removeLesson}
+								open={removeLesson}
+								onClose={() => setRemoveLesson(false)}
+								onRequestClose={() => setRemoveLesson(false)}>
+								<div style={{ width: '30rem', height: '20rem' }}>
+									<AssignmentRemover
+										_id={data.findClassPeriod._id}
+										removeLesson={removeLesson}
+										setRemoveLesson={setRemoveLesson}
+									/>
+								</div>
+							</Modal>
+							<div
+								style={{ color: 'var(--red)', marginLeft: '2%' }}
+								onClick={() => {
+									setRemoveLesson(true)
 								}}>
-								<div style={{ backgroundColor: 'var(--white)' }}>
-									<h3 style={{ textAlign: 'center', textDecoration: 'underline' }}>Unit</h3>
-									{data.findClassPeriod.assignedLesson.inUnit.name}
-								</div>
-								<div style={{ backgroundColor: 'var(--white)' }}>
-									<h3 style={{ textAlign: 'center', textDecoration: 'underline' }}>Lesson</h3>
-									{data.findClassPeriod.assignedLesson.lessonName}
-								</div>
-								<div style={{ backgroundColor: 'var(--white)' }}>
-									<h3 style={{ textAlign: 'center', textDecoration: 'underline' }}>Warm Up</h3>
-									{data.findClassPeriod.assignedLesson.warmup}
-								</div>
-								<div style={{ backgroundColor: 'var(--white)' }}>
-									<h3 style={{ textAlign: 'center', textDecoration: 'underline' }}>
-										Essential Question
-									</h3>
-									{data.findClassPeriod.assignedLesson.essentialQuestion.question}
-								</div>
-								<div style={{ backgroundColor: 'var(--white)' }}>
-									<h3 style={{ textAlign: 'center', textDecoration: 'underline' }}>Readings</h3>
-									<div>{data.findClassPeriod.assignedLesson.readings.pages}</div>
-									<div>{data.findClassPeriod.assignedLesson.readings.sections}</div>
-								</div>
-								<div style={{ backgroundColor: 'var(--white)' }}>
-									<h3 style={{ textAlign: 'center', textDecoration: 'underline' }}>
-										Socratic Questions
-									</h3>
-									{data.findClassPeriod.assignedLesson.socraticQuestions.map((question, i) => (
-										<div key={i}>{question.question}</div>
-									))}
-								</div>
-								<div style={{ backgroundColor: 'var(--white)' }}>
-									<h3 style={{ textAlign: 'center', textDecoration: 'underline' }}>Vocab</h3>
-									{data.findClassPeriod.assignedLesson.vocabWords.map((word, i) => (
-										<div key={i}>{word.word + ': ' + word.definition}</div>
-									))}
-								</div>
-								<div style={{ backgroundColor: 'var(--white)' }}>
-									{data.findClassPeriod.assignedLesson.workDue.map((assignment, i) => {
-										return (
-											<div key={i}>
-												{' '}
-												<h3 style={{ textAlign: 'center', textDecoration: 'underline' }}>
-													Homework
-												</h3>
-												<div>{assignment.type}</div>
-												<div>{assignment.readingPages + ': ' + assignment.readingSections}</div>
-											</div>
-										)
-									})}
-								</div>
+								Remove
 							</div>
-						</div>*/}
+						</div>
 					</div>
 				</div>
 			) : (
@@ -244,20 +215,21 @@ const ClassManagerDisplay = ({ match }) => {
 							alignItems: 'center',
 							paddingRight: '2%'
 						}}>
-						<div onClick={() => setCreateClassPeriod(true)}>
+						{/* <div onClick={() => setCreateClassPeriod(true)}>
 							No Lesson Scheduled - Click to Create
-						</div>
+						</div> */}
+						<div>No Lesson Scheduled</div>
 					</div>
 				</div>
 			)}
-			<>
-				{createClassPeriod && (
-					<div style={{ margin: '5%', border: '3px solid var(--blue)', height: '30vh' }}>
+			<div>
+				{createClassPeriod && data.findClassPeriod === null && (
+					<div style={{ margin: '5%', border: '3px solid var(--blue)', height: '30%' }}>
 						<div
 							style={{
 								fontSize: '150%',
 								display: 'grid',
-								gridTemplateRows: '1fr 4fr'
+								gridTemplateRows: '1fr 2fr'
 							}}>
 							<div
 								style={{
@@ -276,22 +248,16 @@ const ClassManagerDisplay = ({ match }) => {
 									}}>
 									Create Class Period
 								</div>
-								<div
-									style={{
-										display: 'flex',
-										justifyContent: 'flex-end',
-										alignItems: 'center',
-										marginRight: '2%'
-									}}
-									onClick={() => setCreateClassPeriod(false)}>
-									Cancel
-								</div>
 							</div>
-							<ClassPeriodCreator></ClassPeriodCreator>
+							<ClassPeriodCreator
+								period={periods}
+								date={lessonPlanDate}
+								allClassperiods={data.periodName.enumValues.map(period => period.name)}
+							/>
 						</div>
 					</div>
 				)}
-			</>
+			</div>
 			<Attendance date={lessonPlanDate} period={periods}></Attendance>
 		</div>
 	)

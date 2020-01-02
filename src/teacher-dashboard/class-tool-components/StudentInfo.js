@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { gql } from 'apollo-boost'
 import { useQuery } from '@apollo/react-hooks'
 import StudentInfoDisplay from './StudentInfoDisplay'
@@ -15,11 +15,23 @@ export const FIND_STUDENT_QUERY = gql`
 			daysAbsent
 			daysLate
 			desk
+			hasAssignments {
+				assignmentType
+				assignedDate
+				dueDate
+				readingPages
+				readingSections
+				missing
+				exempt
+				score
+			}
 		}
 	}
 `
 
-const StudentInfo = ({ match, periodName }) => {
+const StudentInfo = ({ match, periodName, teacherOptions, setTeacherOptions, todaysDate }) => {
+	// const [criticalThinkingScoreValue, setCriticalThinkingScoreValue] = useState(0)
+
 	const { deskNumber } = match.params
 	const numberizedDeskNumber = parseInt(deskNumber, 10)
 
@@ -30,7 +42,6 @@ const StudentInfo = ({ match, periodName }) => {
 	if (error) console.log(error)
 
 	const { findStudentByPeriodAndDesk } = data
-	console.log(findStudentByPeriodAndDesk === null)
 
 	return (
 		<>
@@ -47,6 +58,9 @@ const StudentInfo = ({ match, periodName }) => {
 						match={match}
 						student={findStudentByPeriodAndDesk}
 						periodName={periodName}
+						todaysDate={todaysDate}
+						teacherOptions={teacherOptions}
+						setTeacherOptions={setTeacherOptions}
 					/>
 				</div>
 			) : (

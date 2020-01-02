@@ -17,7 +17,8 @@ const GET_LESSONS_CLASSWORK = gql`
 	}
 `
 
-const ClassToolsDisplayBox = ({ selector, period }) => {
+const ClassToolsDisplayBox = ({ selector, period, teacherOptions, setTeacherOptions }) => {
+	console.log(teacherOptions)
 	const date = new Date().toISOString().substring(0, 10)
 
 	const { data, loading, error } = useQuery(GET_LESSONS_CLASSWORK, {
@@ -98,18 +99,30 @@ const ClassToolsDisplayBox = ({ selector, period }) => {
 						display: 'flex',
 						flexWrap: 'wrap',
 						justifyContent: 'space-evenly',
-						alignItems: 'flex-start'
+						alignItems: 'flex-start',
+						marginTop: '5%',
+						fontSize: '140%'
 					}}>
-					<button className='whiteButton' style={{ backgroundColor: 'var(--grey)' }}>
-						Button
+					<button
+						className='whiteButton'
+						style={{ backgroundColor: 'var(--grey)' }}
+						onClick={() =>
+							setTeacherOptions({ behaviorPointsToggle: true, criticalThinkingToggle: false })
+						}>
+						Behavior Points
 					</button>
-					<button className='whiteButton' style={{ backgroundColor: 'var(--grey)' }}>
-						Button
+					<button
+						className='whiteButton'
+						style={{ backgroundColor: 'var(--grey)' }}
+						onClick={() =>
+							setTeacherOptions({ behaviorPointsToggle: false, criticalThinkingToggle: true })
+						}>
+						Critical Thinking
 					</button>
-					<button className='whiteButton' style={{ backgroundColor: 'var(--grey)' }}>
+					{/* <button className='whiteButton' style={{ backgroundColor: 'var(--grey)' }}>
 						Button
-					</button>
-					<div
+					</button> */}
+					{/* <div
 						style={{
 							height: 'auto',
 							backgroundColor: 'var(--white)',
@@ -117,7 +130,7 @@ const ClassToolsDisplayBox = ({ selector, period }) => {
 							overflow: 'auto'
 						}}>
 						button
-					</div>
+					</div> */}
 				</div>
 			) : (
 				<div
