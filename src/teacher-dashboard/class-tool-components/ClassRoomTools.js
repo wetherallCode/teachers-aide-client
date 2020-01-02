@@ -24,7 +24,8 @@ export const FIND_STUDENT_QUERY = gql`
 	}
 `
 
-const ClassRoomTools = ({ period, match }) => {
+const ClassRoomTools = ({ period, match, teacherOptions, setTeacherOptions }) => {
+	console.log(teacherOptions)
 	const todaysDate = new Date().toISOString().substring(0, 10)
 	const [selectorSwitch, setSelectorSwitch] = useState(0)
 	if (selectorSwitch > 2) setSelectorSwitch(0)
@@ -93,7 +94,12 @@ const ClassRoomTools = ({ period, match }) => {
 						Period {period}
 					</button>
 				</Link>
-				<ClassToolsDisplayBox selector={selectorSwitch} period={period} />
+				<ClassToolsDisplayBox
+					selector={selectorSwitch}
+					period={period}
+					teacherOptions={teacherOptions}
+					setTeacherOptions={setTeacherOptions}
+				/>
 			</div>
 
 			<div

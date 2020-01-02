@@ -19,7 +19,6 @@ const defaultState = {
 	userLogin: true,
 	createLessonMode: false,
 	addUnitMode: false,
-	behaviorPointsToggle: true,
 	studentAssignmentToggle: false
 }
 
