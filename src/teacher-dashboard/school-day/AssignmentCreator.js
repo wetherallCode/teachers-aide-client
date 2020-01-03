@@ -35,6 +35,7 @@ const AssignmentCreator = ({
 	lessonValues,
 	date,
 	mulitplePeriodSelect,
+	fakeClassPeriodSet
 }) => {
 	const [submitStatus, setSubmitStatus] = useState(false)
 	const [errorLog, setErrorLog] = useState(null)
@@ -51,7 +52,7 @@ const AssignmentCreator = ({
 
 	const createClasses = e => {
 		e.preventDefault()
-		mulitplePeriodSelect.forEach(classPeriod =>
+		fakeClassPeriodSet.forEach(classPeriod =>
 			createClass({
 				variables: {
 					input: {

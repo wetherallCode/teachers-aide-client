@@ -4,6 +4,7 @@ import { useMutation, useQuery } from '@apollo/react-hooks'
 import { ClassPeriodContext } from './ClassPeriodContext'
 import AssignmentLoaderDisplay from './AssignmentLoaderDisplay'
 import AssignmentCreator from './AssignmentCreator'
+import MultipleClassLoader from './MultipleClassLoader'
 
 const GET_GRADE_LEVELS = gql`
 	query getClassPeriodInputs {
@@ -115,6 +116,7 @@ const ClassPeriodCreator = ({ period, date, allClassperiods }) => {
 					lessonValues={lessonValues}
 					date={date}
 					allClassperiods={allClassperiods}
+					fakeClassPeriodSet={['A_12', 'A_34', 'A_67']}
 				/>
 			)}
 		</>
@@ -323,24 +325,16 @@ const AssignmentLoader = ({
 				mulitplePeriodSelect={mulitplePeriodSelect}
 				setMulitplePeriodSelect={setMulitplePeriodSelect}
 			/>
-			<>
-				<div style={{ textAlign: 'center' }}>Load Multiple Classes</div>
-				<div>
-					{allClassperiods.map(classPeriod => (
-						<div key={classPeriod}>
-							<div>{classPeriod}</div>
-							<input
-								type='checkbox'
-								value={classPeriod}
-								onChange={e => {
-									e.preventDefault()
-									setMulitplePeriodSelect(list => [e.target.value].concat(list))
-								}}
-							/>
-						</div>
-					))}
-				</div>
-			</>
+			<MultipleClassLoader
+				data={data}
+				date={date}
+				lessonValues={lessonValues}
+				assignmentList={assignmentList}
+				setAssignmentList={setAssignmentList}
+				mulitplePeriodSelect={mulitplePeriodSelect}
+				setMulitplePeriodSelect={setMulitplePeriodSelect}
+				allClassperiods={allClassperiods}
+			/>
 		</div>
 	)
 }

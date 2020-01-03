@@ -167,6 +167,7 @@ const ClassManagerDisplay = ({ match }) => {
 								<div style={{ width: '30rem', height: '20rem' }}>
 									<AssignmentRemover
 										_id={data.findClassPeriod._id}
+										date={lessonPlanDate}
 										removeLesson={removeLesson}
 										setRemoveLesson={setRemoveLesson}
 									/>
