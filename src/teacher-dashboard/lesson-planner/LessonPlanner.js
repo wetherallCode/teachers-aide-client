@@ -20,7 +20,7 @@ const LessonPlanner = ({ match }) => {
 	return (
 		<LessonPlannerNavBar
 			match={match}
-			gradeLevels={data.gradeLevels.enumValues.map(grade => grade.name)}
+			// gradeLevels={data.gradeLevels.enumValues.map(grade => grade.name)}
 		/>
 	)
 }
@@ -52,11 +52,33 @@ const LessonPlannerNavBar = ({ match, gradeLevels }) => {
 							fontSize: '150%',
 							marginLeft: '1%'
 						}}
-						to={`${url}/${gradeLevels[0]}`}>
+						to={`${url}`}>
 						Lesson Manager
 					</Link>
 				</div>
 				<div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+					<Link
+						style={{
+							color: 'var(--white)',
+							textDecoration: 'none',
+							fontSize: '150%',
+							marginRight: '2%'
+						}}
+						to={`${url}/lesson-plan-creator`}>
+						Lesson Planner
+					</Link>
+					<Link
+						style={{
+							color: 'var(--white)',
+							textDecoration: 'none',
+							fontSize: '150%',
+							marginRight: '2%'
+						}}
+						to={`${url}`}>
+						Lesson Editor
+					</Link>
+				</div>
+				{/* <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
 					{gradeLevels.map(grade => (
 						<Link
 							style={{
@@ -70,7 +92,7 @@ const LessonPlannerNavBar = ({ match, gradeLevels }) => {
 							{grade === 'EIGHTH' ? '8th' : grade === 'SEVENTH' ? '7th' : '6th'} Grade
 						</Link>
 					))}
-				</div>
+				</div> */}
 			</div>
 		</div>
 	)

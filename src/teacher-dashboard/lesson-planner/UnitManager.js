@@ -4,7 +4,7 @@ import { useQuery, useApolloClient } from '@apollo/react-hooks'
 import { Link, Route } from 'react-router-dom'
 import LessonInfoScreen from './LessonInfoScreen'
 import LessonsInUnit from './LessonsInUnit'
-import CreateUnit from './CreateUnit'
+import CreateUnit from './lesson-creater/UnitCreater'
 
 const FIND_ALL_LESSONS_QUERY = gql`
 	query findAllLessons {

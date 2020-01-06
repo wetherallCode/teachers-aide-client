@@ -68,7 +68,6 @@ const LessonEditor = ({ lesson, match }) => {
 	})
 	lesson.workDue.forEach(assignment => {
 		const modifiedAssignment = {
-			dueDate: assignment.dueDate,
 			readingPages: assignment.readingPages,
 			readingSections: assignment.readingSections,
 			type: assignment.type

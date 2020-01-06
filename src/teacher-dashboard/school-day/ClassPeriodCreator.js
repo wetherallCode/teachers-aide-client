@@ -47,7 +47,6 @@ const GET_LESSON_BY_NAME = gql`
 				type
 				readingPages
 				readingSections
-				dueDate
 			}
 		}
 	}
@@ -82,7 +81,7 @@ const ClassPeriodCreator = ({ period, date, allClassperiods }) => {
 	const [lessonValues, setLessonValues] = useState({ grade: '', lessonName: '' })
 	const [assignmentList, setAssignmentList] = useState([])
 	const [mulitplePeriodSelect, setMulitplePeriodSelect] = useState([period])
-	console.log(mulitplePeriodSelect)
+
 	const { data, loading, error } = useQuery(GET_GRADE_LEVELS)
 	if (loading) return <h2 style={{ paddingLeft: '2%', color: 'var(--blue)' }}>Loading</h2>
 	if (error) console.log(error)
@@ -301,7 +300,6 @@ const AssignmentLoader = ({
 	setMulitplePeriodSelect,
 	allClassperiods
 }) => {
-	console.log(mulitplePeriodSelect)
 	const { grade, lessonName } = lessonValues
 	const { data, loading, error } = useQuery(GET_LESSON_BY_NAME, { variables: { name: lessonName } })
 
@@ -334,6 +332,7 @@ const AssignmentLoader = ({
 				mulitplePeriodSelect={mulitplePeriodSelect}
 				setMulitplePeriodSelect={setMulitplePeriodSelect}
 				allClassperiods={allClassperiods}
+				period={period}
 			/>
 		</div>
 	)

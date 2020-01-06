@@ -37,6 +37,7 @@ const AssignmentCreator = ({
 	mulitplePeriodSelect,
 	fakeClassPeriodSet
 }) => {
+	console.log(mulitplePeriodSelect, assignmentList)
 	const [submitStatus, setSubmitStatus] = useState(false)
 	const [errorLog, setErrorLog] = useState(null)
 

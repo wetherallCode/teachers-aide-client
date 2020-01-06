@@ -3,10 +3,8 @@ import { gql } from 'apollo-boost'
 import { useMutation } from '@apollo/react-hooks'
 
 const REMOVE_CLASS_PERIOD = gql`
-	mutation removeClassPeriodForRemoveClassPeriodButton($_id: ID!) # , $date: Date!
-	{
-		removeClassPeriod(_id: $_id) #  date: $date
-		{
+	mutation removeClassPeriodForRemoveClassPeriodButton($input: RemoveClassPeriodInput!) {
+		removeClassPeriod(input: $input) {
 			classPeriod {
 				_id
 			}
@@ -15,14 +13,16 @@ const REMOVE_CLASS_PERIOD = gql`
 	}
 `
 
-const AssignmentRemover = ({ _id, date, removeLesson, setRemoveLesson }) => {
+const AssignmentRemover = ({ _id, date, removeLesson, setRemoveLesson, period }) => {
 	const [withAssignmentsInput, setWithAssignmentsInput] = useState(false)
-	console.log(withAssignmentsInput)
 	const [removeClassPeriod] = useMutation(REMOVE_CLASS_PERIOD, {
 		variables: {
-			_id: _id
-			//  date: date,
-			//  withAssignments: withAssignmentsInput
+			input: {
+				_id: _id,
+				date: date,
+				withAssignments: withAssignmentsInput,
+				period: period
+			}
 		},
 		onCompleted: data => {
 			console.log(data.removeClassPeriod)
@@ -33,11 +33,10 @@ const AssignmentRemover = ({ _id, date, removeLesson, setRemoveLesson }) => {
 
 	return (
 		<div style={{ color: 'var(--white)' }}>
-			{/* <div>Delete Assignments?</div> */}
-			{/* <input
-				type='checkbox'
-				value={withAssignmentsInput}
-				onChange={e => setWithAssignmentsInput(false)}></input> */}
+			<div>Delete Assignments?</div>
+			<button onClick={() => setWithAssignmentsInput(!withAssignmentsInput)}>
+				{withAssignmentsInput ? 'Keep Assignments' : 'Delete Assignments'}
+			</button>
 			<button
 				style={{
 					backgroundColor: 'var(--blue)',

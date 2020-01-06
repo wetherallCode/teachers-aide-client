@@ -8,7 +8,8 @@ const MultipleClassLoader = ({
 	setAssignmentList,
 	mulitplePeriodSelect,
 	setMulitplePeriodSelect,
-	allClassperiods
+	allClassperiods,
+	period
 }) => {
 	const handleChange = e => {
 		const eventValue = e.target.value
@@ -24,6 +25,8 @@ const MultipleClassLoader = ({
 		}
 	}
 
+	const revisedClassPeriods = allClassperiods.filter(classPeriod => classPeriod !== period).sort()
+
 	return (
 		<div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginLeft: '2%' }}>
 			<div>Load Classes:</div>
@@ -34,7 +37,7 @@ const MultipleClassLoader = ({
 					width: '75%',
 					marginRight: '5%'
 				}}>
-				{allClassperiods.map(classPeriod => (
+				{revisedClassPeriods.map(classPeriod => (
 					<div
 						key={classPeriod}
 						style={{

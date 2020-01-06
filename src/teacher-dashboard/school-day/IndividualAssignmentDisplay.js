@@ -42,7 +42,6 @@ const IndividualAssignmentDisplay = ({
 					<div
 						style={{
 							borderRadius: '5px',
-
 							display: 'flex',
 							alignItems: 'center'
 						}}>

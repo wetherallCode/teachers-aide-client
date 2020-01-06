@@ -80,27 +80,3 @@ const StudentInfo = ({ match, periodName, teacherOptions, setTeacherOptions, tod
 }
 
 export default StudentInfo
-
-// {
-/* <Query
-			query={FIND_STUDENT_QUERY}
-			variables={{ period: periodName, desk: numberizedDeskNumber }}>
-			{({ loading, error, data, refetching }) => {
-				if (loading && !refetching) return <h1>Loading</h1>
-				if (error) return <h2>{`Error: ${error}`}</h2>
-				const { firstName, lastName, responsibilityPoints } = data.findStudentByPeriodAndDesk
-				return (
-					<div>
-						{data ? (
-							<div>
-								<h3>First Name: {firstName}</h3>
-								<h3>Last Name: {lastName}</h3>
-								<h3>Points: {responsibilityPoints}</h3>
-							</div>
-						) : (
-							<h3>No one sits here</h3>
-						)}
-					</div>
-			}}
-		</Query> */
-// }

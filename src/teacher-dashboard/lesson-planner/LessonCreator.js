@@ -36,7 +36,7 @@ const LESSON_CREATOR_MUTATION = gql`
 				type
 				readingPages
 				readingSections
-				dueDate
+
 			}
 		}
 	}
@@ -179,7 +179,6 @@ const LessonCreatorForm = ({
 		type: assignmentTypeEnumNames[0],
 		readingPages: '',
 		readingSections: '',
-		dueDate: new Date().toLocaleString().substring(0, 10)
 	})
 
 	const [workDueList, setWorkDueList] = useState([])
@@ -724,23 +723,7 @@ const LessonCreatorForm = ({
 									}}
 								/>
 							</div>
-							<div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-								<h3 style={{ marginRight: '5%' }}>Due Date</h3>
-								<input
-									style={{
-										height: '1.5rem',
-										width: '100%',
-										backgroundColor: 'transparent',
-										color: 'var(--blue)',
-										fontSize: '120%'
-									}}
-									type='date'
-									name='dueDate'
-									placeholder='Assignment Due Date'
-									value={workDue.dueDate}
-									onChange={e => setWorkDue({ ...workDue, dueDate: e.target.value })}
-								/>
-							</div>
+							
 							<button
 								className='blueButton'
 								style={{ height: '3rem', width: '100%', fontSize: '120%' }}
@@ -751,7 +734,6 @@ const LessonCreatorForm = ({
 										type: assignmentTypeEnumNames[0],
 										readingPages: '',
 										readingSections: '',
-										dueDate: new Date().toLocaleString().substring(0, 10)
 									})
 								}}>
 								Add an Assignment
@@ -761,7 +743,6 @@ const LessonCreatorForm = ({
 							{workDueList.reverse().map((assignment, i) => {
 								return (
 									<div style={{ textAlign: 'center' }} key={i}>
-										<h2>{assignment.type + ' due on ' + assignment.dueDate}</h2>
 										<h2>{assignment.readingPages + ': ' + assignment.readingSections}</h2>
 									</div>
 								)

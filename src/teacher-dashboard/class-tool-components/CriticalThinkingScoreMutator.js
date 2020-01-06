@@ -187,7 +187,8 @@ const CriticalThinkingScoreMutator = ({
 											exempt: false,
 											missing: false,
 											score: 1,
-											responsibilityPoints: 1
+											responsibilityPoints: 1,
+											comments: ['Incomplete']
 										}}
 										buttonDisplay={'Incomplete'}
 										buttonColor={'blue'}
@@ -203,7 +204,8 @@ const CriticalThinkingScoreMutator = ({
 											exempt: false,
 											missing: false,
 											score: 2,
-											responsibilityPoints: 2
+											responsibilityPoints: 2,
+											comments: ['Complete']
 										}}
 										buttonDisplay={'Complete'}
 										buttonColor={'blue'}

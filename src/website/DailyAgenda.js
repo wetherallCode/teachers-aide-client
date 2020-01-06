@@ -32,7 +32,6 @@ const FIND_CLASS_PERIOD = gql`
 				}
 				workDue {
 					type
-					dueDate
 					readingPages
 					readingSections
 				}
@@ -410,9 +409,7 @@ const DailyAgenda = ({ match }) => {
 															<li style={{ marginTop: '1%' }}>
 																{data.findClassPeriod.assignedLesson.essentialQuestion.question}
 															</li>
-															{/* <li style={{ marginTop: '1%' }}>
-																Due on {assignment.dueDate.substring(6, 10)}
-															</li> */}
+															
 														</ul>
 													</>
 												</li>
@@ -428,9 +425,7 @@ const DailyAgenda = ({ match }) => {
 															complete a Critical Thinking Guide.
 														</div>
 														<ul>
-															{/* <li style={{ marginTop: '1%' }}>
-																Due on {assignment.dueDate.substring(6, 10)}
-															</li> */}
+													
 														</ul>
 													</>
 												</li>

@@ -14,6 +14,8 @@ import UserLogin from './Login'
 import Logout from './Logout'
 import UnitManager from './lesson-planner/UnitManager'
 import LessonInfoScreen from './lesson-planner/LessonInfoScreen'
+import { LessonCreator } from './lesson-planner/LessonCreator'
+import LessonPlanCreator from './lesson-planner/lesson-creater/LessonPlanCreator'
 
 // import * as ApolloTypes from './__generated__/getAllStudents'
 export const ME_QUERY = gql`
@@ -55,7 +57,7 @@ const DashBoardNavigation = ({ match }) => {
 							<Link style={{ margin: '1%' }} to={`${match.url}/school-day/ClassManager/A_12`}>
 								Course Manager
 							</Link>
-							<Link style={{ margin: '1%' }} to={`${match.url}/lesson-planner/EIGHTH`}>
+							<Link style={{ margin: '1%' }} to={`${match.url}/lesson-planner`}>
 								Lesson Manager
 							</Link>
 							<Link style={{ margin: '1%' }} to={`${match.url}/logout`}>
@@ -76,7 +78,14 @@ const DashBoardNavigation = ({ match }) => {
 
 					<Route path={`${match.path}/classroom/`} component={Classes} />
 					<Route path={`${match.path}/lesson-planner/`} component={LessonPlanner} />
-					<div
+
+					<Route
+						path={`${match.path}/lesson-planner/lesson-plan-creator`}
+						component={LessonPlanCreator}
+					/>
+					{/* <Route path={`${match.path}/lesson-planner/`} component={LessonInfoScreen} /> */}
+
+					{/* <div
 						id='lessonPlanner'
 						style={{
 							display: 'grid',
@@ -88,7 +97,7 @@ const DashBoardNavigation = ({ match }) => {
 							path={`${match.path}/lesson-planner/:grade/:lessonId`}
 							component={LessonInfoScreen}
 						/>
-					</div>
+					</div> */}
 
 					<Route path={`${match.path}/logout`} component={Logout} />
 				</div>

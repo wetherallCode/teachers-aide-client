@@ -27,7 +27,7 @@ const FIND_CLASS_PERIOD = gql`
 				}
 				workDue {
 					type
-					dueDate
+
 					readingPages
 					readingSections
 				}
@@ -83,7 +83,6 @@ const OldLesson = ({ match }) => {
 											<>
 												Open Ended Question:{' '}
 												{data.findClassPeriod.assignedLesson.essentialQuestion.question}
-												<div>{assignment.dueDate}</div>
 											</>
 										)}
 										{assignment.type === 'THINKING_GUIDE' && (

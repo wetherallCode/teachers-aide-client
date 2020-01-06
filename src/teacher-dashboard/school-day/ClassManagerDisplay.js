@@ -44,7 +44,6 @@ const FIND_CLASS_PERIOD = gql`
 			assignedDate
 			assignedHomework {
 				assignedDate
-				dueDate
 				assignmentType
 				readingPages
 				readingSections
@@ -170,6 +169,7 @@ const ClassManagerDisplay = ({ match }) => {
 										date={lessonPlanDate}
 										removeLesson={removeLesson}
 										setRemoveLesson={setRemoveLesson}
+										period={periods}
 									/>
 								</div>
 							</Modal>
