@@ -168,14 +168,13 @@ const CriticalThinkingScoreMutator = ({
 						</div>
 					</div>
 					{criticalThinkingToggle && (
-						// <div style={{ width: '70%' }}>
 						<>
 							<div
 								style={{
 									display: 'grid',
-									gridTemplateColumns: '1fr 1fr',
+									gridTemplateRows: '1fr 1fr',
 									marginTop: '5%',
-									gridGap: '5%'
+									gridGap: '20%'
 								}}>
 								{criticalThinkingStatusValue && (
 									<StudentInfoMutatorButton
