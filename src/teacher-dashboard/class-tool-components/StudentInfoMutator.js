@@ -10,7 +10,15 @@ const StudentInfoMutator = ({
 	teacherOptions,
 	setTeacherOptions
 }) => {
-	console.log(student.hasAssignments === true)
+	const [hasAssignment, setHasAssignment] = useState(false)
+	console.log(hasAssignment)
+	useEffect(() => {
+		student.hasAssignments.forEach(assignment => {
+			if (assignment.assignmentType === 'THINKING_GUIDE' && assignment.dueDate === todaysDate) {
+				setHasAssignment(true)
+			}
+		})
+	}, [hasAssignment, setHasAssignment])
 	return (
 		<div
 			style={{
@@ -29,12 +37,14 @@ const StudentInfoMutator = ({
 				teacherOptions={teacherOptions}
 				setTeacherOptions={setTeacherOptions}
 			/>
-			{student.hasAssignments ? (
+			{hasAssignment ? (
 				<CriticalThinkingScoreMutator
 					student={student}
 					todaysDate={todaysDate}
 					teacherOptions={teacherOptions}
 					setTeacherOptions={setTeacherOptions}
+					// currentCriticalThinkingGuide={currentCriticalThinkingGuide}
+					// setCurrentCriticalThinkingGuide={setCurrentCriticalThinkingGuide}
 				/>
 			) : (
 				<>

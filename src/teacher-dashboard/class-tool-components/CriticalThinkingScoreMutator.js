@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { gql } from 'apollo-boost'
 import { useMutation } from '@apollo/react-hooks'
 import StudentInfoMutatorButton from './StudentInfoMutatorButton'
-import { FIND_STUDENT_QUERY } from './StudentInfo'
 
 export const SCORE_ASSIGNMENT = gql`
 	mutation scoreAssignment($input: AssignmentScoringInput) {
@@ -38,7 +37,6 @@ const CriticalThinkingScoreMutator = ({
 	const [currentCriticalThinkingGuide, setCurrentCriticalThinkingGuide] = useState({})
 	const [exemptToggle, setExemptToggle] = useState(false)
 
-	console.log(criticalThinkingStatusValue)
 	useEffect(() => {
 		student.hasAssignments.forEach(assignment => {
 			if (assignment.assignmentType === 'THINKING_GUIDE' && assignment.dueDate === todaysDate) {
@@ -65,7 +63,7 @@ const CriticalThinkingScoreMutator = ({
 		student.hasAssignments,
 		todaysDate
 	])
-
+	console.log(currentCriticalThinkingGuide)
 	useEffect(() => {
 		student.hasAssignments.forEach(assignment => {
 			if (assignment.assignmentType === 'THINKING_GUIDE' && assignment.dueDate === todaysDate) {
