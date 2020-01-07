@@ -30,15 +30,17 @@ const UnitLoader = ({ grade, unitName, setUnitName }) => {
 					/>
 				)}
 			</div>
-			<div
-				style={{
-					display: 'flex',
-					justifyContent: 'center',
-					alignItems: 'center',
-					fontSize: '160%'
-				}}>
-				In Unit: {unitName}
-			</div>
+			{unitName && (
+				<div
+					style={{
+						display: 'flex',
+						justifyContent: 'center',
+						alignItems: 'center',
+						fontSize: '160%'
+					}}>
+					In Unit: {unitName}
+				</div>
+			)}
 		</div>
 	)
 }

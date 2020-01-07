@@ -21,17 +21,6 @@ const NewLessonCreater = ({
 	studyGuideQuestionList,
 	workDueList
 }) => {
-	console.log(
-		lessonName,
-		unitName,
-		warmUpActivity,
-		essentialQuestionValues,
-		readingsValues,
-		vocabWordList,
-		socraticQuestionsList,
-		studyGuideQuestionList,
-		workDueList
-	)
 	const [createLesson, { data }] = useMutation(CREATE_LESSON, {
 		variables: {
 			input: {
@@ -49,7 +38,18 @@ const NewLessonCreater = ({
 		onCompleted: data => console.log(data.createLesson._id)
 	})
 
-	return <button onClick={() => createLesson()}>Create Lesson</button>
+	return (
+		<button
+			style={{
+				backgroundColor: 'var(--blue)',
+				color: 'var(--white)',
+				fontSize: '150%',
+				height: '10vh'
+			}}
+			onClick={() => createLesson()}>
+			Create Lesson
+		</button>
+	)
 }
 
 export default NewLessonCreater

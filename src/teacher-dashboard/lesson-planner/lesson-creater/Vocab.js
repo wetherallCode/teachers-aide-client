@@ -109,7 +109,15 @@ const Vocab = ({ vocabWordList, setVocabWordList, partsOfSpeechEnum }) => {
 					</div>
 				</div>
 			</div>
-			<div style={{ scroll: 'auto' }}>
+			<div
+				style={{
+					height: '30vh',
+					overflow: 'scroll',
+					display: 'flex',
+					flexDirection: 'column',
+					flexWrap: 'wrap',
+					fontSize: '110%'
+				}}>
 				{vocabWordList.map(word => (
 					<div>
 						{word.word} - {word.definition}
