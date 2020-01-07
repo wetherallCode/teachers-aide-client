@@ -36,6 +36,7 @@ const CriticalThinkingScoreMutator = ({
 	const [criticalThinkingScoreValue, setCriticalThinkingScoreValue] = useState(0)
 	const [criticalThinkingStatusValue, setCriticalThinkingStatusValue] = useState(false)
 	const [currentCriticalThinkingGuide, setCurrentCriticalThinkingGuide] = useState({})
+	const [exemptToggle, setExemptToggle] = useState(false)
 
 	console.log(criticalThinkingStatusValue)
 	useEffect(() => {
@@ -176,7 +177,7 @@ const CriticalThinkingScoreMutator = ({
 									marginTop: '5%',
 									gridGap: '20%'
 								}}>
-								{criticalThinkingStatusValue && (
+								{criticalThinkingStatusValue && !exemptToggle && (
 									<StudentInfoMutatorButton
 										mutation={scoreAssignment}
 										variables={{
@@ -186,14 +187,14 @@ const CriticalThinkingScoreMutator = ({
 											exempt: false,
 											missing: false,
 											score: 1,
-											responsibilityPoints: 1,
+											responsibilityPoints: 3,
 											comments: ['Incomplete']
 										}}
 										buttonDisplay={'Incomplete'}
 										buttonColor={'blue'}
 									/>
 								)}
-								{criticalThinkingStatusValue && (
+								{criticalThinkingStatusValue && !exemptToggle && (
 									<StudentInfoMutatorButton
 										mutation={scoreAssignment}
 										variables={{
@@ -203,12 +204,45 @@ const CriticalThinkingScoreMutator = ({
 											exempt: false,
 											missing: false,
 											score: 2,
-											responsibilityPoints: 2,
+											responsibilityPoints: 4,
 											comments: ['Complete']
 										}}
 										buttonDisplay={'Complete'}
 										buttonColor={'blue'}
 									/>
+								)}
+								{criticalThinkingStatusValue && exemptToggle && (
+									<StudentInfoMutatorButton
+										mutation={scoreAssignment}
+										variables={{
+											_id: student._id,
+											date: todaysDate,
+											assignmentType: 'THINKING_GUIDE',
+											exempt: true,
+											missing: false,
+											score: 0,
+											responsibilityPoints: 2,
+											comments: ['Exempt']
+										}}
+										buttonDisplay={'Exempt'}
+										buttonColor={'blue'}
+									/>
+								)}
+								{criticalThinkingStatusValue && (
+									<button
+										style={{
+											fontSize: '100%',
+											height: '3rem',
+											width: '100%',
+											textDecoration: 'none',
+											color: 'var(--white)',
+											backgroundColor: `var(--blue)`,
+											borderRadius: '5px',
+											boxShadow: `1px 1px 2px 1px var(--blue)`
+										}}
+										onClick={() => setExemptToggle(!exemptToggle)}>
+										{!exemptToggle ? 'Exempt' : 'Score'}
+									</button>
 								)}
 							</div>
 							{!criticalThinkingStatusValue && (
