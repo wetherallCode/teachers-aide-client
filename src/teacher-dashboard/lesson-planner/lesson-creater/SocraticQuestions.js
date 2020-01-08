@@ -17,38 +17,71 @@ const SocraticQuestions = ({
 				height: '30vh',
 				borderBottom: '1px solid var(--blue)'
 			}}>
-			<div>
-				<div>Socratic Questions</div>
-				<div>Socratic Question Type:</div>
-				<select>
-					{socraticQuestionsTypeEnum.map(type => (
-						<option
-							key={type}
-							onChange={e => setSocraticQuestion({ ...socraticQuestion, type: e.target.value })}>
-							{type}
-						</option>
-					))}
-				</select>
-				<div>Question:</div>
-				<input
-					type='text'
-					onChange={e => setSocraticQuestion({ ...socraticQuestion, question: e.target.value })}
-				/>
-				<button onClick={() => setSocraticQuestionsList(list => [...list, socraticQuestion])}>
-					Add Socratic Question
+			<div style={{ display: 'grid', gridTemplateColumns: '1fr 5fr' }}>
+				<button
+					style={{ backgroundColor: 'var(--blue)', color: 'var(--white)', fontSize: '100%' }}
+					onClick={() => setSocraticQuestionsList(list => [...list, socraticQuestion])}>
+					Add Question
 				</button>
+				<div>
+					<div
+						style={{
+							marginRight: '3%',
+							fontSize: '160%',
+							textAlign: 'center',
+							marginBottom: '3%',
+							marginTop: '2%'
+						}}>
+						Socratic Questions
+					</div>
+					<div
+						style={{
+							display: 'flex',
+							justifyContent: 'center',
+							alignItems: 'center',
+							marginBottom: '10%'
+						}}>
+						<div style={{ fontSize: '130%', marginRight: '2%' }}>Question Type:</div>
+						<select
+							style={{
+								height: '2rem',
+								width: '70%',
+								backgroundColor: 'transparent',
+								color: 'var(--blue)',
+								fontSize: '100%'
+							}}>
+							{socraticQuestionsTypeEnum.map(type => (
+								<option
+									key={type}
+									onChange={e =>
+										setSocraticQuestion({ ...socraticQuestion, type: e.target.value })
+									}>
+									{type}
+								</option>
+							))}
+						</select>
+					</div>
+					<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+						<div style={{ fontSize: '130%', marginRight: '2%' }}>Question:</div>
+						<input
+							type='text'
+							style={{
+								height: '1.5rem',
+								width: '100%',
+								backgroundColor: 'transparent',
+								color: 'var(--blue)',
+								fontSize: '100%'
+							}}
+							onChange={e => setSocraticQuestion({ ...socraticQuestion, question: e.target.value })}
+						/>
+					</div>
+				</div>
 			</div>
-			<div
-				style={{
-					display: 'flex',
-					flexDirection: 'column',
-					justifyContent: 'center',
-					alignItems: 'center'
-				}}>
-				{socraticQuestionsList.map(question => (
-					<div>{question.question}</div>
+			<ol>
+				{socraticQuestionsList.map((question, i) => (
+					<li key={i}>{question.question}</li>
 				))}
-			</div>
+			</ol>
 		</div>
 	)
 }
