@@ -58,12 +58,13 @@ const StudyGuideQuestions = ({ studyGuideQuestionList, setStudyGuideQuestionList
 					</div>
 				</div>
 			</div>
-
-			<ol>
-				{studyGuideQuestionList.map((question, i) => (
-					<li key={i}>{question}</li>
-				))}
-			</ol>
+			<div style={{ display: 'flex', alignItems: 'center', marginLeft: '10%' }}>
+				<ol>
+					{studyGuideQuestionList.map((question, i) => (
+						<li key={i}>{question}</li>
+					))}
+				</ol>
+			</div>
 		</div>
 	)
 }

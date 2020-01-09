@@ -9,6 +9,7 @@ const SocraticQuestions = ({
 		type: socraticQuestionsTypeEnum[0],
 		question: ''
 	})
+	console.log(socraticQuestion)
 	return (
 		<div
 			style={{
@@ -49,13 +50,10 @@ const SocraticQuestions = ({
 								backgroundColor: 'transparent',
 								color: 'var(--blue)',
 								fontSize: '100%'
-							}}>
+							}}
+							onChange={e => setSocraticQuestion({ ...socraticQuestion, type: e.target.value })}>
 							{socraticQuestionsTypeEnum.map(type => (
-								<option
-									key={type}
-									onChange={e =>
-										setSocraticQuestion({ ...socraticQuestion, type: e.target.value })
-									}>
+								<option key={type} value={type.type}>
 									{type}
 								</option>
 							))}
@@ -77,11 +75,13 @@ const SocraticQuestions = ({
 					</div>
 				</div>
 			</div>
-			<ol>
-				{socraticQuestionsList.map((question, i) => (
-					<li key={i}>{question.question}</li>
-				))}
-			</ol>
+			<div style={{ display: 'flex', alignItems: 'center', marginLeft: '10%' }}>
+				<ol>
+					{socraticQuestionsList.map((question, i) => (
+						<li key={i}>{question.question}</li>
+					))}
+				</ol>
+			</div>
 		</div>
 	)
 }

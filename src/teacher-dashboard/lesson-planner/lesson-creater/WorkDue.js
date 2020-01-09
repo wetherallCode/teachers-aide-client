@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 
 const WorkDue = ({ AssignmentType, workDueList, setWorkDueList }) => {
 	const [assignment, setAssignment] = useState({
-		type: AssignmentType[0],
+		type: '',
 		readingPages: '',
 		readingSections: ''
 	})
+	console.log(assignment)
 	return (
 		<div
 			style={{
@@ -87,13 +88,10 @@ const WorkDue = ({ AssignmentType, workDueList, setWorkDueList }) => {
 								backgroundColor: 'transparent',
 								color: 'var(--blue)',
 								fontSize: '100%'
-							}}>
+							}}
+							onChange={e => setAssignment({ ...assignment, type: e.target.value })}>
 							{AssignmentType.map(type => (
-								<option
-									key={type}
-									onChange={e => setAssignment({ ...assignment, type: e.target.value })}>
-									{type}
-								</option>
+								<option key={type}>{type}</option>
 							))}
 						</select>
 					</div>
@@ -106,6 +104,7 @@ const WorkDue = ({ AssignmentType, workDueList, setWorkDueList }) => {
 				}}>
 				{workDueList.map(assignment => (
 					<div
+						key={assignment}
 						style={{
 							border: '1px solid var(--blue)',
 							width: '20%',
