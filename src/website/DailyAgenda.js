@@ -36,6 +36,12 @@ const FIND_CLASS_PERIOD = gql`
 					readingSections
 				}
 			}
+			assignedHomework {
+				assignmentType
+				dueDate
+				readingPages
+				readingSections
+			}
 		}
 	}
 `
@@ -54,6 +60,9 @@ const DailyAgenda = ({ match }) => {
 	})
 	if (loading) return null
 	if (error) console.error(error)
+
+	// const OEQ = data.findClassPeriod.assignedHomework.filter(x => x.assignmentType === 'OEQ')
+	// console.log(OEQ)
 
 	return (
 		<>
@@ -367,74 +376,82 @@ const DailyAgenda = ({ match }) => {
 					/>
 					<Route
 						path={`${match.path}/workDue`}
-						render={() => (
-							<div
-								style={{
-									color: 'var(--blue)',
-									display: 'grid',
-									gridTemplateRows: '1fr 4fr'
-								}}>
-								<h1
-									style={{
-										textDecoration: 'underline',
-										fontSize: '300%',
-										textAlign: 'center'
-									}}>
-									Assignments Due
-								</h1>
+						render={() => {
+							const [openEnded] = data.findClassPeriod.assignedHomework.filter(
+								x => x.assignmentType === 'OEQ'
+							)
+
+							const [criticalThinking] = data.findClassPeriod.assignedHomework.filter(
+								x => x.assignmentType === 'THINKING_GUIDE'
+							)
+
+							return (
 								<div
 									style={{
-										display: 'flex',
-										flexDirection: 'column',
-										justifyContent: 'flex-start'
+										color: 'var(--blue)',
+										display: 'grid',
+										gridTemplateRows: '1fr 4fr'
 									}}>
-									{data.findClassPeriod.assignedLesson.workDue.map((assignment, i) => (
-										<ul
-											key={i}
-											style={{
-												fontSize: '170%',
-												paddingLeft: '4%'
-												// marginBottom: '20%'
-											}}>
-											{assignment.type === 'OEQ' && (
-												<li
-												// style={{ borderBottom: '1px solid var(--blue)', width: '85%' }}
-												>
-													<>
-														<div>
-															Read pages {assignment.readingPages}: {assignment.readingSections} and
-															answer the following Open Ended Question:
-														</div>
-														<ul>
-															<li style={{ marginTop: '1%' }}>
-																{data.findClassPeriod.assignedLesson.essentialQuestion.question}
-															</li>
-															
-														</ul>
-													</>
+									<h1
+										style={{
+											textDecoration: 'underline',
+											fontSize: '300%',
+											textAlign: 'center'
+										}}>
+										Assignments Due
+									</h1>
+									<div
+										style={{
+											display: 'flex',
+											flexDirection: 'column',
+											justifyContent: 'flex-start'
+										}}>
+										{openEnded && (
+											<ul
+												style={{
+													fontSize: '170%',
+													paddingLeft: '4%'
+													// marginBottom: '20%'
+												}}>
+												<li>
+													<div style={{ marginBottom: '1%' }}>
+														Read pages {openEnded.readingPages}: {openEnded.readingSections} and
+														answer the following Open Ended Question:
+													</div>
+													<ul>
+														<li style={{ marginBottom: '1%' }}>
+															{data.findClassPeriod.assignedLesson.essentialQuestion.question}
+														</li>
+														<li>Due on: {openEnded.dueDate.substring(5)}</li>
+													</ul>
 												</li>
-											)}
-
-											{assignment.type === 'THINKING_GUIDE' && (
-												<li
-												// style={{ borderBottom: '1px solid var(--blue)', width: '85%' }}
-												>
-													<>
-														<div>
-															Read pages {assignment.readingPages}: {assignment.readingSections} and
-															complete a Critical Thinking Guide.
-														</div>
-														<ul>
-													
-														</ul>
-													</>
+											</ul>
+										)}
+										{criticalThinking && (
+											<ul
+												style={{
+													fontSize: '170%',
+													paddingLeft: '4%'
+													// marginBottom: '20%'
+												}}>
+												<li>
+													<div style={{ marginBottom: '1%' }}>
+														Read pages {criticalThinking.readingPages}:{' '}
+														{criticalThinking.readingSections} and complete a Critical Thinking
+														Guide.
+													</div>
+													<ul>
+														<li>
+															<li>Due on: {criticalThinking.dueDate.substring(5)}</li>
+														</li>
+													</ul>
 												</li>
-											)}
-										</ul>
-									))}
+											</ul>
+										)}
+									</div>
 								</div>
-							</div>
-						)}
+							)
+						}}
 					/>
 					<Route
 						path={`${match.path}/studyGuideQuestions`}
