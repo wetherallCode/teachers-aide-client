@@ -2,19 +2,42 @@ import React, { useState } from 'react'
 
 const IndividualAssignmentDisplay = ({
 	lesson,
+	assignment,
 	date,
-	assignedHomework,
-	setAssignedHomework,
+
 	assignmentList,
 	setAssignmentList
 }) => {
+	const [assignedHomework, setAssignedHomework] = useState({
+		assignedDate: '',
+		dueDate: '',
+		readingPages: '',
+		readingSections: '',
+		assignmentType: ''
+	})
+
 	const [assignmentAdded, setAssignmentAdded] = useState(false)
 	const [dueDateSet, setDueDateSet] = useState(false)
+
+	const assignmentSet = assignmentList.some(i => i.assignmentType === assignment.type)
+
+	const handleChange = () => {
+		const assignmentIndex = assignmentList.findIndex(i => i.assignmentType === assignment.type)
+		console.log(assignmentIndex)
+		if (assignmentIndex > -1) {
+			setAssignmentList(list => [
+				...list.slice(0, assignmentIndex),
+				...list.slice(assignmentIndex + 1)
+			])
+		} else {
+			setAssignmentList(list => [...assignmentList, assignedHomework])
+		}
+	}
 
 	return (
 		<div
 			style={
-				!assignmentAdded
+				!assignmentSet
 					? {
 							display: 'grid',
 							gridTemplateRows: '1fr 3fr',
@@ -34,7 +57,7 @@ const IndividualAssignmentDisplay = ({
 					  }
 			}>
 			<div style={{ textAlign: 'center', textDecoration: 'underline' }}>
-				{lesson.type === 'OEQ' ? 'Open Ended Question' : 'Critical Thinking Guide'}
+				{assignment.type === 'OEQ' ? 'Open Ended Question' : 'Critical Thinking Guide'}
 			</div>
 			<div>
 				<div style={{ display: 'grid', gridTemplateColumns: '2fr 3fr' }}>
@@ -76,9 +99,9 @@ const IndividualAssignmentDisplay = ({
 									...assignedHomework,
 									assignedDate: date,
 									dueDate: e.target.value,
-									readingPages: lesson.readingPages,
-									readingSections: lesson.readingSections,
-									assignmentType: lesson.type
+									readingPages: assignment.readingPages,
+									readingSections: assignment.readingSections,
+									assignmentType: assignment.type
 								})
 								setDueDateSet(true)
 							}}
@@ -87,11 +110,10 @@ const IndividualAssignmentDisplay = ({
 						<div
 							style={{
 								borderRadius: '5px',
-
 								display: 'flex',
 								alignItems: 'center'
 							}}>
-							<div>{assignedHomework.dueDate}</div>
+							<div onClick={() => setDueDateSet(false)}>{assignedHomework.dueDate}</div>
 						</div>
 					)}
 				</div>
@@ -101,7 +123,7 @@ const IndividualAssignmentDisplay = ({
 						style={{
 							borderRadius: '5px'
 						}}>
-						{lesson.readingPages}
+						{assignment.readingPages}
 					</div>
 					{/* <input
 								placeholder={lesson.readingPages}
@@ -122,7 +144,7 @@ const IndividualAssignmentDisplay = ({
 						style={{
 							borderRadius: '5px'
 						}}>
-						{lesson.readingSections}
+						{assignment.readingSections}
 					</div>
 					{/* <input
 								style={{
@@ -140,7 +162,7 @@ const IndividualAssignmentDisplay = ({
 			<div style={{ display: 'flex', justifyContent: 'center', marginTop: '3%' }}>
 				<button
 					style={
-						!assignmentAdded
+						!assignmentSet
 							? {
 									width: '60%',
 									fontSize: '120%',
@@ -156,19 +178,8 @@ const IndividualAssignmentDisplay = ({
 									color: 'var(--blue)'
 							  }
 					}
-					onClick={e => {
-						e.preventDefault()
-						if (!assignmentAdded) {
-							setAssignmentList(list => {
-								console.log(list)
-								return [assignedHomework].concat(list)
-							})
-							setAssignmentAdded(true)
-						} else {
-							console.log('already added')
-						}
-					}}>
-					Add Assignment
+					onClick={() => handleChange()}>
+					{assignmentSet ? 'Remove Assignment' : 'Add Assignment'}
 				</button>
 			</div>
 		</div>

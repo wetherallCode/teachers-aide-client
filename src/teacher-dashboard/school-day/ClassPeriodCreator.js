@@ -81,7 +81,7 @@ const ClassPeriodCreator = ({ period, date, allClassperiods }) => {
 	const [lessonValues, setLessonValues] = useState({ grade: '', lessonName: '' })
 	const [assignmentList, setAssignmentList] = useState([])
 	const [mulitplePeriodSelect, setMulitplePeriodSelect] = useState([period])
-
+	console.log(assignmentList)
 	const { data, loading, error } = useQuery(GET_GRADE_LEVELS)
 	if (loading) return <h2 style={{ paddingLeft: '2%', color: 'var(--blue)' }}>Loading</h2>
 	if (error) console.log(error)

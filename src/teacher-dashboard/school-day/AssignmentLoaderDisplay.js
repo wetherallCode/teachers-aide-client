@@ -8,13 +8,10 @@ const AssignmentLoaderDisplay = ({
 	assignmentList,
 	setAssignmentList
 }) => {
-	const [assignedHomework, setAssignedHomework] = useState({
-		assignedDate: '',
-		dueDate: '',
-		readingPages: '',
-		readingSections: '',
-		assignmentType: ''
-	})
+	const [openEndedQuestion] = data.findLessonByName.workDue.filter(lesson => lesson.type === 'OEQ')
+	const [criticalThinking] = data.findLessonByName.workDue.filter(
+		lesson => lesson.type === 'THINKING_GUIDE'
+	)
 
 	return (
 		<div
@@ -24,19 +21,20 @@ const AssignmentLoaderDisplay = ({
 				backgroundColor: 'var(--white)',
 				color: 'var(--blue)'
 			}}>
-			{data.findLessonByName.workDue.map((lesson, i) => {
-				return (
-					<IndividualAssignmentDisplay
-						key={i}
-						lesson={lesson}
-						date={date}
-						assignedHomework={assignedHomework}
-						setAssignedHomework={setAssignedHomework}
-						assignmentList={assignmentList}
-						setAssignmentList={setAssignmentList}
-					/>
-				)
-			})}
+			<IndividualAssignmentDisplay
+				lesson={data}
+				assignment={openEndedQuestion}
+				date={date}
+				assignmentList={assignmentList}
+				setAssignmentList={setAssignmentList}
+			/>
+			<IndividualAssignmentDisplay
+				lesson={data}
+				assignment={criticalThinking}
+				date={date}
+				assignmentList={assignmentList}
+				setAssignmentList={setAssignmentList}
+			/>
 		</div>
 	)
 }

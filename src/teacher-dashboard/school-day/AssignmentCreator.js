@@ -2,17 +2,6 @@ import React, { useState } from 'react'
 import { gql } from 'apollo-boost'
 import { useMutation } from '@apollo/react-hooks'
 
-// const REMOVE_CLASS_PERIOD = gql`
-// 	mutation removeClassPeriod($_id: ID!) {
-// 		removeClassPeriod(_id: $_id) {
-// 			classPeriod {
-// 				_id
-// 			}
-// 			removed
-// 		}
-// 	}
-// `
-
 const CREATE_CLASS_PERIOD = gql`
 	mutation createClassPeriodWithAssignments($input: ClassPeriodInput) {
 		createClassPeriod(input: $input) {
@@ -36,7 +25,6 @@ const AssignmentCreator = ({
 	date,
 	mulitplePeriodSelect
 }) => {
-	console.log(mulitplePeriodSelect, assignmentList)
 	const [submitStatus, setSubmitStatus] = useState(false)
 	const [errorLog, setErrorLog] = useState(null)
 
@@ -65,10 +53,8 @@ const AssignmentCreator = ({
 				}
 			})
 		)
-
 		setSubmitStatus(true)
 	}
-
 	return (
 		<button
 			style={{
