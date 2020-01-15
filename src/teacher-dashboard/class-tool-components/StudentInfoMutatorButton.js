@@ -1,11 +1,11 @@
 import React from 'react'
 
-const StudentInfoMutatorButton = ({ mutation, variables, buttonDisplay, buttonColor }) => {
+const StudentInfoMutatorButton = ({ mutation, variables, buttonDisplay, buttonColor, height }) => {
 	return (
 		<button
 			style={{
 				fontSize: '100%',
-				height: '3rem',
+				height: `${height}rem`,
 				width: '100%',
 				textDecoration: 'none',
 				color: 'var(--white)',

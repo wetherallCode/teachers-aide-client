@@ -63,7 +63,7 @@ const CriticalThinkingScoreMutator = ({
 		student.hasAssignments,
 		todaysDate
 	])
-	console.log(currentCriticalThinkingGuide)
+
 	useEffect(() => {
 		student.hasAssignments.forEach(assignment => {
 			if (assignment.assignmentType === 'THINKING_GUIDE' && assignment.dueDate === todaysDate) {
@@ -76,22 +76,12 @@ const CriticalThinkingScoreMutator = ({
 
 	const [undoScoreAssignment] = useMutation(UNDO_SCORE_ASSIGNMENT, {
 		refetchQueries: ['FindStudent']
-		// onCompleted: data => {
-		// 	if (data.undoScoreAssignment.assignmentScoreReset) {
-		// 		setAssignmentScoringButtonToggle(!assignmentScoringButtonToggle)
-		// 	}
-		// }
 	})
 
 	const [scoreAssignment] = useMutation(
 		SCORE_ASSIGNMENT,
 		{
 			refetchQueries: ['FindStudent']
-			// onCompleted: data => {
-			// 	if (data.scoreAssignment.scored) {
-			// 		setAssignmentScoringButtonToggle(!assignmentScoringButtonToggle)
-			// 	}
-			// }
 		}
 		// setCriticalThinkingScoreValue(data.scoreAssignment.lastScore)
 		// }
@@ -125,7 +115,7 @@ const CriticalThinkingScoreMutator = ({
 		// }
 		// }
 	)
-
+	const heightControl = 3
 	return (
 		<>
 			{teacherOptions.criticalThinkingToggle && (
@@ -186,10 +176,12 @@ const CriticalThinkingScoreMutator = ({
 											missing: false,
 											score: 1,
 											responsibilityPoints: 3,
-											comments: ['Incomplete']
+											comments: ['Incomplete'],
+											late: false
 										}}
 										buttonDisplay={'Incomplete'}
 										buttonColor={'blue'}
+										height={heightControl}
 									/>
 								)}
 								{criticalThinkingStatusValue && !exemptToggle && (
@@ -203,10 +195,12 @@ const CriticalThinkingScoreMutator = ({
 											missing: false,
 											score: 2,
 											responsibilityPoints: 4,
-											comments: ['Complete']
+											comments: ['Complete'],
+											late: false
 										}}
 										buttonDisplay={'Complete'}
 										buttonColor={'blue'}
+										height={heightControl}
 									/>
 								)}
 								{criticalThinkingStatusValue && exemptToggle && (
@@ -220,10 +214,12 @@ const CriticalThinkingScoreMutator = ({
 											missing: false,
 											score: 0,
 											responsibilityPoints: 2,
-											comments: ['Exempt']
+											comments: ['Exempt'],
+											late: false
 										}}
 										buttonDisplay={'Exempt'}
 										buttonColor={'blue'}
+										height={heightControl}
 									/>
 								)}
 								{criticalThinkingStatusValue && (
@@ -254,6 +250,7 @@ const CriticalThinkingScoreMutator = ({
 									}}
 									buttonDisplay={'Undo'}
 									buttonColor={'red'}
+									height={heightControl}
 								/>
 							)}
 						</>
