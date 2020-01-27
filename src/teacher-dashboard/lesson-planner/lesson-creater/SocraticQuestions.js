@@ -21,7 +21,9 @@ const SocraticQuestions = ({
 			<div style={{ display: 'grid', gridTemplateColumns: '1fr 5fr' }}>
 				<button
 					style={{ backgroundColor: 'var(--blue)', color: 'var(--white)', fontSize: '100%' }}
-					onClick={() => setSocraticQuestionsList(list => [...list, socraticQuestion])}>
+					onClick={() => {
+						setSocraticQuestionsList(list => [...list, socraticQuestion])
+					}}>
 					Add Question
 				</button>
 				<div>

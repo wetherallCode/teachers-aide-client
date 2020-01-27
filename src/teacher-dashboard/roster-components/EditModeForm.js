@@ -4,24 +4,8 @@ import { useMutation, useQuery, ApolloConsumer } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
 
 const UPDATE_STUDENT_MUTATION = gql`
-	mutation update(
-		$_id: ID!
-		$firstName: String!
-		$lastName: String!
-		$period: periodName!
-		$desk: Int!
-		$responsibilityPoints: Int!
-		$teacher: String!
-	) {
-		updateStudent(
-			_id: $_id
-			firstName: $firstName
-			lastName: $lastName
-			period: $period
-			desk: $desk
-			responsibilityPoints: $responsibilityPoints
-			teacher: $teacher
-		) {
+	mutation update($input: UpdateStudentInput!) {
+		updateStudent(input: $input) {
 			firstName
 			lastName
 			period
@@ -83,13 +67,15 @@ const EditStudentInfo = ({ studentInfo, periodName, history, isEditStudentMode }
 
 	const [updateStudent, { error }] = useMutation(UPDATE_STUDENT_MUTATION, {
 		variables: {
-			_id: updatedStudent._id,
-			firstName: updatedStudent.firstName,
-			lastName: updatedStudent.lastName,
-			period: updatedStudent.period,
-			desk: updatedStudent.desk,
-			responsibilityPoints: updatedStudent.responsibilityPoints,
-			teacher: updatedStudent.teacher
+			input: {
+				_id: updatedStudent._id,
+				firstName: updatedStudent.firstName,
+				lastName: updatedStudent.lastName,
+				period: updatedStudent.period,
+				desk: updatedStudent.desk,
+				responsibilityPoints: updatedStudent.responsibilityPoints,
+				teacher: updatedStudent.teacher
+			}
 		},
 		refetchQueries: ['getStudentInfo', 'rosterList', 'roster']
 	})

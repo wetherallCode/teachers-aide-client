@@ -6,6 +6,7 @@ const CREATE_CLASS_PERIOD = gql`
 	mutation createClassPeriodWithAssignments($input: ClassPeriodInput) {
 		createClassPeriod(input: $input) {
 			_id
+			period
 			grade
 			assignedLesson {
 				_id
@@ -13,6 +14,10 @@ const CREATE_CLASS_PERIOD = gql`
 			assignedDate
 			assignedHomework {
 				assignmentType
+				dueDate
+				readingPages
+				readingSections
+				markingPeriod
 			}
 		}
 	}

@@ -20,7 +20,7 @@ input.form-textbox {
 }
 .SubHeader {
 	display: grid;
-	grid-template-columns: 1fr 4fr;
+	grid-template-columns: 1fr 2fr;
 	grid-template-rows: 1fr 5fr;
 	background-color: var(--blue);
 	min-height: 5vh;

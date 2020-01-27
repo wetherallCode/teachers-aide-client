@@ -175,6 +175,7 @@ const CriticalThinkingScoreMutator = ({
 											exempt: false,
 											missing: false,
 											score: 1,
+											earnedPoints: 3,
 											responsibilityPoints: 3,
 											comments: ['Incomplete'],
 											late: false
@@ -194,6 +195,7 @@ const CriticalThinkingScoreMutator = ({
 											exempt: false,
 											missing: false,
 											score: 2,
+											earnedPoints: 4,
 											responsibilityPoints: 4,
 											comments: ['Complete'],
 											late: false
@@ -213,6 +215,7 @@ const CriticalThinkingScoreMutator = ({
 											exempt: true,
 											missing: false,
 											score: 0,
+											earnedPoints: 2,
 											responsibilityPoints: 2,
 											comments: ['Exempt'],
 											late: false

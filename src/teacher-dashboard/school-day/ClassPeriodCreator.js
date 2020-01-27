@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import { gql } from 'apollo-boost'
 import { useMutation, useQuery } from '@apollo/react-hooks'
 import { ClassPeriodContext } from './ClassPeriodContext'
@@ -9,6 +9,11 @@ import MultipleClassLoader from './MultipleClassLoader'
 const GET_GRADE_LEVELS = gql`
 	query getClassPeriodInputs {
 		gradeLevels: __type(name: "GradeLevelEnum") {
+			enumValues {
+				name
+			}
+		}
+		MarkingPeriodEnum: __type(name: "MarkingPeriodEnum") {
 			enumValues {
 				name
 			}
@@ -79,9 +84,10 @@ export const useForm = initialValues => {
 
 const ClassPeriodCreator = ({ period, date, allClassperiods }) => {
 	const [lessonValues, setLessonValues] = useState({ grade: '', lessonName: '' })
+
 	const [assignmentList, setAssignmentList] = useState([])
 	const [mulitplePeriodSelect, setMulitplePeriodSelect] = useState([period])
-	console.log(assignmentList)
+
 	const { data, loading, error } = useQuery(GET_GRADE_LEVELS)
 	if (loading) return <h2 style={{ paddingLeft: '2%', color: 'var(--blue)' }}>Loading</h2>
 	if (error) console.log(error)
@@ -100,6 +106,9 @@ const ClassPeriodCreator = ({ period, date, allClassperiods }) => {
 					lessonValues={lessonValues}
 					period={period}
 					date={date}
+					markingPeriods={data.MarkingPeriodEnum.enumValues.map(
+						markingPeriod => markingPeriod.name
+					)}
 					assignmentList={assignmentList}
 					setAssignmentList={setAssignmentList}
 					mulitplePeriodSelect={mulitplePeriodSelect}
@@ -115,7 +124,6 @@ const ClassPeriodCreator = ({ period, date, allClassperiods }) => {
 					lessonValues={lessonValues}
 					date={date}
 					allClassperiods={allClassperiods}
-					fakeClassPeriodSet={['A_12', 'A_34', 'A_67']}
 				/>
 			)}
 		</>
@@ -246,11 +254,19 @@ const ClassLessonLoaderDisplay = ({
 	lessonValues,
 	setLessonValues
 }) => {
+	useEffect(() => {
+		if (data.findLessonsByUnit.length === 1) {
+			setLessonValues({
+				grade: grade,
+				lessonName: data.findLessonsByUnit[0].lessonName
+			})
+		}
+	}, [setLessonValues])
 	return (
 		<>
 			<div style={{ display: 'flex' }}>
 				<div style={{ marginRight: '1%', color: 'var(--blue)' }}>Lesson: </div>
-				{data.findLessonsByUnit.length > 1 ? (
+				{data.findLessonsByUnit.length > 0 ? (
 					<select
 						style={{
 							fontSize: '70%',
@@ -298,7 +314,8 @@ const AssignmentLoader = ({
 	date,
 	mulitplePeriodSelect,
 	setMulitplePeriodSelect,
-	allClassperiods
+	allClassperiods,
+	markingPeriods
 }) => {
 	const { grade, lessonName } = lessonValues
 	const { data, loading, error } = useQuery(GET_LESSON_BY_NAME, { variables: { name: lessonName } })
@@ -317,6 +334,7 @@ const AssignmentLoader = ({
 			<AssignmentLoaderDisplay
 				data={data}
 				date={date}
+				markingPeriods={markingPeriods}
 				lessonValues={lessonValues}
 				assignmentList={assignmentList}
 				setAssignmentList={setAssignmentList}

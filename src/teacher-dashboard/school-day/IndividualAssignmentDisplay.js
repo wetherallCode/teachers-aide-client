@@ -1,29 +1,37 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 const IndividualAssignmentDisplay = ({
 	lesson,
 	assignment,
+	markingPeriods,
 	date,
-
 	assignmentList,
 	setAssignmentList
 }) => {
 	const [assignedHomework, setAssignedHomework] = useState({
 		assignedDate: '',
 		dueDate: '',
+		markingPeriod: markingPeriods[1],
 		readingPages: '',
 		readingSections: '',
-		assignmentType: ''
+		assignmentType: '',
+		maxScore: 2
 	})
 
-	const [assignmentAdded, setAssignmentAdded] = useState(false)
+	useEffect(() => {
+		if (assignment.type === 'OEQ') {
+			setAssignedHomework({ ...assignedHomework, maxScore: 5 })
+		}
+	}, [])
+
+	const [maxScoreToggle, setMaxScoreToggle] = useState(false)
 	const [dueDateSet, setDueDateSet] = useState(false)
 
 	const assignmentSet = assignmentList.some(i => i.assignmentType === assignment.type)
 
 	const handleChange = () => {
 		const assignmentIndex = assignmentList.findIndex(i => i.assignmentType === assignment.type)
-		console.log(assignmentIndex)
+
 		if (assignmentIndex > -1) {
 			setAssignmentList(list => [
 				...list.slice(0, assignmentIndex),
@@ -157,6 +165,41 @@ const IndividualAssignmentDisplay = ({
 								onChange={e =>
 									setAssignedHomework({ ...assignedHomework, readingSections: e.target.value })
 								}></input> */}
+				</div>
+				<div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}>
+					<div>Assign Maximum Score: </div>
+					{assignment.type === 'OEQ' ? (
+						<div onClick={() => setMaxScoreToggle(!maxScoreToggle)}>
+							{maxScoreToggle ? (
+								<div>
+									<button
+										value={5}
+										onClick={e =>
+											setAssignedHomework({
+												...assignedHomework,
+												maxScore: parseInt(e.target.value, 10)
+											})
+										}>
+										5
+									</button>
+									<button
+										value={2}
+										onClick={e =>
+											setAssignedHomework({
+												...assignedHomework,
+												maxScore: parseInt(e.target.value, 10)
+											})
+										}>
+										2
+									</button>
+								</div>
+							) : (
+								<div>{assignedHomework.maxScore}</div>
+							)}
+						</div>
+					) : (
+						<div>2</div>
+					)}
 				</div>
 			</div>
 			<div style={{ display: 'flex', justifyContent: 'center', marginTop: '3%' }}>

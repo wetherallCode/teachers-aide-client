@@ -21,6 +21,17 @@ const NewLessonCreater = ({
 	studyGuideQuestionList,
 	workDueList
 }) => {
+	console.log(
+		lessonName,
+		unitName,
+		warmUpActivity,
+		essentialQuestionValues,
+		readingsValues,
+		vocabWordList,
+		socraticQuestionsList,
+		studyGuideQuestionList,
+		workDueList
+	)
 	const [createLesson, { data }] = useMutation(CREATE_LESSON, {
 		variables: {
 			input: {

@@ -5,7 +5,7 @@ import { gql } from 'apollo-boost'
 import { useMutation } from '@apollo/react-hooks'
 import { FIND_STUDENT_QUERY } from './StudentInfo'
 
-const MARK_STUDENT_ABSENT = gql`
+export const MARK_STUDENT_ABSENT = gql`
 	mutation markStudentAbsent($_id: ID!, $date: Date) {
 		markStudentAbsent(_id: $_id, date: $date) {
 			_id
@@ -16,7 +16,7 @@ const MARK_STUDENT_ABSENT = gql`
 		}
 	}
 `
-const UNDO_MARK_STUDENT_ABSENT = gql`
+export const UNDO_MARK_STUDENT_ABSENT = gql`
 	mutation unduMarkStudentAbsent($_id: ID!, $date: Date) {
 		unduMarkStudentAbsent(_id: $_id, date: $date) {
 			_id

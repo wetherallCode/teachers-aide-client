@@ -1,22 +1,22 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-// const students = []
+export const sortByLastName = (a, b) => {
+	let lastNameA = a.lastName.toLowerCase()
+	let lastNameB = b.lastName.toLowerCase()
+
+	if (lastNameA < lastNameB) {
+		return -1
+	}
+	if (lastNameA > lastNameB) {
+		return 1
+	}
+	return 0
+}
 
 const StudentListInRosterView = ({ classRoster }) => {
 	let numberMaker = 1
-	const sortByLastName = (a, b) => {
-		let lastNameA = a.lastName.toLowerCase()
-		let lastNameB = b.lastName.toLowerCase()
 
-		if (lastNameA < lastNameB) {
-			return -1
-		}
-		if (lastNameA > lastNameB) {
-			return 1
-		}
-		return 0
-	}
 	return (
 		<>
 			{classRoster.sort(sortByLastName).map((student, index) => (
@@ -48,16 +48,18 @@ const StudentListInRosterView = ({ classRoster }) => {
 												paddingLeft: '2%'
 										  }
 								}>
-								<Link
-									style={{ textDecoration: 'none', color: 'var(--blue)' }}
-									to={`/dashboard/roster-profile/student/${student._id}`}>
-									{
-										<div style={{ display: 'flex' }}>
-											<div>{`${numberMaker++} ${student.lastName}, ${student.firstName} `}</div>
-											<div style={{ marginLeft: '2%' }}>{student.responsibilityPoints}</div>
-										</div>
-									}
-								</Link>
+								<div style={{ display: 'flex' }}>
+									<Link
+										style={{ textDecoration: 'none', color: 'var(--blue)' }}
+										to={`/dashboard/roster-profile/student/${student._id}`}>
+										{
+											<div style={{ display: 'flex' }}>
+												<div>{`${numberMaker++} ${student.lastName}, ${student.firstName} `}</div>
+											</div>
+										}
+									</Link>
+									<div style={{ marginLeft: '2%' }}>{student.responsibilityPoints}</div>
+								</div>
 							</div>
 						</div>
 					)}

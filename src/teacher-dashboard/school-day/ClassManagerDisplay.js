@@ -6,6 +6,8 @@ import Attendance from './Attendance'
 import ClassPeriodCreator from './ClassPeriodCreator'
 import AssignmentRemover from './AssignmentRemover'
 import Modal from 'react-responsive-modal'
+import Assignments from './AssignmentManager'
+import AssignmentManager from './AssignmentManager'
 
 const FIND_CLASS_PERIOD = gql`
 	query findClassPeriodForClassManagerDisplay($assignedDate: Date, $period: periodName) {
@@ -14,6 +16,7 @@ const FIND_CLASS_PERIOD = gql`
 				name
 			}
 		}
+
 		findClassPeriod(assignedDate: $assignedDate, period: $period) {
 			_id
 			assignedLesson {
@@ -44,9 +47,12 @@ const FIND_CLASS_PERIOD = gql`
 			assignedDate
 			assignedHomework {
 				assignedDate
+				dueDate
 				assignmentType
+				markingPeriod
 				readingPages
 				readingSections
+				maxScore
 			}
 		}
 	}
@@ -259,6 +265,7 @@ const ClassManagerDisplay = ({ match }) => {
 					</div>
 				)}
 			</div>
+			{data.findClassPeriod !== null && <AssignmentManager data={data} period={periods} />}
 			<Attendance date={lessonPlanDate} period={periods}></Attendance>
 		</div>
 	)

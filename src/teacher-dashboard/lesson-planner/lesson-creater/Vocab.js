@@ -20,9 +20,15 @@ const Vocab = ({ vocabWordList, setVocabWordList, partsOfSpeechEnum }) => {
 				}}>
 				<button
 					style={{ backgroundColor: 'var(--blue)', color: 'var(--white)', fontSize: '100%' }}
+					type='submit'
 					onClick={e => {
 						e.preventDefault()
 						setVocabWordList(list => [...list, vocabWord])
+						setVocabWord({
+							word: '',
+							partOfSpeech: partsOfSpeechEnum[0],
+							definition: ''
+						})
 					}}>
 					Add Word
 				</button>

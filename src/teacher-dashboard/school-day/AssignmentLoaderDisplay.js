@@ -4,6 +4,7 @@ import IndividualAssignmentDisplay from './IndividualAssignmentDisplay'
 const AssignmentLoaderDisplay = ({
 	data,
 	date,
+	markingPeriods,
 	lessonValues,
 	assignmentList,
 	setAssignmentList
@@ -25,6 +26,7 @@ const AssignmentLoaderDisplay = ({
 				lesson={data}
 				assignment={openEndedQuestion}
 				date={date}
+				markingPeriods={markingPeriods}
 				assignmentList={assignmentList}
 				setAssignmentList={setAssignmentList}
 			/>
@@ -32,6 +34,7 @@ const AssignmentLoaderDisplay = ({
 				lesson={data}
 				assignment={criticalThinking}
 				date={date}
+				markingPeriods={markingPeriods}
 				assignmentList={assignmentList}
 				setAssignmentList={setAssignmentList}
 			/>

@@ -21,13 +21,16 @@ const ADD_STUDENTS_MUTATION = gql`
 			desk
 			teacher
 			isHiddenFromRoster
+			hasAssignments {
+				assignmentType
+			}
 		}
 	}
 `
 
 const StudentInfoLoader = () => {
 	const { data, loading, error } = useQuery(GET_PERIOD_NAMES)
-	console.log(data)
+
 	if (loading) return <div className='loading'>Loading</div>
 	if (error) console.log(error)
 
@@ -57,7 +60,8 @@ const StudentAdder = ({ periodName, isRosterMode, unUsedDesk, roster }) => {
 		responsibilityPoints: 100,
 		desk: '' || unUsedDesk,
 		teacher: 'Wetherall',
-		isHiddenFromRoster: false
+		isHiddenFromRoster: false,
+		hasAssignments: []
 	})
 
 	const {
@@ -67,8 +71,10 @@ const StudentAdder = ({ periodName, isRosterMode, unUsedDesk, roster }) => {
 		desk,
 		responsibilityPoints,
 		teacher,
-		isHiddenFromRoster
+		isHiddenFromRoster,
+		hasAssignments
 	} = newStudent
+	console.log(newStudent)
 	const [addStudent, { error }] = useMutation(ADD_STUDENTS_MUTATION, {
 		variables: {
 			input: {
@@ -78,16 +84,12 @@ const StudentAdder = ({ periodName, isRosterMode, unUsedDesk, roster }) => {
 				desk,
 				responsibilityPoints,
 				teacher,
-				isHiddenFromRoster
+				isHiddenFromRoster,
+				hasAssignments
 			}
 		},
 		refetchQueries: ['rosterList', 'getAllStudents', 'FindStudent'],
-		update(
-			client,
-			{
-				data: { addStudent }
-			}
-		) {
+		update(client, { data: { addStudent } }) {
 			const { classRoster } = client.readQuery({
 				query: GET_CLASS_ROSTER,
 				variables: { period: periodName }

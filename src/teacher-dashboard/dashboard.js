@@ -16,6 +16,7 @@ import UnitManager from './lesson-planner/UnitManager'
 import LessonInfoScreen from './lesson-planner/LessonInfoScreen'
 import { LessonCreator } from './lesson-planner/LessonCreator'
 import LessonPlanCreator from './lesson-planner/lesson-creater/LessonPlanCreator'
+import GradeBook from './grade-book/AssignmentGrader'
 
 // import * as ApolloTypes from './__generated__/getAllStudents'
 export const ME_QUERY = gql`
@@ -48,7 +49,7 @@ const DashBoardNavigation = ({ match }) => {
 							MrWetherall.org
 						</Link>
 						<div style={{ display: 'flex', alignContent: 'center', justifyContent: 'flex-end' }}>
-							<Link style={{ margin: '1%' }} to={`${match.url}/roster-view`}>
+							<Link style={{ margin: '1%' }} to={`${match.url}/roster-view/A_12`}>
 								GradeBook
 							</Link>
 							<Link style={{ margin: '1%' }} to={`${match.url}/classroom/class-period-selector`}>

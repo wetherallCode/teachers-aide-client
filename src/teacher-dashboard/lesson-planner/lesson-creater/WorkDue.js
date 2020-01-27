@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 
 const WorkDue = ({ AssignmentType, workDueList, setWorkDueList }) => {
 	const [assignment, setAssignment] = useState({
-		type: '',
+		type: AssignmentType[0],
 		readingPages: '',
 		readingSections: ''
 	})
-	console.log(assignment)
+	console.log(AssignmentType)
 	return (
 		<div
 			style={{

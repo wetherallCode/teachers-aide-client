@@ -8,6 +8,7 @@ import StudentHider from './StudentHider'
 import RemoveStudentToggle from './RemoveStudentToggle'
 import Modal from 'react-modal'
 import { GET_CLASS_ROSTER } from './rosterView'
+import DaysAbsent from './DaysAbsent'
 
 export const STUDENT_INFO_QUERY = gql`
 	query getStudentInfo($_id: ID!) {
@@ -46,6 +47,7 @@ Modal.setAppElement(document.getElementById('root'))
 const Student = ({ match, history }) => {
 	const client = useApolloClient()
 	const { studentInfo } = match.params
+	const todaysDate = new Date().toISOString().substring(0, 10)
 
 	const { data, loading, error } = useQuery(STUDENT_INFO_QUERY, {
 		variables: { _id: studentInfo }
@@ -264,29 +266,7 @@ const Student = ({ match, history }) => {
 						</div>
 					)}
 				</div>
-				<div
-					style={{
-						color: 'var(--blue)',
-						padding: '1%',
-						border: '1px solid var(--blue)',
-						width: '100%',
-						backgroundColor: 'var(--grey)',
-						display: 'grid',
-						gridTemplateRows: '1fr 5fr'
-					}}>
-					<div style={{ fontSize: '200%', textDecoration: 'underline', textAlign: 'center' }}>
-						Day's Absent
-					</div>
-					{daysAbsent !== null ? (
-						<div>
-							{daysAbsent.map((day, i) => (
-								<div key={i}>{day}</div>
-							))}
-						</div>
-					) : (
-						<div>No Absence</div>
-					)}
-				</div>
+				<DaysAbsent student={student} todaysDate={todaysDate} />
 			</div>
 		</>
 	)
