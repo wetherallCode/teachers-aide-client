@@ -6,12 +6,13 @@ const IndividualAssignmentDisplay = ({
 	markingPeriods,
 	date,
 	assignmentList,
-	setAssignmentList
+	setAssignmentList,
+	markingPeriodDefault
 }) => {
 	const [assignedHomework, setAssignedHomework] = useState({
 		assignedDate: '',
 		dueDate: '',
-		markingPeriod: markingPeriods[1],
+		markingPeriod: markingPeriodDefault,
 		readingPages: '',
 		readingSections: '',
 		assignmentType: '',

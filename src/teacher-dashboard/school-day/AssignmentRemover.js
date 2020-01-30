@@ -15,12 +15,15 @@ const REMOVE_CLASS_PERIOD = gql`
 
 const AssignmentRemover = ({ _id, date, removeLesson, setRemoveLesson, period }) => {
 	const [withAssignmentsInput, setWithAssignmentsInput] = useState(false)
+	const [withTest, setWithTest] = useState(false)
+
 	const [removeClassPeriod] = useMutation(REMOVE_CLASS_PERIOD, {
 		variables: {
 			input: {
 				_id: _id,
 				date: date,
 				withAssignments: withAssignmentsInput,
+				withTest: withTest,
 				period: period
 			}
 		},
@@ -36,6 +39,9 @@ const AssignmentRemover = ({ _id, date, removeLesson, setRemoveLesson, period })
 			<div>Delete Assignments?</div>
 			<button onClick={() => setWithAssignmentsInput(!withAssignmentsInput)}>
 				{withAssignmentsInput ? 'Keep Assignments' : 'Delete Assignments'}
+			</button>
+			<button onClick={() => setWithTest(!withTest)}>
+				{withTest ? 'Keep Test' : 'Delete Test'}
 			</button>
 			<button
 				style={{

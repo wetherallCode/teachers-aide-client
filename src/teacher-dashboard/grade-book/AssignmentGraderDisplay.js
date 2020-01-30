@@ -3,21 +3,20 @@ import SearchForAssignments from './SearchForAssignments'
 import CriticalThinkingGridDisplay from './critical-thinking/CriticalThinkingGridDisplay'
 import OEQGridDisplay from './open-ended/OEQGridDisplay'
 
-const AssignmentGraderDisplay = ({ assignmentType, student }) => {
+const AssignmentGraderDisplay = ({ assignmentType, student, markingPeriodList }) => {
 	const [assignmentTypeValue, setAssignmentTypeValue] = useState('OEQ')
-	// console.log(assignmentTypeValue === 'THINKING_GUIDE')
-	// console.log(
-	// 	student.hasAssignments.filter(assignment => assignment.assignmentType === assignmentTypeValue)
-	// )
 	const [pickedDate, setPickedDate] = useState('')
 	const [filteredAssignmentList, setFilteredAssignmentList] = useState([])
+
+	const [markingPeriod, setMarkingPeriod] = useState(markingPeriodList[1])
+
+	const filterFn = assignment => assignment.markingPeriod === markingPeriod
 
 	useEffect(() => {
 		if (pickedDate === '') {
 			const list = student.hasAssignments.filter(
 				assignment => assignment.assignmentType === assignmentTypeValue
 			)
-			console.log(list)
 			setFilteredAssignmentList([...filteredAssignmentList, ...list])
 		} else {
 			const list = student.hasAssignments.filter(
@@ -29,6 +28,19 @@ const AssignmentGraderDisplay = ({ assignmentType, student }) => {
 		}
 	}, [pickedDate, assignmentTypeValue])
 
+	const sortByDateAssigned = (a, b) => {
+		let dateA = a.assignedDate
+		let dateB = b.assignedDate
+
+		if (dateA < dateB) {
+			return -1
+		}
+		if (dateA > dateB) {
+			return 1
+		}
+		return 0
+	}
+
 	return (
 		<div>
 			<SearchForAssignments
@@ -39,6 +51,9 @@ const AssignmentGraderDisplay = ({ assignmentType, student }) => {
 				setPickedDate={setPickedDate}
 				filteredAssignmentList={filteredAssignmentList}
 				setFilteredAssignmentList={setFilteredAssignmentList}
+				markingPeriodList={markingPeriodList}
+				markingPeriod={markingPeriod}
+				setMarkingPeriod={setMarkingPeriod}
 			/>
 			<div style={{ textAlign: 'center', fontSize: '160%', marginBottom: '2%' }}>
 				{assignmentTypeValue === 'OEQ' ? 'Open Ended Question' : 'Critical Thinking Guide'}{' '}
@@ -46,17 +61,23 @@ const AssignmentGraderDisplay = ({ assignmentType, student }) => {
 			</div>
 			{assignmentTypeValue === 'OEQ' && (
 				<div id='test' style={{ borderBottom: '1px solid var(--blue)' }}>
-					{filteredAssignmentList.map((assignment, i) => (
-						<OEQGridDisplay key={i} assignment={assignment} student={student} />
-					))}
+					{filteredAssignmentList
+						.filter(filterFn)
+						.sort(sortByDateAssigned)
+						.map((assignment, i) => (
+							<OEQGridDisplay key={i} assignment={assignment} student={student} />
+						))}
 				</div>
 			)}
 
 			{assignmentTypeValue === 'THINKING_GUIDE' && (
 				<div style={{ borderBottom: '1px solid var(--blue)' }}>
-					{filteredAssignmentList.map((assignment, i) => (
-						<CriticalThinkingGridDisplay key={i} assignment={assignment} student={student} />
-					))}
+					{filteredAssignmentList
+						.filter(filterFn)
+						.sort(sortByDateAssigned)
+						.map((assignment, i) => (
+							<CriticalThinkingGridDisplay key={i} assignment={assignment} student={student} />
+						))}
 				</div>
 			)}
 		</div>

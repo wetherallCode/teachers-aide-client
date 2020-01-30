@@ -5,7 +5,6 @@ import { UNDO_SCORE_ASSIGNMENT } from '../../class-tool-components/CriticalThink
 import StudentInfoMutatorButton from '../../class-tool-components/StudentInfoMutatorButton'
 
 const CriticalThinkingGrader = ({ student, assignment }) => {
-	console.log(assignment.earnedPoints)
 	const [assignmentScoreValue, setAssignmentScoreValue] = useState(0)
 	const [commentList, setCommentList] = useState([])
 

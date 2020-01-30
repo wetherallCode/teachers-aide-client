@@ -12,6 +12,11 @@ const ASSIGNMENT_TYPE = gql`
 				name
 			}
 		}
+		MarkingPeriodEnum: __type(name: "MarkingPeriodEnum") {
+			enumValues {
+				name
+			}
+		}
 	}
 `
 const AssignmentGrader = ({ classRoster }) => {
@@ -65,6 +70,7 @@ const AssignmentGrader = ({ classRoster }) => {
 			{student !== undefined && (
 				<AssignmentGraderDisplay
 					assignmentType={data.AssignmentType.enumValues.map(value => value.name)}
+					markingPeriodList={data.MarkingPeriodEnum.enumValues.map(value => value.name)}
 					student={student}
 				/>
 			)}

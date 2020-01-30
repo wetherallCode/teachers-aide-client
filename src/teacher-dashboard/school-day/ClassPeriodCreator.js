@@ -5,6 +5,7 @@ import { ClassPeriodContext } from './ClassPeriodContext'
 import AssignmentLoaderDisplay from './AssignmentLoaderDisplay'
 import AssignmentCreator from './AssignmentCreator'
 import MultipleClassLoader from './MultipleClassLoader'
+import TestLoader from './TestLoader'
 
 const GET_GRADE_LEVELS = gql`
 	query getClassPeriodInputs {
@@ -34,6 +35,7 @@ const GET_LESSONS_BY_UNIT = gql`
 		findLessonsByUnit(inUnit: $inUnit) {
 			_id
 			lessonName
+
 			workDue {
 				readingPages
 				readingSections
@@ -48,6 +50,10 @@ const GET_LESSON_BY_NAME = gql`
 		findLessonByName(name: $name) {
 			_id
 			lessonName
+			readings {
+				pages
+				sections
+			}
 			workDue {
 				type
 				readingPages
@@ -57,19 +63,6 @@ const GET_LESSON_BY_NAME = gql`
 	}
 `
 
-const CREATE_CLASS_PERIOD = gql`
-	mutation creatingAClassPeriodForClassPeriodCreator($input: ClassPeriodInput) {
-		createClassPeriod(input: $input) {
-			_id
-			grade
-			assignedLesson {
-				_id
-			}
-			assignedDate
-			# assignedHomework
-		}
-	}
-`
 
 export const useForm = initialValues => {
 	const [values, setValues] = useState(initialValues)
@@ -85,13 +78,30 @@ export const useForm = initialValues => {
 const ClassPeriodCreator = ({ period, date, allClassperiods }) => {
 	const [lessonValues, setLessonValues] = useState({ grade: '', lessonName: '' })
 
+	const [markingPeriodDefault, setMarkingPeriodDefault] = useState('')
 	const [assignmentList, setAssignmentList] = useState([])
 	const [mulitplePeriodSelect, setMulitplePeriodSelect] = useState([period])
+
+	const [testValues, setTestValues] = useState({
+		assignedDate: date,
+		dueDate: '',
+		markingPeriod: '',
+		readingPages: '',
+		readingSections: '',
+		assignmentType: 'TEST',
+		maxScore: 3
+	})
+	// useEffect(() => {
+	// 	if (markingPeriods !== undefined) {
+	// 		setMarkingPeriodDefault(markingPeriods[2])
+	// 	}
+	// })
 
 	const { data, loading, error } = useQuery(GET_GRADE_LEVELS)
 	if (loading) return <h2 style={{ paddingLeft: '2%', color: 'var(--blue)' }}>Loading</h2>
 	if (error) console.log(error)
 
+	const markingPeriods = data.MarkingPeriodEnum.enumValues.map(markingPeriod => markingPeriod.name)
 	return (
 		<>
 			<UnitLoaderDisplay
@@ -106,19 +116,20 @@ const ClassPeriodCreator = ({ period, date, allClassperiods }) => {
 					lessonValues={lessonValues}
 					period={period}
 					date={date}
-					markingPeriods={data.MarkingPeriodEnum.enumValues.map(
-						markingPeriod => markingPeriod.name
-					)}
+					markingPeriods={markingPeriods}
 					assignmentList={assignmentList}
 					setAssignmentList={setAssignmentList}
 					mulitplePeriodSelect={mulitplePeriodSelect}
 					setMulitplePeriodSelect={setMulitplePeriodSelect}
 					allClassperiods={allClassperiods}
+					testValues={testValues}
+					setTestValues={setTestValues}
 				/>
 			)}
 			{lessonValues.lessonName && (
 				<AssignmentCreator
 					assignmentList={assignmentList}
+					testValues={testValues}
 					mulitplePeriodSelect={mulitplePeriodSelect}
 					period={period}
 					lessonValues={lessonValues}
@@ -255,7 +266,7 @@ const ClassLessonLoaderDisplay = ({
 	setLessonValues
 }) => {
 	useEffect(() => {
-		if (data.findLessonsByUnit.length === 1) {
+		if (data.findLessonsByUnit.length > 0) {
 			setLessonValues({
 				grade: grade,
 				lessonName: data.findLessonsByUnit[0].lessonName
@@ -315,7 +326,9 @@ const AssignmentLoader = ({
 	mulitplePeriodSelect,
 	setMulitplePeriodSelect,
 	allClassperiods,
-	markingPeriods
+	markingPeriods,
+	testValues,
+	setTestValues
 }) => {
 	const { grade, lessonName } = lessonValues
 	const { data, loading, error } = useQuery(GET_LESSON_BY_NAME, { variables: { name: lessonName } })
@@ -323,6 +336,8 @@ const AssignmentLoader = ({
 	if (loading) return null
 	if (error) console.log(error)
 
+	const markingPeriodDefault = markingPeriods[1]
+	console.log(markingPeriodDefault)
 	return (
 		<div
 			style={{
@@ -335,11 +350,20 @@ const AssignmentLoader = ({
 				data={data}
 				date={date}
 				markingPeriods={markingPeriods}
+				markingPeriodDefault={markingPeriodDefault}
 				lessonValues={lessonValues}
 				assignmentList={assignmentList}
 				setAssignmentList={setAssignmentList}
 				mulitplePeriodSelect={mulitplePeriodSelect}
 				setMulitplePeriodSelect={setMulitplePeriodSelect}
+			/>
+			<TestLoader
+				testValues={testValues}
+				setTestValues={setTestValues}
+				date={date}
+				data={data}
+				markingPeriods={markingPeriods}
+				markingPeriodDefault={markingPeriodDefault}
 			/>
 			<MultipleClassLoader
 				data={data}

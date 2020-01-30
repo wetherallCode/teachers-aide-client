@@ -441,9 +441,7 @@ const DailyAgenda = ({ match }) => {
 														Guide.
 													</div>
 													<ul>
-														<li>
-															<li>Due on: {criticalThinking.dueDate.substring(5)}</li>
-														</li>
+														<li>Due on: {criticalThinking.dueDate.substring(5)}</li>
 													</ul>
 												</li>
 											</ul>

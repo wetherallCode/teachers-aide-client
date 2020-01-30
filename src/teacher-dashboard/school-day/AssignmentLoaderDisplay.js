@@ -7,7 +7,8 @@ const AssignmentLoaderDisplay = ({
 	markingPeriods,
 	lessonValues,
 	assignmentList,
-	setAssignmentList
+	setAssignmentList,
+	markingPeriodDefault
 }) => {
 	const [openEndedQuestion] = data.findLessonByName.workDue.filter(lesson => lesson.type === 'OEQ')
 	const [criticalThinking] = data.findLessonByName.workDue.filter(
@@ -27,6 +28,7 @@ const AssignmentLoaderDisplay = ({
 				assignment={openEndedQuestion}
 				date={date}
 				markingPeriods={markingPeriods}
+				markingPeriodDefault={markingPeriodDefault}
 				assignmentList={assignmentList}
 				setAssignmentList={setAssignmentList}
 			/>
@@ -35,6 +37,7 @@ const AssignmentLoaderDisplay = ({
 				assignment={criticalThinking}
 				date={date}
 				markingPeriods={markingPeriods}
+				markingPeriodDefault={markingPeriodDefault}
 				assignmentList={assignmentList}
 				setAssignmentList={setAssignmentList}
 			/>

@@ -6,7 +6,6 @@ const CREATE_CLASS_PERIOD = gql`
 	mutation createClassPeriodWithAssignments($input: ClassPeriodInput) {
 		createClassPeriod(input: $input) {
 			_id
-			period
 			grade
 			assignedLesson {
 				_id
@@ -14,10 +13,13 @@ const CREATE_CLASS_PERIOD = gql`
 			assignedDate
 			assignedHomework {
 				assignmentType
+				assignedDate
 				dueDate
-				readingPages
 				readingSections
-				markingPeriod
+			}
+			assignedTest {
+				dueDate
+				readingSections
 			}
 		}
 	}
@@ -25,11 +27,13 @@ const CREATE_CLASS_PERIOD = gql`
 
 const AssignmentCreator = ({
 	assignmentList,
+	testValues,
 	period,
 	lessonValues,
 	date,
 	mulitplePeriodSelect
 }) => {
+	console.log(date)
 	const [submitStatus, setSubmitStatus] = useState(false)
 	const [errorLog, setErrorLog] = useState(null)
 
@@ -53,7 +57,8 @@ const AssignmentCreator = ({
 						assignedLesson: lessonName,
 						assignedDate: date,
 						period: classPeriod,
-						assignedHomework: assignmentList
+						assignedHomework: assignmentList,
+						assignedTest: testValues
 					}
 				}
 			})

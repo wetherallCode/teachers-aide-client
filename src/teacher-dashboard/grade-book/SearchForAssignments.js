@@ -7,10 +7,13 @@ const SearchForAssignments = ({
 	pickedDate,
 	setPickedDate,
 	filteredAssignmentList,
-	setFilteredAssignmentList
+	setFilteredAssignmentList,
+	markingPeriodList,
+	markingPeriod,
+	setMarkingPeriod
 }) => {
 	return (
-		<div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
+		<div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
 			<div style={{ display: 'flex', width: '20rem', justifyContent: 'center' }}>
 				<div style={{ width: '15rem' }}>Assignment Type: </div>
 				<select
@@ -27,7 +30,16 @@ const SearchForAssignments = ({
 						setFilteredAssignmentList([])
 					}}>
 					<option value='OEQ'>Open Ended Question</option>
-					<option value='THINKING_GUIDE'> Critical Thinking Guide</option>
+					<option value='THINKING_GUIDE'>Critical Thinking Guide</option>
+					<option value='TEST'>Test</option>
+				</select>
+			</div>
+			<div style={{ display: 'flex', width: '20rem', justifyContent: 'center' }}>
+				<div style={{ marginRight: '1%' }}>Marking Period: </div>
+				<select value={markingPeriod} onChange={e => setMarkingPeriod(e.target.value)}>
+					{markingPeriodList.map(mp => (
+						<option key={mp}>{mp}</option>
+					))}
 				</select>
 			</div>
 			<div>

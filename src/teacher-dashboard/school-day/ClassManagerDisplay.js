@@ -8,10 +8,16 @@ import AssignmentRemover from './AssignmentRemover'
 import Modal from 'react-responsive-modal'
 import Assignments from './AssignmentManager'
 import AssignmentManager from './AssignmentManager'
+import TestGrader from '../grade-book/test/TestGrader'
 
 const FIND_CLASS_PERIOD = gql`
 	query findClassPeriodForClassManagerDisplay($assignedDate: Date, $period: periodName) {
 		periodName: __type(name: "periodName") {
+			enumValues {
+				name
+			}
+		}
+		MarkingPeriodEnum: __type(name: "MarkingPeriodEnum") {
 			enumValues {
 				name
 			}
@@ -54,6 +60,15 @@ const FIND_CLASS_PERIOD = gql`
 				readingSections
 				maxScore
 			}
+			assignedTest {
+				assignedDate
+				assignmentType
+				dueDate
+				markingPeriod
+				maxScore
+				readingPages
+				readingSections
+			}
 		}
 	}
 `
@@ -70,7 +85,7 @@ const ClassManagerDisplay = ({ match }) => {
 	})
 	if (loading) return null
 	if (error) console.error(error)
-
+	// console.log(data.findClassPeriod)
 	return (
 		<div style={{ overflow: 'scroll', height: '100vh' }}>
 			<div
@@ -265,7 +280,14 @@ const ClassManagerDisplay = ({ match }) => {
 					</div>
 				)}
 			</div>
-			{data.findClassPeriod !== null && <AssignmentManager data={data} period={periods} />}
+			{data.findClassPeriod !== null && (
+				<AssignmentManager
+					classPeriod={data.findClassPeriod}
+					markingPeriodList={data.MarkingPeriodEnum.enumValues.map(value => value.name)}
+					period={periods}
+				/>
+			)}
+
 			<Attendance date={lessonPlanDate} period={periods}></Attendance>
 		</div>
 	)

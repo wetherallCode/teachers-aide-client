@@ -24,6 +24,8 @@ export const FIND_STUDENT_QUERY = gql`
 				missing
 				exempt
 				score
+				maxScore
+				earnedPoints
 			}
 		}
 	}

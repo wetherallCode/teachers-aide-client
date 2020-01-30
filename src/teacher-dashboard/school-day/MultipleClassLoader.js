@@ -28,7 +28,14 @@ const MultipleClassLoader = ({
 	const revisedClassPeriods = allClassperiods.filter(classPeriod => classPeriod !== period).sort()
 
 	return (
-		<div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginLeft: '2%' }}>
+		<div
+			style={{
+				display: 'flex',
+				flexDirection: 'row',
+				alignItems: 'center',
+				marginLeft: '2%',
+				marginTop: '1%'
+			}}>
 			<div>Load Classes:</div>
 			<div
 				style={{

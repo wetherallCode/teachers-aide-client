@@ -24,6 +24,9 @@ const ADD_STUDENTS_MUTATION = gql`
 			hasAssignments {
 				assignmentType
 			}
+			hasTests {
+				dueDate
+			}
 		}
 	}
 `
@@ -61,7 +64,9 @@ const StudentAdder = ({ periodName, isRosterMode, unUsedDesk, roster }) => {
 		desk: '' || unUsedDesk,
 		teacher: 'Wetherall',
 		isHiddenFromRoster: false,
-		hasAssignments: []
+		hasAssignments: [],
+		daysAbsent: [],
+		hasTests: []
 	})
 
 	const {
@@ -72,9 +77,11 @@ const StudentAdder = ({ periodName, isRosterMode, unUsedDesk, roster }) => {
 		responsibilityPoints,
 		teacher,
 		isHiddenFromRoster,
-		hasAssignments
+		hasAssignments,
+		daysAbsent,
+		hasTests
 	} = newStudent
-	console.log(newStudent)
+
 	const [addStudent, { error }] = useMutation(ADD_STUDENTS_MUTATION, {
 		variables: {
 			input: {
@@ -85,7 +92,9 @@ const StudentAdder = ({ periodName, isRosterMode, unUsedDesk, roster }) => {
 				responsibilityPoints,
 				teacher,
 				isHiddenFromRoster,
-				hasAssignments
+				hasAssignments,
+				daysAbsent,
+				hasTests
 			}
 		},
 		refetchQueries: ['rosterList', 'getAllStudents', 'FindStudent'],

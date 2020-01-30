@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import StudentInfoMutatorButton from '../class-tool-components/StudentInfoMutatorButton'
 
-const AssignmentModifierDisplay = ({ period, assignment, updateAssignment }) => {
+const AssignmentModifierDisplay = ({ period, assignment, updateAssignment, markingPeriodList }) => {
 	const [updatedAssignment, setUpdatedAssignment] = useState({
 		dueDate: assignment.dueDate,
-		maxScore: assignment.maxScore
+		maxScore: assignment.maxScore || 2,
+		markingPeriod: assignment.markingPeriod
 	})
 
+	console.log(assignment.assignedDate)
 	const [dueDateToggle, setDueDateToggle] = useState(false)
 	const [maxScoreToggle, setMaxScoreToggle] = useState(false)
 	return (
@@ -36,6 +38,25 @@ const AssignmentModifierDisplay = ({ period, assignment, updateAssignment }) => 
 					justifyContent: 'flex-start',
 					alignItems: 'center'
 				}}>
+				<div>Marking Period: </div>
+				<select
+					style={{ width: '10rem', fontSize: '90%', color: 'var(--blue)' }}
+					value={assignment.markingPeriod}
+					onChange={e =>
+						setUpdatedAssignment({ ...updatedAssignment, markingPeriod: e.target.value })
+					}>
+					{markingPeriodList.map(mp => (
+						<option key={mp}>{mp}</option>
+					))}
+				</select>
+			</div>
+			<div
+				style={{
+					display: 'flex',
+					flexDirection: 'row',
+					justifyContent: 'flex-start',
+					alignItems: 'center'
+				}}>
 				<div>Max Score: </div>
 				{!maxScoreToggle ? (
 					<div onClick={() => setMaxScoreToggle(!maxScoreToggle)}>{updatedAssignment.maxScore}</div>
@@ -43,6 +64,7 @@ const AssignmentModifierDisplay = ({ period, assignment, updateAssignment }) => 
 					<div style={{ display: 'flex' }}>
 						<button
 							style={{ marginRight: '10%' }}
+							value={assignment.maxScore}
 							onClick={e => {
 								setUpdatedAssignment({
 									...updatedAssignment,
@@ -73,7 +95,7 @@ const AssignmentModifierDisplay = ({ period, assignment, updateAssignment }) => 
 					assignmentType: assignment.assignmentType,
 					assignedDate: assignment.assignedDate,
 					dueDate: updatedAssignment.dueDate,
-					markingPeriod: assignment.markingPeriod,
+					markingPeriod: updatedAssignment.markingPeriod,
 					readingPages: assignment.readingPages,
 					readingSections: assignment.readingSections,
 					maxScore: updatedAssignment.maxScore

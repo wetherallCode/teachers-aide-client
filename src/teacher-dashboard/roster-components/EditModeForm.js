@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { GET_PERIOD_NAMES } from './rosterNavigation'
 import { useMutation, useQuery, ApolloConsumer } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
+import DaysAbsent from './DaysAbsent'
 
 const UPDATE_STUDENT_MUTATION = gql`
 	mutation update($input: UpdateStudentInput!) {
@@ -12,6 +13,7 @@ const UPDATE_STUDENT_MUTATION = gql`
 			desk
 			responsibilityPoints
 			teacher
+			learningStyle
 		}
 	}
 `
@@ -62,7 +64,7 @@ const EditStudentInfo = ({ studentInfo, periodName, history, isEditStudentMode }
 		desk: desk,
 		responsibilityPoints: responsibilityPoints,
 		teacher: teacher,
-		learningStyle: learningStyle || null
+		learningStyle: 'Unknown'
 	})
 
 	const [updateStudent, { error }] = useMutation(UPDATE_STUDENT_MUTATION, {
@@ -74,7 +76,8 @@ const EditStudentInfo = ({ studentInfo, periodName, history, isEditStudentMode }
 				period: updatedStudent.period,
 				desk: updatedStudent.desk,
 				responsibilityPoints: updatedStudent.responsibilityPoints,
-				teacher: updatedStudent.teacher
+				teacher: updatedStudent.teacher,
+				learningStyle: updatedStudent.learningStyle
 			}
 		},
 		refetchQueries: ['getStudentInfo', 'rosterList', 'roster']
@@ -95,7 +98,7 @@ const EditStudentInfo = ({ studentInfo, periodName, history, isEditStudentMode }
 						onSubmit={e => {
 							e.preventDefault()
 							updateStudent()
-							addLearningStyle()
+							// addLearningStyle()
 							client.writeData({ data: { isEditStudentMode: !isEditStudentMode } })
 						}}>
 						<div>
