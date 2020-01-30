@@ -35,6 +35,7 @@ const CriticalThinkingScoreMutator = ({
 	const [criticalThinkingScoreValue, setCriticalThinkingScoreValue] = useState(0)
 	const [criticalThinkingStatusValue, setCriticalThinkingStatusValue] = useState(false)
 	const [currentCriticalThinkingGuide, setCurrentCriticalThinkingGuide] = useState({})
+	console.log(currentCriticalThinkingGuide.earnedPoints)
 	const [exemptToggle, setExemptToggle] = useState(false)
 
 	useEffect(() => {
@@ -81,7 +82,8 @@ const CriticalThinkingScoreMutator = ({
 	const [scoreAssignment] = useMutation(
 		SCORE_ASSIGNMENT,
 		{
-			refetchQueries: ['FindStudent']
+			refetchQueries: ['FindStudent'],
+			onCompleted: data => console.log(data)
 		}
 		// setCriticalThinkingScoreValue(data.scoreAssignment.lastScore)
 		// }
@@ -249,7 +251,8 @@ const CriticalThinkingScoreMutator = ({
 										_id: student._id,
 										date: todaysDate,
 										assignmentType: 'THINKING_GUIDE',
-										score: criticalThinkingScoreValue
+										score: criticalThinkingScoreValue,
+										earnedPoints: currentCriticalThinkingGuide.earnedPoints
 									}}
 									buttonDisplay={'Undo'}
 									buttonColor={'red'}
