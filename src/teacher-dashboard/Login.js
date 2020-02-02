@@ -57,7 +57,9 @@ const UserLogin = ({ history }) => {
 			}}
 			open={userLogin}
 			onClose={() => userLoginModalToggle()}>
-			<div style={{ display: 'grid', gridTemplateRows: '1fr 3fr' }}>
+			<form
+				onSubmit={e => e.preventDefault()}
+				style={{ display: 'grid', gridTemplateRows: '1fr 3fr' }}>
 				<div>
 					<h1 style={{ color: 'var(--blue)', textAlign: 'center' }}>Teacher Login</h1>
 				</div>
@@ -132,7 +134,7 @@ const UserLogin = ({ history }) => {
 						Go Back
 					</button>
 				</div>
-			</div>
+			</form>
 		</Modal>
 	)
 }

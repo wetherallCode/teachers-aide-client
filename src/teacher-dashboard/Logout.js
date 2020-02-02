@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { gql } from 'apollo-boost'
 import { useMutation } from '@apollo/react-hooks'
 import { Redirect } from 'react-router'
@@ -14,7 +14,10 @@ const Logout = ({ history }) => {
 		refetchQueries: ['me']
 	})
 
-	logout()
+	useEffect(() => {
+		logout()
+	})
+
 	return <Redirect to='/' />
 }
 
