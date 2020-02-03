@@ -7,6 +7,7 @@ import StudentListInRosterView from './StudentListInRosterView'
 import AllStudentRoster from './AllStudentRoster'
 import AssignmentGrader from '../grade-book/AssignmentGrader'
 import TestGrader from '../grade-book/test/TestGrader'
+import AssignedSeatsView from './AssignedSeatsView'
 
 export const GET_CLASS_ROSTER = gql`
 	query rosterList($period: periodName) {
@@ -41,6 +42,7 @@ export const GET_CLASS_ROSTER = gql`
 				maxScore
 				earnedPoints
 				studyTime
+				markingPeriod
 			}
 		}
 	}
@@ -48,9 +50,11 @@ export const GET_CLASS_ROSTER = gql`
 
 const Rosters = ({ match }) => {
 	const [isAddStudentPressed, setIsAddStudentPressed] = useState(false)
-	const [gradeAssignments, setGradeAssignments] = useState(true)
+	const [gradeAssignments, setGradeAssignments] = useState(false)
 	const [gradeTest, setGradeTest] = useState(true)
 	const [deskLimit, setdeskLimit] = useState(24)
+	const [deskChangeViewToggle, setDeskChangeViewToggle] = useState(false)
+
 	const { periodName } = match.params
 
 	const { data, loading, error } = useQuery(GET_CLASS_ROSTER, {
@@ -105,7 +109,14 @@ const Rosters = ({ match }) => {
 					alignContent: 'center',
 					justifyContent: 'center'
 				}}>
-				<div style={{ display: 'flex', justifyContent: 'center', alignText: 'center' }}>
+				<div
+					onClick={() => setDeskChangeViewToggle(!deskChangeViewToggle)}
+					style={{
+						display: 'flex',
+						justifyContent: 'center',
+						alignText: 'center',
+						cursor: 'pointer'
+					}}>
 					<h1>
 						{periodName.substring(0, 1)} Day: Period {periodName.substring(2, 3)}-
 						{periodName.substring(3, 4)}
@@ -120,31 +131,32 @@ const Rosters = ({ match }) => {
 						alignItems: 'center',
 						marginRight: '2%'
 					}}>
-					{gradeAssignments && (
-						<div
-							onClick={() => setGradeTest(!gradeTest)}
-							style={{ marginRight: '3%', fontSize: '130%', cursor: 'pointer' }}>
-							{!gradeTest ? 'Grade Test' : 'Grade Assignments'}
-						</div>
-					)}
-					<div
-						onClick={() => setGradeAssignments(!gradeAssignments)}
-						style={{ marginRight: '2%', fontSize: '130%', cursor: 'pointer' }}>
-						{!gradeAssignments ? 'Grade Assignments' : 'Roster'}
-					</div>
-					{desks.length < deskLimit && !gradeAssignments && (
-						<div
-							style={{ cursor: 'pointer', fontSize: '130%' }}
-							onClick={() => setIsAddStudentPressed(!isAddStudentPressed)}>
-							{isAddStudentPressed ? 'Cancel' : 'Add Student'}
-						</div>
+					{!deskChangeViewToggle ? (
+						<>
+							<div
+								onClick={() => setGradeAssignments(!gradeAssignments)}
+								style={{ marginRight: '2%', fontSize: '130%', cursor: 'pointer' }}>
+								{!gradeAssignments ? 'Grade Assignments' : 'Roster'}
+							</div>
+							{desks.length < deskLimit && !gradeAssignments && (
+								<div
+									style={{ cursor: 'pointer', fontSize: '130%' }}
+									onClick={() => setIsAddStudentPressed(!isAddStudentPressed)}>
+									{isAddStudentPressed ? 'Cancel' : 'Add Student'}
+								</div>
+							)}
+						</>
+					) : (
+						<div style={{ marginRight: '2%', fontSize: '130%' }}>Desks!</div>
 					)}
 				</div>
 			</header>
 
 			{/* Above is for all appropriate UI, and below is just the roster*/}
 
-			{!gradeAssignments ? (
+			{deskChangeViewToggle ? (
+				<AssignedSeatsView classRoster={classRoster} />
+			) : !gradeAssignments ? (
 				<div>
 					{isAddStudentPressed && (
 						<div
@@ -170,8 +182,6 @@ const Rosters = ({ match }) => {
 						<div style={{ borderBottom: '1px solid var(--blue)' }} />
 					</>
 				</div>
-			) : gradeTest ? (
-				<TestGrader classRoster={classRoster} todaysDate={todaysDate} />
 			) : (
 				<AssignmentGrader classRoster={classRoster} />
 			)}
