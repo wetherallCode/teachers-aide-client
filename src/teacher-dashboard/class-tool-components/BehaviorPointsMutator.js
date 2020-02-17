@@ -22,7 +22,6 @@ const BehaviorPointsMutator = ({
 }) => {
 	const [pointsButtonToggle, setPointsButtonToggle] = useState(true)
 	const { _id, desk, responsibilityPoints } = student
-	console.log(_id)
 	const [updateResponsibilityPoints] = useMutation(UPDATE_RESPONSIBILITY_POINTS, {
 		refetchQueries: ['']
 		// update(client, { data: { updateResponsibilityPoints } }) {

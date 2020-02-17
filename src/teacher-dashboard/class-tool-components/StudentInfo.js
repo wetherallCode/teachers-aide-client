@@ -8,8 +8,10 @@ export const FIND_STUDENT_QUERY = gql`
 	query FindStudent($period: periodName!, $desk: Int!) {
 		findStudentByPeriodAndDesk(period: $period, desk: $desk) {
 			_id
+			schoolID
 			firstName
 			lastName
+			nickName
 			responsibilityPoints
 			period
 			daysAbsent
@@ -18,6 +20,7 @@ export const FIND_STUDENT_QUERY = gql`
 			hasAssignments {
 				assignmentType
 				assignedDate
+				markingPeriod
 				dueDate
 				readingPages
 				readingSections
@@ -26,6 +29,12 @@ export const FIND_STUDENT_QUERY = gql`
 				score
 				maxScore
 				earnedPoints
+			}
+			hasTests {
+				dueDate
+				score
+				maxScore
+				markingPeriod
 			}
 		}
 	}
@@ -55,7 +64,11 @@ const StudentInfo = ({ match, periodName, teacherOptions, setTeacherOptions, tod
 						gridGap: '2px',
 						backgroundColor: 'var(--white)'
 					}}>
-					<StudentInfoDisplay student={findStudentByPeriodAndDesk} periodName={periodName} />
+					<StudentInfoDisplay
+						student={findStudentByPeriodAndDesk}
+						periodName={periodName}
+						todaysDate={todaysDate}
+					/>
 					<StudentInfoMutator
 						match={match}
 						student={findStudentByPeriodAndDesk}

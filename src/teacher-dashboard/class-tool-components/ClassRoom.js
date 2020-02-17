@@ -10,6 +10,7 @@ const ClassRoom = ({ match }) => {
 		criticalThinkingToggle: true
 	})
 	const todaysDate = new Date().toISOString().substring(0, 10)
+
 	const { url } = match
 	const { periodName } = match.params
 
@@ -29,6 +30,7 @@ const ClassRoom = ({ match }) => {
 					match={match}
 					teacherOptions={teacherOptions}
 					setTeacherOptions={setTeacherOptions}
+					todaysDate={todaysDate}
 				/>
 			</div>
 			<Route

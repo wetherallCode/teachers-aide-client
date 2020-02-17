@@ -58,21 +58,25 @@ const EditStudentInfo = ({ studentInfo, periodName, history, isEditStudentMode }
 
 	const [updatedStudent, setupdatedStudent] = useState({
 		_id: _id,
+		schoolID: '',
 		firstName: firstName,
 		lastName: lastName,
+		nickName: '',
 		period: period,
 		desk: desk,
 		responsibilityPoints: responsibilityPoints,
 		teacher: teacher,
 		learningStyle: 'Unknown'
 	})
-
+	console.log(updatedStudent.nickName)
 	const [updateStudent, { error }] = useMutation(UPDATE_STUDENT_MUTATION, {
 		variables: {
 			input: {
 				_id: updatedStudent._id,
+				schoolID: updatedStudent.schoolID,
 				firstName: updatedStudent.firstName,
 				lastName: updatedStudent.lastName,
+				nickName: updatedStudent.nickName,
 				period: updatedStudent.period,
 				desk: updatedStudent.desk,
 				responsibilityPoints: updatedStudent.responsibilityPoints,
@@ -85,10 +89,6 @@ const EditStudentInfo = ({ studentInfo, periodName, history, isEditStudentMode }
 
 	if (error) console.error(error)
 
-	const [addLearningStyle] = useMutation(ADD_LEARNING_STYLE, {
-		variables: { _id: updatedStudent._id, learningStyle: updateStudent.learningStyle }
-	})
-
 	return (
 		<ApolloConsumer>
 			{client => (
@@ -98,7 +98,6 @@ const EditStudentInfo = ({ studentInfo, periodName, history, isEditStudentMode }
 						onSubmit={e => {
 							e.preventDefault()
 							updateStudent()
-							// addLearningStyle()
 							client.writeData({ data: { isEditStudentMode: !isEditStudentMode } })
 						}}>
 						<div>
@@ -122,6 +121,28 @@ const EditStudentInfo = ({ studentInfo, periodName, history, isEditStudentMode }
 								type='text'
 								value={updatedStudent.lastName}
 								onChange={e => setupdatedStudent({ ...updatedStudent, lastName: e.target.value })}
+							/>
+						</div>
+						<div>
+							Nick Name:{' '}
+							<input
+								style={{ backgroundColor: 'var(--white)' }}
+								name='lastName'
+								placeholder={updatedStudent.nickName}
+								type='text'
+								value={updatedStudent.nickName}
+								onChange={e => setupdatedStudent({ ...updatedStudent, nickName: e.target.value })}
+							/>
+						</div>
+						<div>
+							School ID:{' '}
+							<input
+								style={{ backgroundColor: 'var(--white)' }}
+								name='schoolID'
+								placeholder='School ID'
+								type='text'
+								value={updatedStudent.schoolID}
+								onChange={e => setupdatedStudent({ ...updatedStudent, schoolID: e.target.value })}
 							/>
 						</div>
 						<div>
@@ -160,6 +181,7 @@ const EditStudentInfo = ({ studentInfo, periodName, history, isEditStudentMode }
 							Class Period:{' '}
 							<select
 								style={{ backgroundColor: 'var(--white)' }}
+								value={period}
 								onChange={e => setupdatedStudent({ ...updatedStudent, period: e.target.value })}>
 								{periodName.map(period => (
 									<option key={period} value={period}>

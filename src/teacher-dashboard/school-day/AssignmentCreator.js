@@ -33,7 +33,6 @@ const AssignmentCreator = ({
 	date,
 	mulitplePeriodSelect
 }) => {
-	console.log(date)
 	const [submitStatus, setSubmitStatus] = useState(false)
 	const [errorLog, setErrorLog] = useState(null)
 
@@ -44,7 +43,7 @@ const AssignmentCreator = ({
 	const [createClass, { data }] = useMutation(CREATE_CLASS_PERIOD, {
 		onError: displayError,
 		onCompleted: data => console.log(data),
-		refetchQueries: ['findClassPeriodForClassManagerDisplay']
+		refetchQueries: ['findClassPeriodForClassManagerDisplay', 'getClassPeriodForTestManager']
 	})
 
 	const createClasses = e => {

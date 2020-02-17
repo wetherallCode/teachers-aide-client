@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import IndividualAssignmentDisplay from './IndividualAssignmentDisplay'
 
 const AssignmentLoaderDisplay = ({
-	data,
+	lesson,
 	date,
 	markingPeriods,
 	lessonValues,
@@ -10,10 +10,8 @@ const AssignmentLoaderDisplay = ({
 	setAssignmentList,
 	markingPeriodDefault
 }) => {
-	const [openEndedQuestion] = data.findLessonByName.workDue.filter(lesson => lesson.type === 'OEQ')
-	const [criticalThinking] = data.findLessonByName.workDue.filter(
-		lesson => lesson.type === 'THINKING_GUIDE'
-	)
+	const [openEndedQuestion] = lesson.workDue.filter(lesson => lesson.type === 'OEQ')
+	const [criticalThinking] = lesson.workDue.filter(lesson => lesson.type === 'THINKING_GUIDE')
 
 	return (
 		<div
@@ -24,7 +22,7 @@ const AssignmentLoaderDisplay = ({
 				color: 'var(--blue)'
 			}}>
 			<IndividualAssignmentDisplay
-				lesson={data}
+				lesson={lesson}
 				assignment={openEndedQuestion}
 				date={date}
 				markingPeriods={markingPeriods}
@@ -33,7 +31,7 @@ const AssignmentLoaderDisplay = ({
 				setAssignmentList={setAssignmentList}
 			/>
 			<IndividualAssignmentDisplay
-				lesson={data}
+				lesson={lesson}
 				assignment={criticalThinking}
 				date={date}
 				markingPeriods={markingPeriods}

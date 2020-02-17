@@ -1,6 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
-const StudentInfoMutatorButton = ({ mutation, variables, buttonDisplay, buttonColor, height }) => {
+const StudentInfoMutatorButton = ({
+	mutation,
+	variables,
+	buttonDisplay,
+	buttonColor,
+	height
+	// toggle,
+	// setToggle
+}) => {
+	// console.log(toggle)
+	// useEffect(() => {
+	// 	if (toggle !== undefined) {
+	// 		setToggle(!toggle)
+	// 	}
+	// }, [])
 	return (
 		<button
 			style={{
@@ -17,6 +31,7 @@ const StudentInfoMutatorButton = ({ mutation, variables, buttonDisplay, buttonCo
 				mutation({
 					variables: { input: variables }
 				})
+				// setToggle(!toggle)
 			}}
 			onMouseDown={e => {
 				e.target.style.backgroundColor = 'var(--white)'

@@ -15,13 +15,14 @@ import { SCORE_ASSIGNMENT } from '../../class-tool-components/CriticalThinkingSc
 import { UNDO_SCORE_ASSIGNMENT } from '../../class-tool-components/CriticalThinkingScoreMutator'
 import OEQCompletionStatus from './OEQCompletionStatus'
 import StudentInfoMutatorButton from '../../class-tool-components/StudentInfoMutatorButton'
+import OEQCompletedDisplay from './OEQCompletedDisplay'
 
 const OEQGrader = ({ student, assignment, essentialQuestion }) => {
 	const [gradeOpenEndedToggle, setGradeOpenEndedToggle] = useState(false)
 	const [commentCategories, setCommentCategories] = useState('')
 	const [commentList, setCommentList] = useState([])
-	const [organizerGrade, setOrganizerGrade] = useState(0)
-	const [paragraphGrade, setParagraphGrade] = useState(0)
+	const [organizerGrade, setOrganizerGrade] = useState(1)
+	const [paragraphGrade, setParagraphGrade] = useState(1)
 
 	// console.log(['Answer explains the topic sentence completely'].includes(...answerCommentList))
 	useEffect(() => {
@@ -38,15 +39,15 @@ const OEQGrader = ({ student, assignment, essentialQuestion }) => {
 			setCommentList(list => [...list, 'Conclusion is a logical result of the topic'])
 		}
 	}, [])
-	const [scoreAssignment, { data }] = useMutation(SCORE_ASSIGNMENT, {
-		refetchQueries: ['rosterList'],
-		onCompleted: () => setGradeOpenEndedToggle(true)
+	const [scoreAssignment, { data, loading }] = useMutation(SCORE_ASSIGNMENT, {
+		refetchQueries: ['classrosterForAssignmentGrader'],
+		onCompleted: () => setGradeOpenEndedToggle(false)
 	})
 	const [undoScoreAssignment] = useMutation(UNDO_SCORE_ASSIGNMENT, {
-		refetchQueries: ['rosterList'],
-		onCompleted: () => setGradeOpenEndedToggle(true)
+		refetchQueries: ['classrosterForAssignmentGrader']
 	})
 	const heightControl = 2
+
 	return (
 		<div
 			style={
@@ -66,39 +67,47 @@ const OEQGrader = ({ student, assignment, essentialQuestion }) => {
 			}>
 			{!gradeOpenEndedToggle && (
 				<>
-					<div>
-						<OEQAssignmentStatusDisplay
-							student={student}
-							assignment={assignment}
-							essentialQuestion={essentialQuestion}
-						/>
-						{assignment.maxScore === 5 || assignment.maxScore === null ? (
-							<>
-								<OEQCommentSelector
-									commentCategories={commentCategories}
-									setCommentCategories={setCommentCategories}
-								/>
-								<div>
-									{commentCategories !== '' && (
-										<div style={{ textAlign: 'center' }}>Comment List</div>
-									)}
-									<CommentListDisplay
-										commentCategories={commentCategories}
-										commentList={commentList}
-										setCommentList={setCommentList}
-									/>
-								</div>
-							</>
-						) : (
-							<OEQCompletionStatus
-								organizerGrade={organizerGrade}
-								setOrganizerGrade={setOrganizerGrade}
-								paragraphGrade={paragraphGrade}
-								setParagraphGrade={setParagraphGrade}
+					{!assignment.missing ? (
+						<OEQCompletedDisplay assignment={assignment} />
+					) : (
+						<div>
+							<OEQAssignmentStatusDisplay
+								student={student}
 								assignment={assignment}
+								essentialQuestion={essentialQuestion}
 							/>
-						)}
-					</div>
+							{assignment.maxScore === 5 || assignment.maxScore === null ? (
+								<>
+									{assignment.missing && (
+										<>
+											<OEQCommentSelector
+												commentCategories={commentCategories}
+												setCommentCategories={setCommentCategories}
+											/>
+											<div>
+												{commentCategories !== '' && (
+													<div style={{ textAlign: 'center' }}>Comment List</div>
+												)}
+												<CommentListDisplay
+													commentCategories={commentCategories}
+													commentList={commentList}
+													setCommentList={setCommentList}
+												/>
+											</div>
+										</>
+									)}
+								</>
+							) : (
+								<OEQCompletionStatus
+									organizerGrade={organizerGrade}
+									setOrganizerGrade={setOrganizerGrade}
+									paragraphGrade={paragraphGrade}
+									setParagraphGrade={setParagraphGrade}
+									assignment={assignment}
+								/>
+							)}
+						</div>
+					)}
 					<>
 						{assignment.missing && (
 							<button
@@ -137,6 +146,7 @@ const OEQGrader = ({ student, assignment, essentialQuestion }) => {
 							setGradeOpenEndedToggle={setGradeOpenEndedToggle}
 							scoreAssignment={scoreAssignment}
 							undoScoreAssignment={undoScoreAssignment}
+							loading={loading}
 						/>
 					)}
 					{assignment.maxScore === 2 && (
@@ -151,6 +161,7 @@ const OEQGrader = ({ student, assignment, essentialQuestion }) => {
 							setGradeOpenEndedToggle={setGradeOpenEndedToggle}
 							scoreAssignment={scoreAssignment}
 							undoScoreAssignment={undoScoreAssignment}
+							loading={loading}
 						/>
 					)}
 				</div>

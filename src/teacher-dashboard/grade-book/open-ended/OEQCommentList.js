@@ -10,6 +10,7 @@ export const topicSentenceCommentList = [
 	'Topic sentence is complete',
 	'Topic sentence ending is incorrect',
 	'Topic sentence is missing an ending',
+	'Topic sentence isn’t separate from the answer',
 	'Topic sentence is missing'
 ]
 export const answerCommentList = [

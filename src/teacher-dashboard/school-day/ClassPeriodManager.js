@@ -9,6 +9,8 @@ import Modal from 'react-responsive-modal'
 import Assignments from './AssignmentManager'
 import AssignmentManager from './AssignmentManager'
 import TestGrader from '../grade-book/test/TestGrader'
+import TestManager from './TestManager'
+import CourseManager from './CourseManager'
 
 const FIND_CLASS_PERIOD = gql`
 	query findClassPeriodForClassManagerDisplay($assignedDate: Date, $period: periodName) {
@@ -73,10 +75,12 @@ const FIND_CLASS_PERIOD = gql`
 	}
 `
 
-const ClassManagerDisplay = ({ match }) => {
+const ClassPeriodManager = ({ match }) => {
 	const [lessonPlanDate, setLessonPlanDate] = useState(new Date().toISOString().substring(0, 10))
 	const [createClassPeriod, setCreateClassPeriod] = useState(true)
 	const [removeLesson, setRemoveLesson] = useState(false)
+	const [courseManagerToggle, setCourseManagerToggle] = useState(false)
+	const [courseManagerDisplayToggle, setCourseManagerDisplayToggle] = useState(true)
 
 	const { periods } = match.params
 
@@ -85,24 +89,23 @@ const ClassManagerDisplay = ({ match }) => {
 	})
 	if (loading) return null
 	if (error) console.error(error)
-	// console.log(data.findClassPeriod)
+
 	return (
 		<div style={{ overflow: 'scroll', height: '100vh' }}>
 			<div
 				style={{
 					color: 'var(--blue)',
 					fontSize: '250%',
+					display: 'flex',
+					justifyContent: 'center',
+					width: '100%',
 					marginBottom: '2%',
-					marginTop: '2%',
-					textDecoration: 'underline',
-					textAlign: 'center'
+					marginTop: '2%'
 				}}>
-				Scheduled Lesson for{' '}
-				{lessonPlanDate.substring(5, 7) +
-					'/' +
-					lessonPlanDate.substring(8, 10) +
-					'/' +
-					lessonPlanDate.substring(0, 4)}
+				<div>
+					Period{' '}
+					{periods.substring(0, 1) + ' ' + periods.substring(2, 3) + '-' + periods.substring(3)}
+				</div>
 			</div>
 			<div
 				style={{
@@ -112,7 +115,12 @@ const ClassManagerDisplay = ({ match }) => {
 					// textDecoration: 'underline',
 					textAlign: 'center'
 				}}>
-				Period {periods}
+				Scheduled Lesson for{' '}
+				{lessonPlanDate.substring(5, 7) +
+					'/' +
+					lessonPlanDate.substring(8, 10) +
+					'/' +
+					lessonPlanDate.substring(0, 4)}
 			</div>
 			<div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
 				<div style={{ fontSize: '130%', color: 'var(--blue)' }}>Select Date: </div>
@@ -132,7 +140,6 @@ const ClassManagerDisplay = ({ match }) => {
 					onChange={e => setLessonPlanDate(e.target.value)}
 				/>
 			</div>
-
 			{data.findClassPeriod !== null ? (
 				<div>
 					<div
@@ -214,10 +221,7 @@ const ClassManagerDisplay = ({ match }) => {
 						display: 'grid',
 						gridTemplateColumns: '1fr 4fr',
 						margin: '5%'
-						// justifyContent: 'flex-start',
-						// alignItems: 'center'
 					}}>
-					{/* <TodaysDate date={lessonPlanDate} /> */}
 					<div
 						style={{
 							marginLeft: '10%',
@@ -237,9 +241,6 @@ const ClassManagerDisplay = ({ match }) => {
 							alignItems: 'center',
 							paddingRight: '2%'
 						}}>
-						{/* <div onClick={() => setCreateClassPeriod(true)}>
-							No Lesson Scheduled - Click to Create
-						</div> */}
 						<div>No Lesson Scheduled</div>
 					</div>
 				</div>
@@ -285,12 +286,14 @@ const ClassManagerDisplay = ({ match }) => {
 					classPeriod={data.findClassPeriod}
 					markingPeriodList={data.MarkingPeriodEnum.enumValues.map(value => value.name)}
 					period={periods}
+					date={lessonPlanDate}
 				/>
 			)}
-
+			<TestManager dueDate={lessonPlanDate} period={periods} />
 			<Attendance date={lessonPlanDate} period={periods}></Attendance>
+			)}
 		</div>
 	)
 }
 
-export default ClassManagerDisplay
+export default ClassPeriodManager

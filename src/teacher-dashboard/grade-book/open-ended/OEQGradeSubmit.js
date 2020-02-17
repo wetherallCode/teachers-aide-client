@@ -11,10 +11,11 @@ const OEQGradeSubmit = ({
 	gradeOpenEndedToggle,
 	setGradeOpenEndedToggle,
 	scoreAssignment,
-	undoScoreAssignment
+	undoScoreAssignment,
+	loading
 }) => {
 	const [late, setLate] = useState(false)
-	const [responsibilityPointsForOEQ, setResponsibilityPointsForOEQ] = useState(0)
+	const [responsibilityPointsForOEQ, setResponsibilityPointsForOEQ] = useState(2)
 	const [latenessOverride, setLatenessOverride] = useState(false)
 
 	const [paragraphScore, setParagraphScore] = useState(4)
@@ -27,15 +28,15 @@ const OEQGradeSubmit = ({
 	useEffect(() => {
 		if (todaysDate !== assignment.dueDate && !studentWasAbsent) {
 			setLate(true)
-			setResponsibilityPointsForOEQ(3)
+			setResponsibilityPointsForOEQ(0)
 		}
 		if (todaysDate !== assignment.dueDate && studentWasAbsent) {
 			console.log('student was absent')
-			setResponsibilityPointsForOEQ(4)
+			setResponsibilityPointsForOEQ(2)
 		}
 		if (todaysDate !== assignment.dueDate && !studentWasAbsent && latenessOverride) {
 			console.log('lateness override')
-			setResponsibilityPointsForOEQ(4)
+			setResponsibilityPointsForOEQ(2)
 			setLate(false)
 		}
 	}, [studentWasAbsent, latenessOverride])
@@ -72,6 +73,9 @@ const OEQGradeSubmit = ({
 		}
 		if (
 			commentList.includes('Not enough textual evidence cited') ||
+			commentList.includes(
+				'Not enough textual evidence Topic sentence isn’t separate from the answer'
+			) ||
 			commentList.includes('Answer is only partially correct') ||
 			commentList.includes('Parts of the text Structure don’t logically connect') ||
 			commentList.includes('Missing  parts of the text structure')
@@ -107,6 +111,7 @@ const OEQGradeSubmit = ({
 				setCommentList={setCommentList}
 				latenessOverride={latenessOverride}
 				setLatenessOverride={setLatenessOverride}
+				loading={loading}
 			/>
 		</>
 	)

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { gql } from 'apollo-boost'
 import { useQuery } from '@apollo/react-hooks'
-import AssignmentGraderDisplay from './AssignmentGraderDisplay'
+import AssignmentGraderDisplayInfo from './AssignmentGraderDisplayInfo'
 import { sortByLastName } from '../roster-components/StudentListInRosterView'
 import { Link } from 'react-router-dom'
 
@@ -19,7 +19,7 @@ const ASSIGNMENT_TYPE = gql`
 		}
 	}
 `
-const AssignmentGrader = ({ classRoster }) => {
+const AssignmentGrader = ({ classRoster, periodName }) => {
 	const [studentID, setStudentID] = useState('')
 
 	const { data, loading, error } = useQuery(ASSIGNMENT_TYPE)
@@ -56,7 +56,6 @@ const AssignmentGrader = ({ classRoster }) => {
 							display: 'flex',
 							justifyContent: 'center',
 							alignItems: 'center',
-
 							textDecoration: 'underline'
 						}}>
 						<Link
@@ -68,12 +67,14 @@ const AssignmentGrader = ({ classRoster }) => {
 				)}
 			</div>
 			{student !== undefined && (
-				<AssignmentGraderDisplay
+				<AssignmentGraderDisplayInfo
 					assignmentType={data.AssignmentType.enumValues.map(value => value.name)}
 					markingPeriodList={data.MarkingPeriodEnum.enumValues.map(value => value.name)}
 					student={student}
+					periodName={periodName}
 				/>
 			)}
+			{<div></div>}
 		</div>
 	)
 }

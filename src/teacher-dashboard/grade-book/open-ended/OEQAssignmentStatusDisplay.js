@@ -31,12 +31,20 @@ const OEQAssignmentStatusDisplay = ({ student, assignment, essentialQuestion }) 
 						<div style={{ marginRight: '2%' }}>Student Status: </div>
 						<div>{studentWasAbsent ? 'Absent' : 'Present'} </div>
 					</div>
-					<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+					<div
+						style={{
+							display: 'flex',
+							justifyContent: 'center',
+							alignItems: 'center',
+							width: '20rem'
+						}}>
 						<div style={{ marginRight: '2%' }}>Status: </div>
 						{assignment.missing ? (
 							<div style={{ color: 'var(--red)' }}>Missing</div>
 						) : (
-							<div>Completed</div>
+							<div>
+								Completed: {assignment.score}/{assignment.maxScore}
+							</div>
 						)}
 					</div>
 				</div>

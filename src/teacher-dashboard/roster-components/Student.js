@@ -7,13 +7,14 @@ import EditModeForm from './EditModeForm'
 import StudentHider from './StudentHider'
 import RemoveStudentToggle from './RemoveStudentToggle'
 import Modal from 'react-modal'
-import { GET_CLASS_ROSTER } from './rosterView'
+// import { GET_CLASS_ROSTER } from './rosterView'
 import DaysAbsent from './DaysAbsent'
 
 export const STUDENT_INFO_QUERY = gql`
 	query getStudentInfo($_id: ID!) {
 		student(_id: $_id) {
 			_id
+			schoolID
 			firstName
 			lastName
 			period
@@ -80,6 +81,7 @@ const Student = ({ match, history }) => {
 
 	const { student, isEditStudentMode, removeStudentScreen } = data
 	const {
+		schoolID,
 		firstName,
 		lastName,
 		period,
@@ -151,6 +153,7 @@ const Student = ({ match, history }) => {
 											{isHiddenFromRoster && 'Hidden'}{' '}
 										</h1>
 									</div>
+									<h2>SchoolID: {schoolID}</h2>
 									<h2>{`Period: ${period}`}</h2>
 									<h2>{`Seat: ${desk}`}</h2>
 									<h2>{`Responsibility Points: ${responsibilityPoints}`}</h2>

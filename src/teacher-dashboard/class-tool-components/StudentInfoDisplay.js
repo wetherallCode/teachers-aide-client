@@ -4,6 +4,7 @@ import TodaysDate from '../../website/TodaysDate'
 import { gql } from 'apollo-boost'
 import { useMutation } from '@apollo/react-hooks'
 import { FIND_STUDENT_QUERY } from './StudentInfo'
+import { CurrentGradeCalculator } from '../../utils'
 
 export const MARK_STUDENT_ABSENT = gql`
 	mutation markStudentAbsent($_id: ID!, $date: Date) {
@@ -51,13 +52,14 @@ const UNDO_MARK_STUDENT_LATE = gql`
 	}
 `
 
-const StudentInfoDisplay = ({ student, periodName }) => {
+const StudentInfoDisplay = ({ student, periodName, todaysDate }) => {
 	const [attendanceToggle, setAttendanceToggle] = useState(false)
-	const [markStudentAbsentToggle, setMarkStudentAbsent] = useState(false)
 
 	const {
 		firstName,
 		lastName,
+		nickName,
+		schoolID,
 		responsibilityPoints,
 		_id,
 		period,
@@ -65,12 +67,13 @@ const StudentInfoDisplay = ({ student, periodName }) => {
 		daysLate,
 		desk
 	} = student
+	const generalDate = new Date()
 
-	const todaysDate = new Date()
-	const date = new Date().toISOString().substring(0, 10)
+	const markingPeriod = 'THIRD'
+	const grade = CurrentGradeCalculator({ student, markingPeriod, todaysDate })
 
 	const [markStudentAbsent] = useMutation(MARK_STUDENT_ABSENT, {
-		variables: { _id: _id, date: date, assignedDate: date, period: period },
+		variables: { _id: _id, date: todaysDate, assignedDate: todaysDate, period: period },
 		refetchQueries: ['findEligibleStudents'],
 		update(client, { data: { markStudentAbsent } }) {
 			const { findStudentByPeriodAndDesk } = client.readQuery({
@@ -96,7 +99,7 @@ const StudentInfoDisplay = ({ student, periodName }) => {
 		}
 	})
 	const [unduMarkStudentAbsent] = useMutation(UNDO_MARK_STUDENT_ABSENT, {
-		variables: { _id: _id, date: date },
+		variables: { _id: _id, date: todaysDate },
 		refetchQueries: ['findEligibleStudents'],
 		update(client, { data: { unduMarkStudentAbsent } }) {
 			const { findStudentByPeriodAndDesk } = client.readQuery({
@@ -122,7 +125,7 @@ const StudentInfoDisplay = ({ student, periodName }) => {
 		}
 	})
 	const [markStudentLate] = useMutation(MARK_STUDENT_LATE, {
-		variables: { _id: _id, date: date },
+		variables: { _id: _id, date: todaysDate },
 		update(client, { data: { markStudentLate } }) {
 			const { findStudentByPeriodAndDesk } = client.readQuery({
 				query: FIND_STUDENT_QUERY,
@@ -148,7 +151,7 @@ const StudentInfoDisplay = ({ student, periodName }) => {
 		}
 	})
 	const [unduMarkStudentLate] = useMutation(UNDO_MARK_STUDENT_LATE, {
-		variables: { _id: _id, date: date },
+		variables: { _id: _id, date: todaysDate },
 		update(client, { data: { unduMarkStudentLate } }) {
 			const { findStudentByPeriodAndDesk } = client.readQuery({
 				query: FIND_STUDENT_QUERY,
@@ -176,7 +179,7 @@ const StudentInfoDisplay = ({ student, periodName }) => {
 	return (
 		<div
 			style={
-				daysAbsent !== null && daysAbsent.includes(date)
+				daysAbsent !== null && daysAbsent.includes(todaysDate)
 					? {
 							display: 'flex',
 							flexDirection: 'column',
@@ -209,11 +212,15 @@ const StudentInfoDisplay = ({ student, periodName }) => {
 							<Link to={`/dashboard/roster-profile/student/${_id}`}>
 								<div
 									style={{ fontSize: '200%', textDecoration: 'underline', color: 'var(--white)' }}>
-									{firstName + ' ' + lastName}
+									{nickName === null || nickName === '' ? firstName : nickName} {lastName}
 								</div>
 								<div
 									style={{ fontSize: '150%', textDecoration: 'underline', color: 'var(--white)' }}>
 									Points: {responsibilityPoints}
+								</div>
+								<div
+									style={{ fontSize: '150%', textDecoration: 'underline', color: 'var(--white)' }}>
+									Current Grade: {grade}
 								</div>
 							</Link>
 						</div>
@@ -242,10 +249,10 @@ const StudentInfoDisplay = ({ student, periodName }) => {
 						<>
 							<div style={{ fontSize: '180%' }}>{firstName + ' ' + lastName}</div>
 							<div style={{ fontSize: '130%' }}>
-								<TodaysDate date={todaysDate}></TodaysDate>
+								<TodaysDate date={generalDate}></TodaysDate>
 							</div>
 						</>
-						{daysAbsent !== null && daysAbsent.includes(date) ? (
+						{daysAbsent !== null && daysAbsent.includes(todaysDate) ? (
 							<button
 								style={{
 									height: '2rem',
@@ -276,7 +283,7 @@ const StudentInfoDisplay = ({ student, periodName }) => {
 								Absent
 							</button>
 						)}
-						{daysLate !== null && daysLate.includes(date) ? (
+						{daysLate !== null && daysLate.includes(todaysDate) ? (
 							<button
 								style={{
 									height: '2rem',

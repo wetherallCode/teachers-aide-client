@@ -2,13 +2,57 @@ import React, { useState, useEffect } from 'react'
 import SearchForAssignments from './SearchForAssignments'
 import CriticalThinkingGridDisplay from './critical-thinking/CriticalThinkingGridDisplay'
 import OEQGridDisplay from './open-ended/OEQGridDisplay'
+import { gql } from 'apollo-boost'
+import { useQuery } from '@apollo/react-hooks'
+import IndividualTestDisplay from './test/IndividualTestDisplay'
+import IndividualTestGrid from './test/IndividualTestGrid'
+import { CURRENT_MARKING_PERIOD_ID } from '../../utils'
 
-const AssignmentGraderDisplay = ({ assignmentType, student, markingPeriodList }) => {
+const GET_MARKING_PERIOD = gql`
+	query findMarkingPeriodForAssignmentGrader($_id: ID!) {
+		findCurrentMarkingPeriod(_id: $_id) {
+			markingPeriod
+		}
+	}
+`
+
+const AssignmentGraderDisplayInfo = ({
+	assignmentType,
+	student,
+	markingPeriodList,
+	periodName
+}) => {
+	const { loading, data, error } = useQuery(GET_MARKING_PERIOD, {
+		variables: { _id: CURRENT_MARKING_PERIOD_ID }
+	})
+
+	if (loading) return null
+	if (error) console.error(error)
+
+	const markingPeriod = data.findCurrentMarkingPeriod.markingPeriod
+	return (
+		<AssignmentGraderDisplay
+			assignmentType={assignmentType}
+			student={student}
+			markingPeriodList={markingPeriodList}
+			periodName={periodName}
+			currentMarkingPeriod={markingPeriod}
+		/>
+	)
+}
+
+const AssignmentGraderDisplay = ({
+	assignmentType,
+	student,
+	markingPeriodList,
+	currentMarkingPeriod,
+	periodName
+}) => {
 	const [assignmentTypeValue, setAssignmentTypeValue] = useState('OEQ')
 	const [pickedDate, setPickedDate] = useState('')
 	const [filteredAssignmentList, setFilteredAssignmentList] = useState([])
 
-	const [markingPeriod, setMarkingPeriod] = useState(markingPeriodList[1])
+	const [markingPeriod, setMarkingPeriod] = useState(currentMarkingPeriod)
 
 	const filterFn = assignment => assignment.markingPeriod === markingPeriod
 
@@ -17,7 +61,7 @@ const AssignmentGraderDisplay = ({ assignmentType, student, markingPeriodList })
 			const list = student.hasAssignments.filter(
 				assignment => assignment.assignmentType === assignmentTypeValue
 			)
-			setFilteredAssignmentList([...filteredAssignmentList, ...list])
+			setFilteredAssignmentList([...list])
 		} else {
 			const list = student.hasAssignments.filter(
 				assignment =>
@@ -26,7 +70,14 @@ const AssignmentGraderDisplay = ({ assignmentType, student, markingPeriodList })
 			)
 			setFilteredAssignmentList(list)
 		}
-	}, [pickedDate, assignmentTypeValue])
+	}, [pickedDate, assignmentTypeValue, student])
+
+	useEffect(() => {
+		if (assignmentTypeValue === 'TEST' && pickedDate === '') {
+			const list = student.hasTests
+			setFilteredAssignmentList(list)
+		}
+	}, [pickedDate, assignmentTypeValue, student])
 
 	const sortByDateAssigned = (a, b) => {
 		let dateA = a.assignedDate
@@ -55,9 +106,13 @@ const AssignmentGraderDisplay = ({ assignmentType, student, markingPeriodList })
 				markingPeriod={markingPeriod}
 				setMarkingPeriod={setMarkingPeriod}
 			/>
-			<div style={{ textAlign: 'center', fontSize: '160%', marginBottom: '2%' }}>
-				{assignmentTypeValue === 'OEQ' ? 'Open Ended Question' : 'Critical Thinking Guide'}{' '}
-				Assignments
+			<div style={{ textAlign: 'center', fontSize: '160%', marginBottom: '2%', marginTop: '2%' }}>
+				{assignmentTypeValue === 'OEQ'
+					? 'Open Ended Question'
+					: assignmentTypeValue === 'TEST'
+					? 'Tests'
+					: 'Critical Thinking Guide'}
+				<>{assignmentTypeValue !== 'TEST' && ' Assignments'}</>
 			</div>
 			{assignmentTypeValue === 'OEQ' && (
 				<div id='test' style={{ borderBottom: '1px solid var(--blue)' }}>
@@ -80,8 +135,24 @@ const AssignmentGraderDisplay = ({ assignmentType, student, markingPeriodList })
 						))}
 				</div>
 			)}
+
+			{assignmentTypeValue === 'TEST' && (
+				<div style={{ borderTop: '1px solid var(--blue)' }}>
+					{filteredAssignmentList
+						.filter(filterFn)
+						.sort(sortByDateAssigned)
+						.map((assignment, i) => (
+							<IndividualTestGrid
+								key={assignment.dueDate}
+								assignment={assignment}
+								student={student}
+								periodName={periodName}
+							/>
+						))}
+				</div>
+			)}
 		</div>
 	)
 }
 
-export default AssignmentGraderDisplay
+export default AssignmentGraderDisplayInfo

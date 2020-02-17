@@ -53,7 +53,12 @@ const CriticalThinkingGridDisplay = ({ assignment, student }) => {
 				</button>
 			</div>
 			{assignmentScorerToggle && (
-				<CriticalThinkingGrader student={student} assignment={assignment} />
+				<CriticalThinkingGrader
+					student={student}
+					assignment={assignment}
+					assignmentScorerToggle={assignmentScorerToggle}
+					setAssignmentScorerToggle={setAssignmentScorerToggle}
+				/>
 			)}
 		</div>
 	)

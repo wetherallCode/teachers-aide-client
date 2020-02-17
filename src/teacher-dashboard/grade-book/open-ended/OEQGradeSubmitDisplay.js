@@ -17,19 +17,32 @@ const OEQGradeSubmitDisplay = ({
 	gradeOpenEndedToggle,
 	setGradeOpenEndedToggle,
 	latenessOverride,
-	setLatenessOverride
+	setLatenessOverride,
+	loading
 }) => {
 	const heightControl = 2
-	console.log(responsibilityPointsForOEQ)
+
 	return (
 		<div>
-			<OEQGradeSubmitDisplayComments
-				commentList={commentList}
-				organizerScore={organizerScore}
-				paragraphScore={paragraphScore}
-				overallScore={overallScore}
-				assignment={assignment}
-			/>
+			{loading ? (
+				<div
+					style={{
+						height: '40vh',
+						display: 'flex',
+						justifyContent: 'center',
+						alignItems: 'center'
+					}}>
+					<div>Grading</div>
+				</div>
+			) : (
+				<OEQGradeSubmitDisplayComments
+					commentList={commentList}
+					organizerScore={organizerScore}
+					paragraphScore={paragraphScore}
+					overallScore={overallScore}
+					assignment={assignment}
+				/>
+			)}
 			<button
 				onClick={() => {
 					setGradeOpenEndedToggle(false)
@@ -48,8 +61,8 @@ const OEQGradeSubmitDisplay = ({
 				}}>
 				Reset
 			</button>
-			<button onClick={() => setLatenessOverride(true)}>Override Lateness</button>
-			{assignment.missing && !latenessOverride && (
+			{late && <button onClick={() => setLatenessOverride(true)}>Override Lateness</button>}
+			{assignment.missing && !latenessOverride && !late && (
 				<StudentInfoMutatorButton
 					mutation={scoreAssignment}
 					variables={{
@@ -59,8 +72,8 @@ const OEQGradeSubmitDisplay = ({
 						exempt: false,
 						missing: false,
 						score: overallScore,
-						earnedPoints: 4,
-						responsibilityPoints: 4,
+						earnedPoint: 2,
+						responsibilityPoints: 2,
 						comments: commentList,
 						late: late
 					}}

@@ -14,6 +14,9 @@ export const SCORE_ASSIGNMENT = gql`
 					assignmentType
 					missing
 				}
+				hasTests {
+					score
+				}
 			}
 		}
 	}
@@ -35,14 +38,13 @@ const CriticalThinkingScoreMutator = ({
 	const [criticalThinkingScoreValue, setCriticalThinkingScoreValue] = useState(0)
 	const [criticalThinkingStatusValue, setCriticalThinkingStatusValue] = useState(false)
 	const [currentCriticalThinkingGuide, setCurrentCriticalThinkingGuide] = useState({})
-	console.log(currentCriticalThinkingGuide.earnedPoints)
+
 	const [exemptToggle, setExemptToggle] = useState(false)
 
 	useEffect(() => {
 		student.hasAssignments.forEach(assignment => {
 			if (assignment.assignmentType === 'THINKING_GUIDE' && assignment.dueDate === todaysDate) {
 				setCriticalThinkingScoreValue(assignment.score)
-				console.log(assignment.missing)
 			}
 		})
 	}, [

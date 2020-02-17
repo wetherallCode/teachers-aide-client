@@ -25,7 +25,6 @@ const OEQGridDisplay = ({ assignment, student }) => {
 	})
 	if (loading) return null
 	if (error) console.error(error)
-	const { essentialQuestion } = data.findClassPeriod.assignedLesson
 
 	return (
 		<div>
@@ -79,11 +78,13 @@ const OEQGridDisplay = ({ assignment, student }) => {
 			</div>
 			{assignmentScorerToggle && (
 				<>
-					<OEQGrader
-						student={student}
-						assignment={assignment}
-						essentialQuestion={essentialQuestion}
-					/>
+					{data.findClassPeriod.assignedLesson.essentialQuestion !== undefined && (
+						<OEQGrader
+							student={student}
+							assignment={assignment}
+							essentialQuestion={data.findClassPeriod.assignedLesson.essentialQuestion}
+						/>
+					)}
 				</>
 			)}
 		</div>

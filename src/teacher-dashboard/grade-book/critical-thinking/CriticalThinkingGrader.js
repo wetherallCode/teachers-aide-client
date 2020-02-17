@@ -4,9 +4,12 @@ import { SCORE_ASSIGNMENT } from '../../class-tool-components/CriticalThinkingSc
 import { UNDO_SCORE_ASSIGNMENT } from '../../class-tool-components/CriticalThinkingScoreMutator'
 import StudentInfoMutatorButton from '../../class-tool-components/StudentInfoMutatorButton'
 
-const CriticalThinkingGrader = ({ student, assignment }) => {
-	console.log(assignment.earnedPoints)
-	const [assignmentScoreValue, setAssignmentScoreValue] = useState(0)
+const CriticalThinkingGrader = ({
+	student,
+	assignment,
+	assignmentScorerToggle,
+	setAssignmentScorerToggle
+}) => {
 	const [commentList, setCommentList] = useState([])
 
 	const [assignmentStatus, setAssignmentStatus] = useState(0)
@@ -15,12 +18,12 @@ const CriticalThinkingGrader = ({ student, assignment }) => {
 	const todaysDate = new Date().toISOString().substring(0, 10)
 
 	const [scoreAssignment, { data }] = useMutation(SCORE_ASSIGNMENT, {
-		refetchQueries: ['rosterList'],
+		refetchQueries: ['classrosterForAssignmentGrader'],
 		onCompleted: data => console.log(data)
 	})
 
 	const [undoScoreAssignment] = useMutation(UNDO_SCORE_ASSIGNMENT, {
-		refetchQueries: ['rosterList']
+		refetchQueries: ['classrosterForAssignmentGrader']
 	})
 
 	const studentWasAbsent = student.daysAbsent.includes(assignment.dueDate)
@@ -112,6 +115,8 @@ const CriticalThinkingGrader = ({ student, assignment }) => {
 						buttonDisplay={'Excused Incomplete'}
 						buttonColor={'blue'}
 						height={heightControl}
+						toggle={assignmentScorerToggle}
+						setToggle={setAssignmentScorerToggle}
 					/>
 				)}
 				{assignment.missing && (
@@ -132,6 +137,8 @@ const CriticalThinkingGrader = ({ student, assignment }) => {
 						buttonDisplay={'Excused Complete'}
 						buttonColor={'blue'}
 						height={heightControl}
+						toggle={assignmentScorerToggle}
+						setToggle={setAssignmentScorerToggle}
 					/>
 				)}
 				{assignment.missing && (
@@ -152,6 +159,8 @@ const CriticalThinkingGrader = ({ student, assignment }) => {
 						buttonDisplay={'Incomplete'}
 						buttonColor={'blue'}
 						height={heightControl}
+						toggle={assignmentScorerToggle}
+						setToggle={setAssignmentScorerToggle}
 					/>
 				)}
 				{assignment.missing && (
@@ -172,6 +181,8 @@ const CriticalThinkingGrader = ({ student, assignment }) => {
 						buttonDisplay={'Complete'}
 						buttonColor={'blue'}
 						height={heightControl}
+						toggle={assignmentScorerToggle}
+						setToggle={setAssignmentScorerToggle}
 					/>
 				)}
 				{assignment.missing && (
@@ -192,6 +203,8 @@ const CriticalThinkingGrader = ({ student, assignment }) => {
 						buttonDisplay={'Exempt'}
 						buttonColor={'blue'}
 						height={heightControl}
+						toggle={assignmentScorerToggle}
+						setToggle={setAssignmentScorerToggle}
 					/>
 				)}
 				{!assignment.missing && (
@@ -208,6 +221,8 @@ const CriticalThinkingGrader = ({ student, assignment }) => {
 							buttonDisplay={'Undo'}
 							buttonColor={'red'}
 							height={heightControl}
+							toggle={assignmentScorerToggle}
+							setToggle={setAssignmentScorerToggle}
 						/>
 					</div>
 				)}

@@ -31,7 +31,7 @@ const AssignmentRemover = ({ _id, date, removeLesson, setRemoveLesson, period })
 			console.log(data.removeClassPeriod)
 			console.log('lesson removed')
 		},
-		refetchQueries: ['findClassPeriodForClassManagerDisplay']
+		refetchQueries: ['findClassPeriodForClassManagerDisplay', 'findClassPeriodByTestDueDate']
 	})
 
 	return (

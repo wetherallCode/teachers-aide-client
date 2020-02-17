@@ -13,7 +13,9 @@ const CREATE_UNIT = gql`
 `
 
 const UnitCreater = ({ grade, newUnitName, setNewUnitName }) => {
-	const [createUnit] = useMutation(CREATE_UNIT, { refetchQueries: ['findUnitsByGrade'] })
+	const [createUnit] = useMutation(CREATE_UNIT, {
+		refetchQueries: ['findUnitsByGradeForUnitLoader']
+	})
 
 	return (
 		<div

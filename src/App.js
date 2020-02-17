@@ -17,7 +17,7 @@ const App = () => {
 		</div>
 	)
 }
-//  #383b3d
+
 const Home = () => (
 	<>
 		<header

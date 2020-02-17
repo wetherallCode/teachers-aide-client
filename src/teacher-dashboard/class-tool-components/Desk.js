@@ -15,6 +15,7 @@ const Desk = ({ match, deskNumber, periodName }) => {
 	const todaysDate = new Date().toISOString().substring(0, 10)
 
 	const { findStudentByPeriodAndDesk } = data
+
 	return (
 		<>
 			{findStudentByPeriodAndDesk && !findStudentByPeriodAndDesk.isHiddenFromRoster ? (
@@ -47,7 +48,12 @@ const Desk = ({ match, deskNumber, periodName }) => {
 										boxShadow: '1x 1px 1px var(--darkgrey)'
 								  }
 						}>
-						<div>{findStudentByPeriodAndDesk.firstName}</div>
+						<div>
+							{findStudentByPeriodAndDesk.nickName === null ||
+							findStudentByPeriodAndDesk.nickName === ''
+								? findStudentByPeriodAndDesk.firstName
+								: findStudentByPeriodAndDesk.nickName}
+						</div>
 					</button>
 				</Link>
 			) : (

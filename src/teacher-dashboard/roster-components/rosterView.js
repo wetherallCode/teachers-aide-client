@@ -8,11 +8,15 @@ import AllStudentRoster from './AllStudentRoster'
 import AssignmentGrader from '../grade-book/AssignmentGrader'
 import TestGrader from '../grade-book/test/TestGrader'
 import AssignedSeatsView from './AssignedSeatsView'
+import AssingmentGraderInfo from '../grade-book/AssingmentGraderInfo'
+import { GET_CURRENT_MARKING_PERIOD } from '../school-day/ClassPeriodCreator'
+import { CURRENT_MARKING_PERIOD_ID } from '../../utils'
 
 export const GET_CLASS_ROSTER = gql`
 	query rosterList($period: periodName) {
 		classRoster(period: $period) {
 			_id
+			schoolID
 			firstName
 			lastName
 			responsibilityPoints
@@ -40,6 +44,7 @@ export const GET_CLASS_ROSTER = gql`
 				readingSections
 				missing
 				maxScore
+				score
 				earnedPoints
 				studyTime
 				markingPeriod
@@ -47,11 +52,21 @@ export const GET_CLASS_ROSTER = gql`
 		}
 	}
 `
-
 const Rosters = ({ match }) => {
+	const { loading, error, data } = useQuery(GET_CURRENT_MARKING_PERIOD, {
+		variables: { _id: CURRENT_MARKING_PERIOD_ID }
+	})
+
+	if (loading) return null
+	if (error) console.error(error)
+	const { markingPeriod } = data.findCurrentMarkingPeriod
+
+	return <RosterDisplay match={match} markingPeriod={markingPeriod} />
+}
+
+const RosterDisplay = ({ match, markingPeriod }) => {
 	const [isAddStudentPressed, setIsAddStudentPressed] = useState(false)
-	const [gradeAssignments, setGradeAssignments] = useState(false)
-	const [gradeTest, setGradeTest] = useState(true)
+	const [gradeAssignments, setGradeAssignments] = useState(true)
 	const [deskLimit, setdeskLimit] = useState(24)
 	const [deskChangeViewToggle, setDeskChangeViewToggle] = useState(false)
 
@@ -136,7 +151,7 @@ const Rosters = ({ match }) => {
 							<div
 								onClick={() => setGradeAssignments(!gradeAssignments)}
 								style={{ marginRight: '2%', fontSize: '130%', cursor: 'pointer' }}>
-								{!gradeAssignments ? 'Grade Assignments' : 'Roster'}
+								{!gradeAssignments ? 'Grading' : 'Roster'}
 							</div>
 							{desks.length < deskLimit && !gradeAssignments && (
 								<div
@@ -151,8 +166,6 @@ const Rosters = ({ match }) => {
 					)}
 				</div>
 			</header>
-
-			{/* Above is for all appropriate UI, and below is just the roster*/}
 
 			{deskChangeViewToggle ? (
 				<AssignedSeatsView classRoster={classRoster} />
@@ -176,14 +189,18 @@ const Rosters = ({ match }) => {
 						{match.params.periodName === 'allStudents' ? (
 							<AllStudentRoster />
 						) : (
-							<StudentListInRosterView classRoster={classRoster} />
+							<StudentListInRosterView
+								classRoster={classRoster}
+								markingPeriod={markingPeriod}
+								todaysDate={todaysDate}
+							/>
 						)}
 
 						<div style={{ borderBottom: '1px solid var(--blue)' }} />
 					</>
 				</div>
 			) : (
-				<AssignmentGrader classRoster={classRoster} />
+				<AssingmentGraderInfo period={periodName} markingPeriod={markingPeriod} />
 			)}
 		</div>
 	)

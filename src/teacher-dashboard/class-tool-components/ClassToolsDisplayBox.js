@@ -18,7 +18,6 @@ const GET_LESSONS_CLASSWORK = gql`
 `
 
 const ClassToolsDisplayBox = ({ selector, period, teacherOptions, setTeacherOptions }) => {
-	console.log(teacherOptions)
 	const date = new Date().toISOString().substring(0, 10)
 
 	const { data, loading, error } = useQuery(GET_LESSONS_CLASSWORK, {

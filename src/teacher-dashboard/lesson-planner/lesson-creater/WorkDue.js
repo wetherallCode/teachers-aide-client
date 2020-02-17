@@ -102,9 +102,9 @@ const WorkDue = ({ AssignmentType, workDueList, setWorkDueList }) => {
 					display: 'flex',
 					margin: '5%'
 				}}>
-				{workDueList.map(assignment => (
+				{workDueList.map((assignment, i) => (
 					<div
-						key={assignment}
+						key={i}
 						style={{
 							border: '1px solid var(--blue)',
 							width: '20%',

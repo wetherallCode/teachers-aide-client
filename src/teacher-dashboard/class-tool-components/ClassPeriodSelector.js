@@ -84,7 +84,8 @@ const ClassPeriodItems = ({ items, match }) => {
 							boxShadow: '1px 1px 1px 1px gray',
 							borderRadius: '5px'
 						}}>
-						Period {period}
+						Period{' '}
+						{period.substring(0, 1) + ' ' + period.substring(2, 3) + '-' + period.substring(3)}
 					</button>
 				</Link>
 			))}

@@ -10,7 +10,6 @@ const StudentInfoMutator = ({
 	teacherOptions,
 	setTeacherOptions
 }) => {
-	console.log(student.hasAssignments !== null)
 	const [hasAssignment, setHasAssignment] = useState(false)
 
 	useEffect(() => {
@@ -20,6 +19,7 @@ const StudentInfoMutator = ({
 			}
 		})
 	}, [hasAssignment, setHasAssignment])
+
 	return (
 		<div
 			style={{
@@ -44,8 +44,6 @@ const StudentInfoMutator = ({
 					todaysDate={todaysDate}
 					teacherOptions={teacherOptions}
 					setTeacherOptions={setTeacherOptions}
-					// currentCriticalThinkingGuide={currentCriticalThinkingGuide}
-					// setCurrentCriticalThinkingGuide={setCurrentCriticalThinkingGuide}
 				/>
 			) : (
 				<>

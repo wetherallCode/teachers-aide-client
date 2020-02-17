@@ -6,6 +6,7 @@ import AssignmentLoaderDisplay from './AssignmentLoaderDisplay'
 import AssignmentCreator from './AssignmentCreator'
 import MultipleClassLoader from './MultipleClassLoader'
 import TestLoader from './TestLoader'
+import { CURRENT_MARKING_PERIOD_ID } from '../../utils'
 
 const GET_GRADE_LEVELS = gql`
 	query getClassPeriodInputs {
@@ -63,7 +64,13 @@ const GET_LESSON_BY_NAME = gql`
 	}
 `
 
-
+export const GET_CURRENT_MARKING_PERIOD = gql`
+	query findMarkingPeriod($_id: ID!) {
+		findCurrentMarkingPeriod(_id: $_id) {
+			markingPeriod
+		}
+	}
+`
 export const useForm = initialValues => {
 	const [values, setValues] = useState(initialValues)
 
@@ -77,8 +84,6 @@ export const useForm = initialValues => {
 
 const ClassPeriodCreator = ({ period, date, allClassperiods }) => {
 	const [lessonValues, setLessonValues] = useState({ grade: '', lessonName: '' })
-
-	const [markingPeriodDefault, setMarkingPeriodDefault] = useState('')
 	const [assignmentList, setAssignmentList] = useState([])
 	const [mulitplePeriodSelect, setMulitplePeriodSelect] = useState([period])
 
@@ -89,13 +94,9 @@ const ClassPeriodCreator = ({ period, date, allClassperiods }) => {
 		readingPages: '',
 		readingSections: '',
 		assignmentType: 'TEST',
-		maxScore: 3
+		maxScore: 3,
+		scored: false
 	})
-	// useEffect(() => {
-	// 	if (markingPeriods !== undefined) {
-	// 		setMarkingPeriodDefault(markingPeriods[2])
-	// 	}
-	// })
 
 	const { data, loading, error } = useQuery(GET_GRADE_LEVELS)
 	if (loading) return <h2 style={{ paddingLeft: '2%', color: 'var(--blue)' }}>Loading</h2>
@@ -245,8 +246,8 @@ const ClassLessonLoader = ({ unit, grade, date, period, lessonValues, setLessonV
 
 	return (
 		<ClassLessonLoaderDisplay
-			data={data}
-			error={errorLog}
+			lessons={data.findLessonsByUnit}
+			errorLog={errorLog}
 			grade={grade}
 			date={date}
 			period={period}
@@ -257,8 +258,8 @@ const ClassLessonLoader = ({ unit, grade, date, period, lessonValues, setLessonV
 }
 
 const ClassLessonLoaderDisplay = ({
-	data,
-	error,
+	lessons,
+	errorLog,
 	grade,
 	date,
 	period,
@@ -266,18 +267,26 @@ const ClassLessonLoaderDisplay = ({
 	setLessonValues
 }) => {
 	useEffect(() => {
-		if (data.findLessonsByUnit.length > 0) {
+		if (lessons.length > 0) {
 			setLessonValues({
 				grade: grade,
-				lessonName: data.findLessonsByUnit[0].lessonName
+				lessonName: lessons[0].lessonName
 			})
 		}
 	}, [setLessonValues])
+	const { loading, data, error } = useQuery(GET_CURRENT_MARKING_PERIOD, {
+		variables: { _id: CURRENT_MARKING_PERIOD_ID }
+	})
+
+	if (loading) return null
+	if (error) console.error(error)
+	const markingPeriod = data.findCurrentMarkingPeriod.markingPeriod
+
 	return (
 		<>
 			<div style={{ display: 'flex' }}>
 				<div style={{ marginRight: '1%', color: 'var(--blue)' }}>Lesson: </div>
-				{data.findLessonsByUnit.length > 0 ? (
+				{lessons.length > 0 ? (
 					<select
 						style={{
 							fontSize: '70%',
@@ -291,7 +300,7 @@ const ClassLessonLoaderDisplay = ({
 								lessonName: e.target.value
 							})
 						}}>
-						{data.findLessonsByUnit.map(lesson => {
+						{lessons.map(lesson => {
 							return (
 								<option key={lesson._id} value={lesson.lessonName}>
 									{lesson.lessonName.length < 30
@@ -336,8 +345,8 @@ const AssignmentLoader = ({
 	if (loading) return null
 	if (error) console.log(error)
 
-	const markingPeriodDefault = markingPeriods[1]
-	console.log(markingPeriodDefault)
+	const markingPeriodDefault = markingPeriods[2]
+
 	return (
 		<div
 			style={{
@@ -347,7 +356,7 @@ const AssignmentLoader = ({
 				gridTemplateRows: '7fr 2fr'
 			}}>
 			<AssignmentLoaderDisplay
-				data={data}
+				lesson={data.findLessonByName}
 				date={date}
 				markingPeriods={markingPeriods}
 				markingPeriodDefault={markingPeriodDefault}

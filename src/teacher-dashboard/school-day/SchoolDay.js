@@ -1,8 +1,9 @@
 import React from 'react'
 import { Route, Link } from 'react-router-dom'
 import LessonLoader from './LessonLoader'
-import ClassManager from './ClassManager'
-import ClassManagerDisplay from './ClassManagerDisplay'
+import ClassPeriodNavigation from './ClassPeriodNavigation'
+import ClassPeriodManager from './ClassPeriodManager'
+import CourseManager from './CourseManager'
 
 const SchoolDay = ({ match }) => {
 	const { url, path } = match
@@ -22,7 +23,7 @@ const SchoolDay = ({ match }) => {
 					borderBottom: '3px solid var(--white)'
 				}}>
 				<Link
-					to={`${match.url}/ClassManager/A_12`}
+					to={`${match.url}`}
 					style={{
 						display: 'flex',
 						alignItems: 'center',
@@ -33,7 +34,7 @@ const SchoolDay = ({ match }) => {
 						fontSize: '110%',
 						marginRight: '3%'
 					}}>
-					School Day
+					Courses
 				</Link>
 				<div
 					style={{
@@ -48,27 +49,47 @@ const SchoolDay = ({ match }) => {
 							fontSize: '110%',
 							marginRight: '3%'
 						}}
-						to={`${url}/lessonLoader`}>
-						Lesson Loader
+						to={`${match.url}/classManager/A_12`}>
+						Class Manager
 					</Link>
-					{/* <Link
+					<Link
 						style={{
 							color: 'var(--white)',
 							textDecoration: 'none',
 							fontSize: '110%',
 							marginRight: '3%'
 						}}
-						to={`${url}/classManager`}>
-						Class Period Manager
-					</Link> */}
+						to={`${url}/courseManager/A_12`}>
+						Course Manager
+					</Link>
 				</div>
 			</div>
-			<Route path={`${path}/lessonLoader`} component={LessonLoader} />
+			{/* <Route path={`${path}`} component={SchoolDayHomePage} /> */}
 
 			<div style={{ display: 'grid', gridTemplateColumns: '1fr 4fr' }}>
-				<Route path={`${path}/classManager`} component={ClassManager} />
-				<Route path={`${path}/classManager/:periods`} component={ClassManagerDisplay} />
+				<Route path={`${path}/classManager`} component={ClassPeriodNavigation} />
+				<Route path={`${path}/classManager/:periods`} component={ClassPeriodManager} />
 			</div>
+			<div style={{ display: 'grid', gridTemplateColumns: '1fr 4fr' }}>
+				<Route path={`${path}/courseManager`} component={ClassPeriodNavigation} />
+				<Route path={`${path}/courseManager/:periods`} component={CourseManager} />
+			</div>
+		</div>
+	)
+}
+
+const SchoolDayHomePage = () => {
+	return (
+		<div
+			style={{
+				display: 'flex',
+				justifyContent: 'center',
+				alignItems: 'center',
+				height: '0vh',
+				color: 'var(--blue)',
+				fontSize: '200%'
+			}}>
+			<div>Class Manager</div>
 		</div>
 	)
 }

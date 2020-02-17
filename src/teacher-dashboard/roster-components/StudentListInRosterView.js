@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import StudentListinRosterViewRow from './StudentListinRosterViewRow'
 
 export const sortByLastName = (a, b) => {
 	let lastNameA = a.lastName.toLowerCase()
@@ -14,11 +15,36 @@ export const sortByLastName = (a, b) => {
 	return 0
 }
 
-const StudentListInRosterView = ({ classRoster }) => {
-	let numberMaker = 1
+const StudentListInRosterView = ({ classRoster, markingPeriod, todaysDate }) => {
+	// console.log(
 
+	// )
+	const readingSectionsForGradeBook = classRoster.map(student =>
+		student.hasAssignments
+			.filter(
+				assignment => assignment.assignmentType === 'OEQ' && assignment.markingPeriod === 'SECOND'
+			)
+			.map(assignment => assignment.readingSections)
+	)
+	// console.log(readingSectionsForGradeBook[0].length+1)
 	return (
-		<>
+		<div style={{ overflowX: 'scroll' }}>
+			<div
+				style={{
+					color: 'var(--blue)',
+					display: 'grid',
+					// gridTemplateColumns: `2fr 1fr 1fr 1fr repeat(${readingSectionsForGradeBook[0].length +
+					// 1}, 50px)  `
+					gridTemplateColumns: `2fr 1fr 1fr 1fr`
+				}}>
+				<div style={{ color: 'var(--blue)' }}>Student</div>
+				<div style={{ color: 'var(--blue)' }}>Overall Grade</div>
+				<div style={{ color: 'var(--blue)' }}>Responsibility Points</div>
+				<div style={{ color: 'var(--blue)' }}>Test Points</div>
+				{/* {readingSectionsForGradeBook[0].map(assignment => (
+					<div style={{ color: 'var(--blue)' }}>{assignment.substring(0, 8)}</div>
+				))} */}
+			</div>
 			{classRoster.sort(sortByLastName).map((student, index) => (
 				<div key={index}>
 					{!student.isHiddenFromRoster && (
@@ -34,9 +60,8 @@ const StudentListInRosterView = ({ classRoster }) => {
 							}}>
 							<div
 								style={
-									numberMaker % 2
+									index % 2
 										? {
-												backgroundColor: 'var(--white)',
 												width: '100%',
 												height: '100%',
 												paddingLeft: '2%'
@@ -48,24 +73,18 @@ const StudentListInRosterView = ({ classRoster }) => {
 												paddingLeft: '2%'
 										  }
 								}>
-								<div style={{ display: 'flex' }}>
-									<Link
-										style={{ textDecoration: 'none', color: 'var(--blue)' }}
-										to={`/dashboard/roster-profile/student/${student._id}`}>
-										{
-											<div style={{ display: 'flex' }}>
-												<div>{`${numberMaker++} ${student.lastName}, ${student.firstName} `}</div>
-											</div>
-										}
-									</Link>
-									<div style={{ marginLeft: '2%' }}>{student.responsibilityPoints}</div>
-								</div>
+								<StudentListinRosterViewRow
+									student={student}
+									index={index}
+									markingPeriod={markingPeriod}
+									todaysDate={todaysDate}
+								/>
 							</div>
 						</div>
 					)}
 				</div>
 			))}
-		</>
+		</div>
 	)
 }
 

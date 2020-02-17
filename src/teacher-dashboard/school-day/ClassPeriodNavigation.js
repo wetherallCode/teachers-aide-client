@@ -13,7 +13,7 @@ export const GET_PERIOD_NAMES = gql`
 	}
 `
 
-const ClassManager = ({ match }) => {
+const ClassPeriodNavigation = ({ match }) => {
 	return <ClassManagerNavigationDisplay match={match} />
 }
 
@@ -85,7 +85,7 @@ const ClassManagerNavBarItems = ({ match, items }) => {
 							textShadow: '1px 3px 1px black',
 							borderRadius: '5px'
 						}}>
-						Period {item}
+						Period {item.substring(0, 1) + ' ' + item.substring(2, 3) + '-' + item.substring(3)}
 					</button>
 				</Link>
 			))}
@@ -93,4 +93,4 @@ const ClassManagerNavBarItems = ({ match, items }) => {
 	)
 }
 
-export default ClassManager
+export default ClassPeriodNavigation
