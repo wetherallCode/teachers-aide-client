@@ -11,6 +11,7 @@ const TestGradeDownloaderGrid = ({
 	markingPeriodSelector,
 	setMarkingPeriodSelector
 }) => {
+	const [testGradeTotalForDisplay, setTestGradeTotalForDisplay] = useState('')
 	return (
 		<div
 			style={{
@@ -39,6 +40,7 @@ const TestGradeDownloaderGrid = ({
 						))}
 					</select>
 				</div>
+				<div>Total Test Points = {testGradeTotalForDisplay}</div>
 			</div>
 			<div
 				style={{
@@ -60,6 +62,7 @@ const TestGradeDownloaderGrid = ({
 					setRosterList={setRosterList}
 					csvToggle={csvToggle}
 					markingPeriodSelector={markingPeriodSelector}
+					setTestGradeTotalForDisplay={setTestGradeTotalForDisplay}
 				/>
 			))}
 		</div>

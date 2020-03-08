@@ -36,11 +36,34 @@ export const FIND_STUDENT_QUERY = gql`
 				maxScore
 				markingPeriod
 			}
+			hasProtocols {
+				__typename
+				assignedDate
+				isActive
+				isPresent
+				markingPeriod
+				... on SocraticQuestionProtocol {
+					socraticQuestion
+					readingSections
+					thinkPairScore
+					thinkPairEarnedPoints
+					shareEarnedPoints
+					shareScore
+				}
+			}
 		}
 	}
 `
 
-const StudentInfo = ({ match, periodName, teacherOptions, setTeacherOptions, todaysDate }) => {
+const StudentInfo = ({
+	match,
+	periodName,
+	teacherOptions,
+	setTeacherOptions,
+	todaysDate,
+	protocolToggle,
+	setProtocolToggle
+}) => {
 	// const [criticalThinkingScoreValue, setCriticalThinkingScoreValue] = useState(0)
 
 	const { deskNumber } = match.params
@@ -76,6 +99,8 @@ const StudentInfo = ({ match, periodName, teacherOptions, setTeacherOptions, tod
 						todaysDate={todaysDate}
 						teacherOptions={teacherOptions}
 						setTeacherOptions={setTeacherOptions}
+						protocolToggle={protocolToggle}
+						setProtocolToggle={setProtocolToggle}
 					/>
 				</div>
 			) : (

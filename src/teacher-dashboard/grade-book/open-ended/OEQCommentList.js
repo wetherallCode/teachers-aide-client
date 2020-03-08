@@ -39,5 +39,7 @@ export const conclusionCommentList = [
 	'Conclusion is not a logical result of the topic',
 	'Conclusion is Missing',
 	'Conclusion is logical but general and not specific to the topic',
-	'Conclusion repeats information from the answer section'
+	'Conclusion repeats information from the answer section',
+	'Conclusion isn’t set up correctly',
+	'Conclusion is set up correctly but missing consequence of the topic'
 ]

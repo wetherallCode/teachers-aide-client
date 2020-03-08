@@ -37,9 +37,9 @@ const TestGridRow = ({
 
 	return (
 		<div
-			style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', alignItems: 'center' }}>
-			<div>{student.firstName}</div>
+			style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr', alignItems: 'center' }}>
 			<div>{student.lastName}</div>
+			<div>{student.firstName}</div>
 			<div>
 				{studentInfo.missing ? (
 					<input

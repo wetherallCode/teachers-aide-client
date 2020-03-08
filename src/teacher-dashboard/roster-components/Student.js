@@ -17,6 +17,7 @@ export const STUDENT_INFO_QUERY = gql`
 			schoolID
 			firstName
 			lastName
+			nickName
 			period
 			teacher
 			responsibilityPoints
@@ -84,6 +85,7 @@ const Student = ({ match, history }) => {
 		schoolID,
 		firstName,
 		lastName,
+		nickName,
 		period,
 		teacher,
 		responsibilityPoints,
@@ -153,6 +155,7 @@ const Student = ({ match, history }) => {
 											{isHiddenFromRoster && 'Hidden'}{' '}
 										</h1>
 									</div>
+									<h2>NickName: {nickName}</h2>
 									<h2>SchoolID: {schoolID}</h2>
 									<h2>{`Period: ${period}`}</h2>
 									<h2>{`Seat: ${desk}`}</h2>

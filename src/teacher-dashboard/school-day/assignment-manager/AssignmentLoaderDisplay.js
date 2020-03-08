@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import IndividualAssignmentDisplay from './IndividualAssignmentDisplay'
+import IndividualAssignmentDisplay from '../IndividualAssignmentDisplay'
 
 const AssignmentLoaderDisplay = ({
 	lesson,

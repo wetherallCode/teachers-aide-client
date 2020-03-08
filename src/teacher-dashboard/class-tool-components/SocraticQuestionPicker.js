@@ -1,11 +1,25 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import SocraticQuestionPickerDisplay from './SocraticQuestionPickerDisplay'
+import SocraticQuestionProtocolCreator from './SocraticQuestionProtocolCreator'
 
-const SocraticQuestionPicker = data => {
+const SocraticQuestionPicker = ({
+	classPeriodInfo,
+	period,
+	date,
+	markingPeriod,
+	protocolToggle,
+	setProtocolToggle,
+	setProtocolQuestionForProtocolManager,
+	eligibleStudentList,
+	activeProtocol,
+	protocolList
+}) => {
 	const [questionPicker, setQuestionPicker] = useState(0)
-
+	const [errorDisplay, setErrorDisplay] = useState('')
+	console.log(protocolList)
 	return (
 		<>
-			{data.data.findClassPeriod !== null ? (
+			{classPeriodInfo !== null ? (
 				<div
 					style={{
 						display: 'flex',
@@ -15,31 +29,50 @@ const SocraticQuestionPicker = data => {
 					}}>
 					<button
 						className='whiteButton'
-						style={{ fontSize: '100%', textShadow: '3px 3px 3px var(--grey)' }}
+						style={
+							questionPicker !== 0
+								? { fontSize: '100%', textShadow: '3px 3px 3px var(--grey)' }
+								: { fontSize: '100%', textShadow: '3px 3px 3px var(--grey)', color: 'var(--grey)' }
+						}
 						onClick={() => {
 							return questionPicker && setQuestionPicker(questionPicker - 1)
 						}}>
-						{questionPicker !== 0 && 'Previous'}
+						{/* {questionPicker !== 0 && 'Previous'} */}
+						Previous
 					</button>
 
-					<h3 style={{ color: 'var(--white)' }}>Questions</h3>
+					<SocraticQuestionProtocolCreator
+						period={period}
+						date={date}
+						markingPeriod={markingPeriod}
+						protocolToggle={protocolToggle}
+						setProtocolToggle={setProtocolToggle}
+						classPeriodInfo={classPeriodInfo}
+						questionInfo={classPeriodInfo.assignedLesson.socraticQuestions[questionPicker]}
+						eligibleStudentList={eligibleStudentList}
+						setErrorDisplay={setErrorDisplay}
+						protocolList={protocolList}
+					/>
 
 					<button
 						className='whiteButton'
-						style={{ fontSize: '100%', textShadow: '3px 3px 3px var(--grey)' }}
+						style={
+							questionPicker < classPeriodInfo.assignedLesson.socraticQuestions.length - 1
+								? { fontSize: '100%', textShadow: '3px 3px 3px var(--grey)' }
+								: { fontSize: '100%', textShadow: '3px 3px 3px var(--grey)', color: 'var(--grey)' }
+						}
 						onClick={() => {
 							return (
-								questionPicker <
-									data.data.findClassPeriod.assignedLesson.socraticQuestions.length - 1 &&
+								questionPicker < classPeriodInfo.assignedLesson.socraticQuestions.length - 1 &&
 								setQuestionPicker(questionPicker + 1)
 							)
 						}}>
-						{questionPicker <
-							data.data.findClassPeriod.assignedLesson.socraticQuestions.length - 1 && 'Next'}
+						{/* {questionPicker < classPeriodInfo.assignedLesson.socraticQuestions.length - 1 && 'Next'} */}
+						Next
 					</button>
 					<div
 						style={{
-							height: '40%',
+							height: '8vh',
 							backgroundColor: 'var(--white)',
 							width: '90%',
 							fontSize: '120%',
@@ -48,9 +81,10 @@ const SocraticQuestionPicker = data => {
 							justifyContent: 'center',
 							alignItems: 'center'
 						}}>
-						<div style={{ color: 'var(--blue)' }}>
-							{data.data.findClassPeriod.assignedLesson.socraticQuestions[questionPicker].question}
-						</div>
+						<SocraticQuestionPickerDisplay
+							error={errorDisplay}
+							question={classPeriodInfo.assignedLesson.socraticQuestions[questionPicker].question}
+						/>
 					</div>
 				</div>
 			) : (

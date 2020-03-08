@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import RandomDeskSelector from './RandomDeskSelector'
 import { gql } from 'apollo-boost'
 import { useQuery } from '@apollo/react-hooks'
 import ClassToolsDisplayBox from './ClassToolsDisplayBox'
@@ -24,7 +23,16 @@ export const FIND_STUDENT_QUERY = gql`
 	}
 `
 
-const ClassRoomTools = ({ period, match, todaysDate, teacherOptions, setTeacherOptions }) => {
+const ClassRoomTools = ({
+	classPeriodInfo,
+	period,
+	match,
+	todaysDate,
+	teacherOptions,
+	setTeacherOptions,
+	setProtocolToggle,
+	protocolToggle
+}) => {
 	const [selectorSwitch, setSelectorSwitch] = useState(0)
 	if (selectorSwitch > 2) setSelectorSwitch(0)
 	if (selectorSwitch < 0) setSelectorSwitch(2)
@@ -96,8 +104,12 @@ const ClassRoomTools = ({ period, match, todaysDate, teacherOptions, setTeacherO
 				<ClassToolsDisplayBox
 					selector={selectorSwitch}
 					period={period}
+					classPeriodInfo={classPeriodInfo}
 					teacherOptions={teacherOptions}
 					setTeacherOptions={setTeacherOptions}
+					setProtocolToggle={setProtocolToggle}
+					protocolToggle={protocolToggle}
+					eligibleStudentList={eligibleStudentList}
 				/>
 			</div>
 

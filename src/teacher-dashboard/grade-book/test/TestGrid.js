@@ -46,8 +46,13 @@ const TestGrid = ({ classRoster, dueDate, periodName, test }) => {
 
 	const [gradeTests, { data }] = useMutation(GRADE_TESTS, {
 		refetchQueries: ['classListForTestGrading'],
-		onComplete: data => console.log(data)
+		onComplete: () => {
+			setTestList([])
+			setListSetter(false)
+			console.log('complete')
+		}
 	})
+
 	const [undoGradedTest] = useMutation(UNDO_GRADED_TEST, {
 		refetchQueries: ['classListForTestGrading']
 	})
@@ -64,7 +69,7 @@ const TestGrid = ({ classRoster, dueDate, periodName, test }) => {
 			<div
 				style={{
 					display: 'grid',
-					gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr',
+					gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr',
 					borderBottom: '3px solid var(--blue)'
 				}}>
 				<div
@@ -75,7 +80,7 @@ const TestGrid = ({ classRoster, dueDate, periodName, test }) => {
 						paddingLeft: '2%',
 						paddingRight: '2%'
 					}}>
-					<div>First Name</div>
+					<div>Last Name</div>
 				</div>
 				<div
 					style={{
@@ -85,7 +90,7 @@ const TestGrid = ({ classRoster, dueDate, periodName, test }) => {
 						paddingLeft: '2%',
 						paddingRight: '2%'
 					}}>
-					<div>Last Name</div>
+					<div>First Name</div>
 				</div>
 				<div
 					style={{
@@ -103,7 +108,8 @@ const TestGrid = ({ classRoster, dueDate, periodName, test }) => {
 						justifyContent: 'flex-start',
 						alignItems: 'center',
 						marginLeft: '15%',
-						paddingRight: '10%'
+						paddingRight: '10%',
+						width: '8rem'
 					}}>
 					<div>Study Time</div>
 				</div>
@@ -112,7 +118,6 @@ const TestGrid = ({ classRoster, dueDate, periodName, test }) => {
 						display: 'flex',
 						justifyContent: 'center',
 						alignItems: 'center',
-						// paddingLeft: '2%',
 						paddingRight: '15%'
 					}}>
 					<div>Status</div>
@@ -174,13 +179,15 @@ const TestGrid = ({ classRoster, dueDate, periodName, test }) => {
 								backgroundColor: 'var(--blue)',
 								color: 'var(--white)'
 							}}
-							onClick={() =>
+							onClick={() => {
 								gradeTests({
 									variables: {
 										input: { period: periodName, scoredTests: testList, dueDate: dueDate }
 									}
 								})
-							}>
+								setTestList([])
+								setListSetter(false)
+							}}>
 							Grade
 						</button>
 					</div>

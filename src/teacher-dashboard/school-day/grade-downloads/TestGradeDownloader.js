@@ -13,6 +13,7 @@ const TestGradeDownloader = ({
 	const [csvToggle, setCsvToggle] = useState(false)
 	const [markingPeriodSelector, setMarkingPeriodSelector] = useState(currentMarkingPeriod)
 	const headers = [
+		{ label: 'NAME', key: 'NAME' },
 		{ label: 'STUDENTID', key: 'STUDENTID' },
 		{ label: 'GRADE', key: 'GRADE' },
 		{ label: 'ABSENT', key: 'ABSENT' },
@@ -21,6 +22,7 @@ const TestGradeDownloader = ({
 		{ label: 'MISSING', key: 'MISSING' }
 	]
 	const title = 'test_grades_'
+
 	return (
 		<div style={{ margin: '5%' }}>
 			<div

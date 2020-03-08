@@ -48,11 +48,18 @@ const OldLesson = ({ match }) => {
 	return (
 		<>
 			{data.findClassPeriod ? (
-				<div style={{ display: 'grid', gridTemplateRows: '1fr 7fr' }}>
+				<div
+					style={{
+						display: 'grid',
+						gridTemplateRows: '1fr 7fr',
+						overflow: 'scroll',
+						height: '100vh'
+					}}>
 					<div
 						style={{
 							fontSize: '200%',
-							borderBottom: '3px solid var(--blue)',
+							// borderBottom: '3px solid var(--blue)',
+							marginTop: '5%',
 							display: 'flex',
 							justifyContent: 'center',
 							alignItems: 'center'

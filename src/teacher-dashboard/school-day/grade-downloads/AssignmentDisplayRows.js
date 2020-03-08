@@ -15,6 +15,7 @@ const AssignmentDisplayRows = ({
 			assignment.assignmentType === assignmentTypeFilterValue
 	)
 	const [assignmentValues, setAssignmentValues] = useState({
+		NAME: student.lastName + ', ' + student.firstName,
 		STUDENTID: student.schoolID,
 		GRADE: assignment.score,
 		ABSENT: '',
@@ -22,15 +23,7 @@ const AssignmentDisplayRows = ({
 		INCOMPLETE: '',
 		MISSING: ''
 	})
-	const [responsibilityPointsValues, setResponsibilityPointsValues] = useState({
-		STUDENTID: student.schoolID,
-		GRADE: student.responsibilityPoints,
-		ABSENT: '',
-		EXEMPT: '',
-		INCOMPLETE: '',
-		MISSING: ''
-	})
-
+	console.log(assignmentValues)
 	useEffect(() => {
 		if (assignment.missing) {
 			setAssignmentValues({ ...assignmentValues, MISSING: 'Y' })
@@ -40,14 +33,9 @@ const AssignmentDisplayRows = ({
 		}
 	}, [assignmentValue])
 	useEffect(() => {
-		if (createCSVToggle && assignmentValue !== 'RESPONSIBILITY_POINTS') {
+		if (createCSVToggle) {
 			if (student.schoolID !== null) {
 				setAssignmentList(list => [...list, assignmentValues])
-			}
-		}
-		if (createCSVToggle && assignmentValue === 'RESPONSIBILITY_POINTS') {
-			if (student.schoolID !== null) {
-				setAssignmentList(list => [...list, responsibilityPointsValues])
 			}
 		}
 	}, [createCSVToggle])

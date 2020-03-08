@@ -51,65 +51,65 @@ const BehaviorPointsMutator = ({
 
 	return (
 		<>
-			{teacherOptions.behaviorPointsToggle && (
-				<>
-					<button
-						style={{
-							textDecoration: 'underline',
-							width: '70%',
-							height: '3rem',
-							marginTop: '25px',
-							backgroundColor: 'var(--blue)',
-							color: 'var(--white)',
-							fontSize: '100%',
-							fontWeight: 'bolder',
-							boxShadow: '1px 1px 2px 1px var(--blue)',
-							borderRadius: '5px'
-						}}
-						onClick={() => setPointsButtonToggle(!pointsButtonToggle)}>
-						Behavior Points
-					</button>
-					<div
-						style={{
-							display: 'grid',
-							gridTemplateColumns: '1fr 1fr',
-							gridTemplateRows: '1fr 1fr',
-							width: '55%',
-							gridGap: '15%',
-							margin: '5%',
-							fontSize: '170%'
-						}}>
-						{pointsButtonToggle && (
-							<>
-								<StudentInfoMutatorButton
-									mutation={updateResponsibilityPoints}
-									variables={{ _id: _id, responsibilityPoints: 1 }}
-									buttonDisplay={'+1'}
-									buttonColor={'blue'}
-								/>
-								<StudentInfoMutatorButton
-									mutation={updateResponsibilityPoints}
-									variables={{ _id: _id, responsibilityPoints: 2 }}
-									buttonDisplay={'+2'}
-									buttonColor={'blue'}
-								/>
-								<StudentInfoMutatorButton
-									mutation={updateResponsibilityPoints}
-									variables={{ _id: _id, responsibilityPoints: -1 }}
-									buttonDisplay={'-1'}
-									buttonColor={'red'}
-								/>
-								<StudentInfoMutatorButton
-									mutation={updateResponsibilityPoints}
-									variables={{ _id: _id, responsibilityPoints: -2 }}
-									buttonDisplay={'-2'}
-									buttonColor={'red'}
-								/>
-							</>
-						)}
-					</div>
-				</>
-			)}
+			{/* {teacherOptions.behaviorPointsToggle && ( */}
+			<>
+				<button
+					style={{
+						textDecoration: 'underline',
+						width: '70%',
+						height: '3rem',
+						marginTop: '25px',
+						backgroundColor: 'var(--blue)',
+						color: 'var(--white)',
+						fontSize: '100%',
+						fontWeight: 'bolder',
+						boxShadow: '1px 1px 2px 1px var(--blue)',
+						borderRadius: '5px'
+					}}
+					onClick={() => setPointsButtonToggle(!pointsButtonToggle)}>
+					Behavior Points
+				</button>
+				<div
+					style={{
+						display: 'grid',
+						gridTemplateColumns: '1fr 1fr',
+						gridTemplateRows: '1fr 1fr',
+						width: '55%',
+						gridGap: '15%',
+						margin: '5%',
+						fontSize: '170%'
+					}}>
+					{pointsButtonToggle && (
+						<>
+							<StudentInfoMutatorButton
+								mutation={updateResponsibilityPoints}
+								variables={{ _id: _id, responsibilityPoints: 1 }}
+								buttonDisplay={'+1'}
+								buttonColor={'blue'}
+							/>
+							<StudentInfoMutatorButton
+								mutation={updateResponsibilityPoints}
+								variables={{ _id: _id, responsibilityPoints: 2 }}
+								buttonDisplay={'+2'}
+								buttonColor={'blue'}
+							/>
+							<StudentInfoMutatorButton
+								mutation={updateResponsibilityPoints}
+								variables={{ _id: _id, responsibilityPoints: -1 }}
+								buttonDisplay={'-1'}
+								buttonColor={'red'}
+							/>
+							<StudentInfoMutatorButton
+								mutation={updateResponsibilityPoints}
+								variables={{ _id: _id, responsibilityPoints: -2 }}
+								buttonDisplay={'-2'}
+								buttonColor={'red'}
+							/>
+						</>
+					)}
+				</div>
+			</>
+			{/* )} */}
 		</>
 	)
 }

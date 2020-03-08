@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import StudentInfoMutatorButton from '../class-tool-components/StudentInfoMutatorButton'
+import StudentInfoMutatorButton from '../../class-tool-components/StudentInfoMutatorButton'
 import { useQuery } from '@apollo/react-hooks'
-import { GET_CURRENT_MARKING_PERIOD } from './ClassPeriodCreator'
-import { CURRENT_MARKING_PERIOD_ID } from '../../utils'
+import { GET_CURRENT_MARKING_PERIOD } from '../ClassPeriodCreator'
+import { CURRENT_MARKING_PERIOD_ID } from '../../../utils'
 
 const TestModifierDisplay = ({
 	period,
@@ -32,10 +32,10 @@ const TestModifierDisplay = ({
 	const { markingPeriod } = data.findCurrentMarkingPeriod
 
 	return (
-		<div style={{ fontSize: '130%' }}>
+		<div style={{ fontSize: '130%', height: '15vh' }}>
 			<div style={{ textAlign: 'center', marginTop: '2%' }}>Update Test</div>
 			<div style={{ display: 'flex', alignItems: 'center' }}>
-				<div>{modifiedTestValues.readingSections}</div>
+				<div>{modifiedTestValues.readingSections.substring(0, 42)}...</div>
 			</div>
 			<div style={{ display: 'flex', alignItems: 'center' }}>
 				<div style={{ marginRight: '1%' }}>DueDate: </div>

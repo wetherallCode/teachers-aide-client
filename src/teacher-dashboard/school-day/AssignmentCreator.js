@@ -43,7 +43,11 @@ const AssignmentCreator = ({
 	const [createClass, { data }] = useMutation(CREATE_CLASS_PERIOD, {
 		onError: displayError,
 		onCompleted: data => console.log(data),
-		refetchQueries: ['findClassPeriodForClassManagerDisplay', 'getClassPeriodForTestManager']
+		refetchQueries: [
+			'findClassPeriodForClassManagerDisplay',
+			'getClassPeriodForTestManager',
+			'rosterList'
+		]
 	})
 
 	const createClasses = e => {
@@ -74,7 +78,7 @@ const AssignmentCreator = ({
 				fontSize: '120%'
 			}}
 			onClick={createClasses}>
-			Create Lesson
+			Create Class Period
 		</button>
 	)
 }

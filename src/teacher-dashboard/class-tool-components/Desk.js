@@ -2,8 +2,9 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { useQuery } from '@apollo/react-hooks'
 import { FIND_STUDENT_QUERY } from './StudentInfo'
+import DeskName from './DeskName'
 
-const Desk = ({ match, deskNumber, periodName }) => {
+const Desk = ({ match, deskNumber, periodName, todaysDate }) => {
 	const { data, loading, error } = useQuery(FIND_STUDENT_QUERY, {
 		variables: { period: periodName, desk: deskNumber }
 	})
@@ -12,7 +13,6 @@ const Desk = ({ match, deskNumber, periodName }) => {
 	if (error) console.log(error)
 
 	const { url } = match
-	const todaysDate = new Date().toISOString().substring(0, 10)
 
 	const { findStudentByPeriodAndDesk } = data
 
@@ -48,12 +48,7 @@ const Desk = ({ match, deskNumber, periodName }) => {
 										boxShadow: '1x 1px 1px var(--darkgrey)'
 								  }
 						}>
-						<div>
-							{findStudentByPeriodAndDesk.nickName === null ||
-							findStudentByPeriodAndDesk.nickName === ''
-								? findStudentByPeriodAndDesk.firstName
-								: findStudentByPeriodAndDesk.nickName}
-						</div>
+						<DeskName student={findStudentByPeriodAndDesk} todaysDate={todaysDate} />
 					</button>
 				</Link>
 			) : (

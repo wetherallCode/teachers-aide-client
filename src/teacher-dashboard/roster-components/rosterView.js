@@ -49,6 +49,22 @@ export const GET_CLASS_ROSTER = gql`
 				studyTime
 				markingPeriod
 			}
+			hasProtocols {
+				__typename
+				... on SocraticQuestionProtocol {
+					socraticQuestion
+					socraticQuestionType
+					readingSections
+					assignedDate
+					isPresent
+					markingPeriod
+					period
+					shareScore
+					shareEarnedPoints
+					thinkPairScore
+					thinkPairEarnedPoints
+				}
+			}
 		}
 	}
 `

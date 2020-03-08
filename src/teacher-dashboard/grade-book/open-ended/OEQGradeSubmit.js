@@ -67,15 +67,14 @@ const OEQGradeSubmit = ({
 			commentList.includes('Conclusion is Missing') ||
 			commentList.includes('Essay is a summary') ||
 			commentList.includes('Text structure doesn’t match the question’s text structure') ||
-			commentList.includes('Answer is not supported by evidence from the text')
+			commentList.includes('Answer is not supported by evidence from the text') ||
+			commentList.includes('Conclusion is set up correctly but missing consequence of the topic')
 		) {
 			return setParagraphScore(1)
 		}
 		if (
 			commentList.includes('Not enough textual evidence cited') ||
-			commentList.includes(
-				'Not enough textual evidence Topic sentence isn’t separate from the answer'
-			) ||
+			commentList.includes('Not enough textual evidence') ||
 			commentList.includes('Answer is only partially correct') ||
 			commentList.includes('Parts of the text Structure don’t logically connect') ||
 			commentList.includes('Missing  parts of the text structure')
@@ -87,7 +86,9 @@ const OEQGradeSubmit = ({
 			commentList.includes('Missing details that would explain your answer better') ||
 			commentList.includes('Conclusion is logical but general and not specific to the topic') ||
 			commentList.includes('Conclusion is not a logical result of the topic') ||
-			commentList.includes('Conclusion repeats information from the answer section')
+			commentList.includes('Conclusion repeats information from the answer section') ||
+			commentList.includes('Conclusion isn’t set up correctly') ||
+			commentList.includes('Topic sentence ending is incorrect')
 		) {
 			return setParagraphScore(3)
 		}

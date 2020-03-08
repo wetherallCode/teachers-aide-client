@@ -133,6 +133,7 @@ const CourseManagerClassPeriodData = ({
 				<DownloadsDisplay
 					classPeriods={data.findClassPeriodsForCourse}
 					roster={roster}
+					period={period}
 					markingPeriods={markingPeriods}
 					currentMarkingPeriod={currentMarkingPeriod}
 				/>

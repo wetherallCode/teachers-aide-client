@@ -1,27 +1,28 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Timer from 'react-compound-timer'
 import { gql } from 'apollo-boost'
 import { useQuery } from '@apollo/react-hooks'
 import SocraticQuestionPicker from './SocraticQuestionPicker'
+import ProtocolManager from './ProtocolManager'
+import { CURRENT_MARKING_PERIOD_ID } from '../../utils'
+import { GET_CURRENT_MARKING_PERIOD } from '../school-day/ClassPeriodCreator'
+import ProtocolDisplay from './ProtocolDisplay'
 
-const GET_LESSONS_CLASSWORK = gql`
-	query findClassPeriodForClassToolsDisplayBox($assignedDate: Date, $period: periodName) {
-		findClassPeriod(assignedDate: $assignedDate, period: $period) {
-			_id
-			assignedLesson {
-				socraticQuestions {
-					question
-				}
-			}
-		}
-	}
-`
-
-const ClassToolsDisplayBox = ({ selector, period, teacherOptions, setTeacherOptions }) => {
+const ClassToolsDisplayBox = ({
+	selector,
+	period,
+	classPeriodInfo,
+	teacherOptions,
+	setTeacherOptions,
+	protocolToggle,
+	setProtocolToggle,
+	eligibleStudentList
+}) => {
+	// const [protocolQuestionForProtocolManager, setProtocolQuestionForProtocolManager] = useState('')
 	const date = new Date().toISOString().substring(0, 10)
 
-	const { data, loading, error } = useQuery(GET_LESSONS_CLASSWORK, {
-		variables: { period: period, assignedDate: date }
+	const { data, loading, error } = useQuery(GET_CURRENT_MARKING_PERIOD, {
+		variables: { _id: CURRENT_MARKING_PERIOD_ID }
 	})
 	if (loading) return null
 	if (error) console.log(error)
@@ -29,7 +30,26 @@ const ClassToolsDisplayBox = ({ selector, period, teacherOptions, setTeacherOpti
 	return (
 		<>
 			{selector === 0 ? (
-				<SocraticQuestionPicker data={data} />
+				<>
+					{classPeriodInfo !== null ? (
+						<ProtocolDisplay
+							period={period}
+							date={date}
+							classPeriodInfo={classPeriodInfo}
+							markingPeriod={data.findCurrentMarkingPeriod.markingPeriod}
+						/>
+					) : (
+						<div
+							style={{
+								display: 'flex',
+								justifyContent: 'center',
+								alignItems: 'center',
+								fontSize: '2rem'
+							}}>
+							<div>No Questions</div>
+						</div>
+					)}
+				</>
 			) : selector === 1 ? (
 				<Timer
 					initialTime={0}

@@ -16,9 +16,6 @@ export const sortByLastName = (a, b) => {
 }
 
 const StudentListInRosterView = ({ classRoster, markingPeriod, todaysDate }) => {
-	// console.log(
-
-	// )
 	const readingSectionsForGradeBook = classRoster.map(student =>
 		student.hasAssignments
 			.filter(
@@ -26,15 +23,13 @@ const StudentListInRosterView = ({ classRoster, markingPeriod, todaysDate }) => 
 			)
 			.map(assignment => assignment.readingSections)
 	)
-	// console.log(readingSectionsForGradeBook[0].length+1)
+
 	return (
 		<div style={{ overflowX: 'scroll' }}>
 			<div
 				style={{
 					color: 'var(--blue)',
 					display: 'grid',
-					// gridTemplateColumns: `2fr 1fr 1fr 1fr repeat(${readingSectionsForGradeBook[0].length +
-					// 1}, 50px)  `
 					gridTemplateColumns: `2fr 1fr 1fr 1fr`
 				}}>
 				<div style={{ color: 'var(--blue)' }}>Student</div>

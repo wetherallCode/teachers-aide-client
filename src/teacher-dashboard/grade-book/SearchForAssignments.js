@@ -33,6 +33,8 @@ const SearchForAssignments = ({
 					<option value='OEQ'>Open Ended Question</option>
 					<option value='THINKING_GUIDE'>Critical Thinking Guide</option>
 					<option value='TEST'>Test</option>
+					<option value='PARENT_CONTACT'>Parent Contact</option>
+					<option value='EXTRA_CREDIT'>Extra Credit</option>
 				</select>
 			</div>
 			<div

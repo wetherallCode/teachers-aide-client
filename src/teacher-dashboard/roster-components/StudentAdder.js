@@ -16,16 +16,30 @@ const ADD_STUDENTS_MUTATION = gql`
 			_id
 			firstName
 			lastName
+			nickName
+			schoolID
 			period
 			responsibilityPoints
 			desk
 			teacher
 			isHiddenFromRoster
+			daysAbsent
+			daysLate
 			hasAssignments {
 				assignmentType
 			}
 			hasTests {
 				dueDate
+			}
+			hasAssignments {
+				assignmentType
+				readingSections
+			}
+			hasProtocols {
+				... on SocraticQuestionProtocol {
+					assignedDate
+					readingSections
+				}
 			}
 		}
 	}
@@ -59,45 +73,58 @@ const StudentAdder = ({ periodName, isRosterMode, unUsedDesk, roster }) => {
 	const [newStudent, setNewStudent] = useState({
 		firstName: '',
 		lastName: '',
+		// schooID: '',
+		nickName: '',
 		period: periodName,
 		responsibilityPoints: 100,
 		desk: '' || unUsedDesk,
 		teacher: 'Wetherall',
-		isHiddenFromRoster: false,
-		hasAssignments: [],
-		daysAbsent: [],
-		hasTests: []
+		isHiddenFromRoster: false
+		// hasAssignments: [],
+		// daysAbsent: [],
+		// daysLate: [],
+		// hasTests: [],
+		// hasProtocols: []
 	})
 
 	const {
 		firstName,
 		lastName,
+		// schoolID,
+		nickName,
 		period,
 		desk,
 		responsibilityPoints,
 		teacher,
-		isHiddenFromRoster,
-		hasAssignments,
-		daysAbsent,
-		hasTests
+		isHiddenFromRoster
+		// hasAssignments,
+		// hasTests,
+		// hasProtocols,
+		// daysAbsent,
+		// daysLate
 	} = newStudent
 
-	const [addStudent, { error }] = useMutation(ADD_STUDENTS_MUTATION, {
+	const [addStudent, { data, error }] = useMutation(ADD_STUDENTS_MUTATION, {
 		variables: {
 			input: {
 				firstName,
 				lastName,
+				schoolID: '',
+				nickName,
 				period,
 				desk,
 				responsibilityPoints,
 				teacher,
 				isHiddenFromRoster,
-				hasAssignments,
-				daysAbsent,
-				hasTests
+				hasAssignments: [],
+				daysAbsent: [],
+				daysLate: [],
+				hasTests: [],
+				hasProtocols: []
 			}
 		},
 		refetchQueries: ['rosterList', 'getAllStudents', 'FindStudent'],
+		onCompleted: data => console.log(data),
 		update(client, { data: { addStudent } }) {
 			const { classRoster } = client.readQuery({
 				query: GET_CLASS_ROSTER,
@@ -114,7 +141,7 @@ const StudentAdder = ({ periodName, isRosterMode, unUsedDesk, roster }) => {
 	if (error) {
 		console.log('error', error)
 	}
-
+	console.log(newStudent)
 	return (
 		<div>
 			<form

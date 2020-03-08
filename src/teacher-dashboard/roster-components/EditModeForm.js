@@ -58,17 +58,17 @@ const EditStudentInfo = ({ studentInfo, periodName, history, isEditStudentMode }
 
 	const [updatedStudent, setupdatedStudent] = useState({
 		_id: _id,
-		schoolID: '',
+		schoolID: studentInfo.schoolID,
 		firstName: firstName,
 		lastName: lastName,
-		nickName: '',
+		nickName: studentInfo.nickName || '',
 		period: period,
 		desk: desk,
 		responsibilityPoints: responsibilityPoints,
 		teacher: teacher,
 		learningStyle: 'Unknown'
 	})
-	console.log(updatedStudent.nickName)
+
 	const [updateStudent, { error }] = useMutation(UPDATE_STUDENT_MUTATION, {
 		variables: {
 			input: {
@@ -84,7 +84,7 @@ const EditStudentInfo = ({ studentInfo, periodName, history, isEditStudentMode }
 				learningStyle: updatedStudent.learningStyle
 			}
 		},
-		refetchQueries: ['getStudentInfo', 'rosterList', 'roster']
+		refetchQueries: ['getStudentInfo', 'rosterList', 'roster', 'FindStudent']
 	})
 
 	if (error) console.error(error)

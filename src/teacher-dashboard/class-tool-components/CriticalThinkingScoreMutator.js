@@ -33,7 +33,8 @@ const CriticalThinkingScoreMutator = ({
 	student,
 	todaysDate,
 	teacherOptions,
-	setTeacherOptions
+	setTeacherOptions,
+	todaysCriticalThinkingGuide
 }) => {
 	const [criticalThinkingScoreValue, setCriticalThinkingScoreValue] = useState(0)
 	const [criticalThinkingStatusValue, setCriticalThinkingStatusValue] = useState(false)
@@ -122,7 +123,10 @@ const CriticalThinkingScoreMutator = ({
 	const heightControl = 3
 	return (
 		<>
-			{teacherOptions.criticalThinkingToggle && (
+			{student.hasAssignments.some(
+				assignment =>
+					assignment.assignmentType === 'THINKING_GUIDE' && assignment.dueDate === todaysDate
+			) && student.hasAssignments !== null ? (
 				<div
 					style={{
 						width: '98%',
@@ -142,7 +146,12 @@ const CriticalThinkingScoreMutator = ({
 						Critical Thinking{' '}
 					</div>
 					<div
-						style={{ color: 'var(--blue)', fontSize: '100%', marginTop: '3%', textAlign: 'left' }}>
+						style={{
+							color: 'var(--blue)',
+							fontSize: '100%',
+							marginTop: '3%',
+							textAlign: 'left'
+						}}>
 						<div>
 							Page
 							{' ' +
@@ -263,6 +272,18 @@ const CriticalThinkingScoreMutator = ({
 							)}
 						</>
 					)}
+				</div>
+			) : (
+				<div
+					style={{
+						display: 'flex',
+						justifyContent: 'center',
+						alignItems: 'center',
+						color: 'var(--blue)',
+						height: '30vh',
+						fontSize: '1.5rem'
+					}}>
+					<div>No Assignments</div>
 				</div>
 			)}
 		</>

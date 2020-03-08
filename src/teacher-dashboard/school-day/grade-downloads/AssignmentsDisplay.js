@@ -6,8 +6,9 @@ import { CSVLink } from 'react-csv'
 const AssignmentsDisplay = ({ assignmentValue, roster, period, assignmentTypeFilterValue }) => {
 	const [assignmentList, setAssignmentList] = useState([])
 	const [createCSVToggle, setCreateCSVToggle] = useState(false)
-
+	console.log(assignmentList)
 	const headers = [
+		{ label: 'NAME', key: 'NAME' },
 		{ label: 'STUDENTID', key: 'STUDENTID' },
 		{ label: 'GRADE', key: 'GRADE' },
 		{ label: 'ABSENT', key: 'ABSENT' },
@@ -15,7 +16,7 @@ const AssignmentsDisplay = ({ assignmentValue, roster, period, assignmentTypeFil
 		{ label: 'INCOMPLETE', key: 'INCOMPLETE' },
 		{ label: 'MISSING', key: 'MISSING' }
 	]
-	console.log(assignmentList)
+
 	return (
 		<div style={{ display: 'grid', gridTemplateRows: '1fr 1fr 14fr auto' }}>
 			<div style={{ textAlign: 'center', fontSize: '130%' }}>{assignmentValue}</div>

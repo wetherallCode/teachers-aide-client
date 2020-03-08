@@ -8,6 +8,7 @@ const ResponsibilityPointsDownloader = ({ roster, period }) => {
 
 	const title = 'responsibility_points'
 	const headers = [
+		{ label: 'NAME', key: 'NAME' },
 		{ label: 'STUDENTID', key: 'STUDENTID' },
 		{ label: 'GRADE', key: 'GRADE' },
 		{ label: 'ABSENT', key: 'ABSENT' },

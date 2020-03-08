@@ -4,6 +4,7 @@ import { useQuery } from '@apollo/react-hooks'
 import AssignmentGraderDisplayInfo from './AssignmentGraderDisplayInfo'
 import { sortByLastName } from '../roster-components/StudentListInRosterView'
 import { Link } from 'react-router-dom'
+import GradeReport from './GradeReport'
 
 const ASSIGNMENT_TYPE = gql`
 	query selectAssingmentType {
@@ -21,6 +22,8 @@ const ASSIGNMENT_TYPE = gql`
 `
 const AssignmentGrader = ({ classRoster, periodName }) => {
 	const [studentID, setStudentID] = useState('')
+	const [gradeReportRundownToggle, setGradeReportRundownToggle] = useState(false)
+	const todaysDate = new Date().toISOString().substring(0, 10)
 
 	const { data, loading, error } = useQuery(ASSIGNMENT_TYPE)
 	if (loading) return null
@@ -29,7 +32,13 @@ const AssignmentGrader = ({ classRoster, periodName }) => {
 	const student = classRoster.find(student => student._id === studentID)
 
 	return (
-		<div style={{ display: 'grid', gridTemplateRows: '1fr 7fr', color: 'var(--blue)' }}>
+		<div
+			style={{
+				display: 'grid',
+				gridTemplateRows: '1fr 7fr',
+				color: 'var(--blue)',
+				overflow: 'scroll'
+			}}>
 			<div style={{ display: 'grid', gridTemplateColumns: '1fr 4fr' }}>
 				<div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}>
 					<div>Student: </div>
@@ -58,23 +67,28 @@ const AssignmentGrader = ({ classRoster, periodName }) => {
 							alignItems: 'center',
 							textDecoration: 'underline'
 						}}>
-						<Link
-							to={`/dashboard/roster-profile/student/${student._id}`}
+						<div
+							onClick={() => setGradeReportRundownToggle(!gradeReportRundownToggle)}
 							style={{ fontSize: '200%', color: 'var(--blue)' }}>
 							{student.firstName + ' ' + student.lastName}
-						</Link>
+						</div>
 					</div>
 				)}
 			</div>
-			{student !== undefined && (
-				<AssignmentGraderDisplayInfo
-					assignmentType={data.AssignmentType.enumValues.map(value => value.name)}
-					markingPeriodList={data.MarkingPeriodEnum.enumValues.map(value => value.name)}
-					student={student}
-					periodName={periodName}
-				/>
+			{!gradeReportRundownToggle ? (
+				<>
+					{student !== undefined && (
+						<AssignmentGraderDisplayInfo
+							assignmentType={data.AssignmentType.enumValues.map(value => value.name)}
+							markingPeriodList={data.MarkingPeriodEnum.enumValues.map(value => value.name)}
+							student={student}
+							periodName={periodName}
+						/>
+					)}
+				</>
+			) : (
+				<GradeReport student={student} period={periodName} todaysDate={todaysDate} />
 			)}
-			{<div></div>}
 		</div>
 	)
 }

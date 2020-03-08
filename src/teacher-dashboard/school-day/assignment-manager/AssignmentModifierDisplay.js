@@ -1,16 +1,30 @@
-import React, { useState } from 'react'
-import StudentInfoMutatorButton from '../class-tool-components/StudentInfoMutatorButton'
+import React, { useState, useEffect } from 'react'
+import StudentInfoMutatorButton from '../../class-tool-components/StudentInfoMutatorButton'
 import { useQuery } from '@apollo/react-hooks'
-import { GET_CURRENT_MARKING_PERIOD } from './ClassPeriodCreator'
-import { CURRENT_MARKING_PERIOD_ID } from '../../utils'
+import { GET_CURRENT_MARKING_PERIOD } from '../ClassPeriodCreator'
+import { CURRENT_MARKING_PERIOD_ID } from '../../../utils'
 
-const AssignmentModifierDisplay = ({ period, assignment, updateAssignment, markingPeriodList }) => {
+const AssignmentModifierDisplay = ({
+	period,
+	assignment,
+	date,
+	updateAssignment,
+	markingPeriodList
+}) => {
 	const [updatedAssignment, setUpdatedAssignment] = useState({
 		dueDate: assignment.dueDate,
 		maxScore: assignment.maxScore || 2,
 		markingPeriod: assignment.markingPeriod,
 		readingSections: assignment.readingSections
 	})
+	useEffect(() => {
+		setUpdatedAssignment({
+			dueDate: assignment.dueDate,
+			maxScore: assignment.maxScore || 2,
+			markingPeriod: assignment.markingPeriod,
+			readingSections: assignment.readingSections
+		})
+	}, [assignment])
 
 	const [dueDateToggle, setDueDateToggle] = useState(false)
 	const [maxScoreToggle, setMaxScoreToggle] = useState(false)
@@ -150,7 +164,10 @@ const AssignmentModifierDisplay = ({ period, assignment, updateAssignment, marki
 						borderRadius: '5px',
 						boxShadow: `1px 1px 2px 1px var(--blue)`
 					}}
-					onClick={() => setUpdateAssignmentCheckPoint(true)}>
+					onClick={() => {
+						setUpdateAssignmentCheckPoint(true)
+						console.log(updatedAssignment.readingSections)
+					}}>
 					Update Assignment
 				</button>
 			) : (

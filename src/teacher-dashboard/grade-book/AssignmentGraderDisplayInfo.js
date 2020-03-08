@@ -7,6 +7,8 @@ import { useQuery } from '@apollo/react-hooks'
 import IndividualTestDisplay from './test/IndividualTestDisplay'
 import IndividualTestGrid from './test/IndividualTestGrid'
 import { CURRENT_MARKING_PERIOD_ID } from '../../utils'
+import ParentContactGraderGrid from './parent-contact/ParentContactGraderGrid'
+import ExtraCreditGraderGrid from './extra-credit/ExtraCreditGraderGrid'
 
 const GET_MARKING_PERIOD = gql`
 	query findMarkingPeriodForAssignmentGrader($_id: ID!) {
@@ -111,8 +113,13 @@ const AssignmentGraderDisplay = ({
 					? 'Open Ended Question'
 					: assignmentTypeValue === 'TEST'
 					? 'Tests'
+					: assignmentTypeValue === 'PARENT_CONTACT'
+					? 'Parent Contact'
+					: assignmentTypeValue === 'EXTRA_CREDIT'
+					? 'Extra Credit'
 					: 'Critical Thinking Guide'}
-				<>{assignmentTypeValue !== 'TEST' && ' Assignments'}</>
+				<>{assignmentTypeValue === 'THINKING_GUIDE' && ' Assignments'} </>
+				<>{assignmentTypeValue === 'OEQ' && ' Assignments'} </>
 			</div>
 			{assignmentTypeValue === 'OEQ' && (
 				<div id='test' style={{ borderBottom: '1px solid var(--blue)' }}>
@@ -143,6 +150,36 @@ const AssignmentGraderDisplay = ({
 						.sort(sortByDateAssigned)
 						.map((assignment, i) => (
 							<IndividualTestGrid
+								key={assignment.dueDate}
+								assignment={assignment}
+								student={student}
+								periodName={periodName}
+							/>
+						))}
+				</div>
+			)}
+			{assignmentTypeValue === 'PARENT_CONTACT' && (
+				<div style={{ borderTop: '1px solid var(--blue)' }}>
+					{filteredAssignmentList
+						.filter(filterFn)
+						.sort(sortByDateAssigned)
+						.map((assignment, i) => (
+							<ParentContactGraderGrid
+								key={assignment.dueDate}
+								assignment={assignment}
+								student={student}
+								periodName={periodName}
+							/>
+						))}
+				</div>
+			)}
+			{assignmentTypeValue === 'EXTRA_CREDIT' && (
+				<div style={{ borderTop: '1px solid var(--blue)' }}>
+					{filteredAssignmentList
+						.filter(filterFn)
+						.sort(sortByDateAssigned)
+						.map((assignment, i) => (
+							<ExtraCreditGraderGrid
 								key={assignment.dueDate}
 								assignment={assignment}
 								student={student}

@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { gql } from 'apollo-boost'
-import { useMutation } from '@apollo/react-hooks'
+import { useMutation, useQuery } from '@apollo/react-hooks'
 import AssignmentModifierDisplay from './AssignmentModifierDisplay'
-import ClassManagerLinkDisplay from './ClassManagerLinkDisplay'
+import ClassManagerLinkDisplay from '../ClassManagerLinkDisplay'
 import TestModifierDisplay from './TestModifierDisplay'
 import AssignmentDeleteManager from './AssignmentDeleteManager'
+import AddTestManager from './AddTestManager'
+import { GET_CURRENT_MARKING_PERIOD } from '../ClassPeriodCreator'
+import { CURRENT_MARKING_PERIOD_ID } from '../../../utils'
+import AddAssignmentManager from './AddAssignmentManager'
 
 export const UPDATE_ASSIGNMENT = gql`
 	mutation updateAssignment($input: UpdateAssignmentInput) {
@@ -37,16 +41,25 @@ export const UPDATE_ASSIGNMENT = gql`
 
 const AssignmentManager = ({ classPeriod, period, date, markingPeriodList }) => {
 	const [updateCheckToggle, setUpdateCheckToggle] = useState(false)
-	const [assignmentManagerDisplayToggle, setAssignmentManagerDisplayToggle] = useState(false)
-	const [updateAssignment, { data }] = useMutation(UPDATE_ASSIGNMENT, {
+	const [assignmentManagerDisplayToggle, setAssignmentManagerDisplayToggle] = useState(true)
+
+	const [updateAssignment] = useMutation(UPDATE_ASSIGNMENT, {
 		onCompleted: () => setUpdateCheckToggle(false),
 		refetchQueries: [
 			'findClassPeriodForClassManagerDisplay',
 			'classListForTestGrading',
-			'getClassPeriodForTestManager'
+			'getClassPeriodForTestManager',
+			'rosterList'
 		]
 	})
 	const [modifyAndDeleteToggle, setModifyAndDeleteToggle] = useState(false)
+	const { loading, error, data } = useQuery(GET_CURRENT_MARKING_PERIOD, {
+		variables: { _id: CURRENT_MARKING_PERIOD_ID }
+	})
+	if (loading) return null
+	if (error) console.error(error)
+
+	const { markingPeriod } = data.findCurrentMarkingPeriod
 
 	const [openEndedQuestion] = classPeriod.assignedHomework.filter(
 		lesson => lesson.assignmentType === 'OEQ'
@@ -54,7 +67,7 @@ const AssignmentManager = ({ classPeriod, period, date, markingPeriodList }) => 
 	const [criticalThinking] = classPeriod.assignedHomework.filter(
 		lesson => lesson.assignmentType === 'THINKING_GUIDE'
 	)
-
+	console.log(classPeriod.assignedHomework)
 	return (
 		<div style={{ margin: '5%' }}>
 			<div
@@ -116,15 +129,14 @@ const AssignmentManager = ({ classPeriod, period, date, markingPeriodList }) => 
 									borderLeft: '3px solid var(--blue)',
 									borderRight: '3px solid var(--blue)',
 									borderBottom: '3px solid var(--blue)',
-									height: '40%'
-									// display: 'grid',
-									// gridTemplateRows: '1fr 4fr'
+									height: '45.5vh'
 								}}>
 								<div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
 									{openEndedQuestion ? (
 										<AssignmentModifierDisplay
 											assignment={openEndedQuestion}
 											period={period}
+											date={date}
 											updateAssignment={updateAssignment}
 											markingPeriodList={markingPeriodList}
 										/>
@@ -135,6 +147,7 @@ const AssignmentManager = ({ classPeriod, period, date, markingPeriodList }) => 
 										<AssignmentModifierDisplay
 											assignment={criticalThinking}
 											period={period}
+											date={date}
 											updateAssignment={updateAssignment}
 											markingPeriodList={markingPeriodList}
 										/>
@@ -154,17 +167,20 @@ const AssignmentManager = ({ classPeriod, period, date, markingPeriodList }) => 
 											setUpdateCheckToggle={setUpdateCheckToggle}
 										/>
 									) : (
-										<div>No Test Assigned</div>
+										<AddTestManager
+											period={period}
+											date={date}
+											markingPeriodList={markingPeriodList}
+											markingPeriod={markingPeriod}
+											readingPages={classPeriod.assignedLesson.readings.pages}
+											readingSections={classPeriod.assignedLesson.readings.sections}
+										/>
 									)}
-									<div
-										style={{
-											display: 'flex',
-											justifyContent: 'center',
-											alignItems: 'center',
-											fontSize: '130%'
-										}}>
-										<div>Add Assignment</div>
-									</div>
+									<AddAssignmentManager
+										period={period}
+										assignedDate={date}
+										markingPeriod={markingPeriod}
+									/>
 								</div>
 							</div>
 						) : (

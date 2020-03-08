@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 const ResponsibilityPointsRows = ({ student, index, setRosterList, csvToggle }) => {
 	const [studentResponsibilityPoints, setStudentResponsibilityPoints] = useState({
+		NAME: student.lastName + ', ' + student.firstName,
 		STUDENTID: student.schoolID,
 		GRADE: student.responsibilityPoints,
 		ABSENT: '',

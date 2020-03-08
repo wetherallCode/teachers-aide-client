@@ -6,13 +6,10 @@ import Attendance from './Attendance'
 import ClassPeriodCreator from './ClassPeriodCreator'
 import AssignmentRemover from './AssignmentRemover'
 import Modal from 'react-responsive-modal'
-import Assignments from './AssignmentManager'
-import AssignmentManager from './AssignmentManager'
-import TestGrader from '../grade-book/test/TestGrader'
+import AssignmentManager from './assignment-manager/AssignmentManager'
 import TestManager from './TestManager'
-import CourseManager from './CourseManager'
 
-const FIND_CLASS_PERIOD = gql`
+export const FIND_CLASS_PERIOD = gql`
 	query findClassPeriodForClassManagerDisplay($assignedDate: Date, $period: periodName) {
 		periodName: __type(name: "periodName") {
 			enumValues {
@@ -79,8 +76,6 @@ const ClassPeriodManager = ({ match }) => {
 	const [lessonPlanDate, setLessonPlanDate] = useState(new Date().toISOString().substring(0, 10))
 	const [createClassPeriod, setCreateClassPeriod] = useState(true)
 	const [removeLesson, setRemoveLesson] = useState(false)
-	const [courseManagerToggle, setCourseManagerToggle] = useState(false)
-	const [courseManagerDisplayToggle, setCourseManagerDisplayToggle] = useState(true)
 
 	const { periods } = match.params
 
@@ -151,10 +146,7 @@ const ClassPeriodManager = ({ match }) => {
 							display: 'grid',
 							gridTemplateColumns: '1fr 4fr',
 							margin: '5%'
-							// justifyContent: 'flex-start',
-							// alignItems: 'center'
 						}}>
-						{/* <TodaysDate date={lessonPlanDate} /> */}
 						<div
 							style={{
 								marginLeft: '10%',
@@ -291,7 +283,6 @@ const ClassPeriodManager = ({ match }) => {
 			)}
 			<TestManager dueDate={lessonPlanDate} period={periods} />
 			<Attendance date={lessonPlanDate} period={periods}></Attendance>
-			)}
 		</div>
 	)
 }

@@ -3,7 +3,7 @@ import { gql } from 'apollo-boost'
 import OEQGrader from './OEQGrader'
 import { useQuery } from '@apollo/react-hooks'
 
-const LOOK_UP_CLASS_PERIOD = gql`
+export const LOOK_UP_CLASS_PERIOD = gql`
 	query findClassPeriodForOEQ($period: periodName, $assignedDate: Date) {
 		findClassPeriod(period: $period, assignedDate: $assignedDate) {
 			assignedLesson {

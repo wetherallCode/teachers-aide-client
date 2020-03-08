@@ -6,13 +6,15 @@ const TestGradeDownloaderGridRows = ({
 	setRosterList,
 	index,
 	csvToggle,
-	markingPeriodSelector
+	markingPeriodSelector,
+	setTestGradeTotalForDisplay
 }) => {
 	const todaysDate = new Date().toISOString().substring(0, 10)
 	const markingPeriod = markingPeriodSelector
 	const testGradeTotal = testTotalScoredPoints({ student, markingPeriod })
 	const testGradeMaxTotal = testTotalMaxScorePoints({ student, markingPeriod, todaysDate })
 	const [studentTestGrade, setStudentTestGrade] = useState({
+		NAME: student.lastName + ', ' + student.firstName,
 		STUDENTID: student.schoolID,
 		GRADE: testGradeTotal,
 		ABSENT: '',
@@ -21,12 +23,16 @@ const TestGradeDownloaderGridRows = ({
 		MISSING: ''
 	})
 	useEffect(() => {
+		setTestGradeTotalForDisplay(testGradeMaxTotal)
+	}, [])
+	useEffect(() => {
 		if (csvToggle) {
 			if (student.schoolID !== null) {
 				setRosterList(list => [...list, studentTestGrade])
 			}
 		}
 	}, [csvToggle])
+
 	return (
 		<div
 			style={
