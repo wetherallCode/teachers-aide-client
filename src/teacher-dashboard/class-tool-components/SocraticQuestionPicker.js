@@ -16,7 +16,7 @@ const SocraticQuestionPicker = ({
 }) => {
 	const [questionPicker, setQuestionPicker] = useState(0)
 	const [errorDisplay, setErrorDisplay] = useState('')
-	console.log(protocolList)
+
 	return (
 		<>
 			{classPeriodInfo !== null ? (

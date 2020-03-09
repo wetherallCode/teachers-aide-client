@@ -69,7 +69,7 @@ const SocraticQuestionProtocolCreator = ({
 	const questionCheck = protocolList.some(
 		protocol => protocol.socraticQuestion === questionInfo.question
 	)
-	console.log(protocolList)
+
 	return (
 		<>
 			{!questionCheck && (
@@ -77,7 +77,7 @@ const SocraticQuestionProtocolCreator = ({
 					onClick={() => {
 						createSocraticQuestionProtocol()
 					}}
-					style={{ width: '7rem', height: '2rem', color: 'var(--blue)', fontSize: '1em' }}>
+					style={{ width: '7rem', height: '2rem', color: 'var(--blue)', fontSize: '110%' }}>
 					Create
 				</button>
 			)}

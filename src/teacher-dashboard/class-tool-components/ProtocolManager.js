@@ -79,20 +79,32 @@ const ProtocolManager = ({
 
 	return (
 		<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-			<div style={{ fontSize: '2rem' }}>Current Protocol: {socraticQuestion.__typename}</div>
-			<div style={{ fontSize: '1.5rem' }}>{socraticQuestion.socraticQuestion}</div>
-			<div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
+			<div style={{ fontSize: '120%' }}>
+				Current Protocol:{' '}
+				{socraticQuestion.__typename === 'SocraticQuestionProtocolForClassPeriod'
+					? 'Socratic Question'
+					: 'none'}
+			</div>
+			<div style={{ fontSize: '100', marginTop: '2%' }}>{socraticQuestion.socraticQuestion}</div>
+			<div
+				style={{
+					display: 'flex',
+					justifyContent: 'space-evenly',
+					alignItems: 'center',
+					width: '30rem',
+					marginTop: '3%'
+				}}>
 				<button
-					style={{ width: '5rem', height: '2rem', color: 'var(--blue)' }}
+					style={{ width: '10rem', height: '2.5rem', color: 'var(--blue)', fontSize: '1.1rem' }}
 					onClick={() => setIsActive()}>
 					Question Finished
 				</button>
 				<button
 					style={{
-						width: '5rem',
-						height: '2rem',
-						color: 'var(--white)',
-						backgroundColor: 'var(--white)'
+						width: '10rem',
+						height: '2.5rem',
+						color: 'var(--red)',
+						fontSize: '1.1rem'
 					}}
 					onClick={() => {
 						deleteSocraticQuestion()

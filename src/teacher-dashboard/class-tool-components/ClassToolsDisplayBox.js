@@ -26,7 +26,7 @@ const ClassToolsDisplayBox = ({
 	})
 	if (loading) return null
 	if (error) console.log(error)
-
+	console.log(classPeriodInfo)
 	return (
 		<>
 			{selector === 0 ? (
