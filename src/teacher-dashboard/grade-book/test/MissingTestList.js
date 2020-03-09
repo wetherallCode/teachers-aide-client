@@ -12,6 +12,7 @@ const MissingTestList = ({ classRoster, dueDate }) => {
 				backgroundColor: 'var(--white)',
 				color: 'var(--blue)',
 				height: '75vh',
+				width: '71.5vw',
 				overflow: 'scroll',
 				display: 'flex',
 				flexDirection: 'column'

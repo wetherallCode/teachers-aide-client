@@ -25,8 +25,13 @@ export const UNDO_SCORE_SHARE_SOCRATIC_QUESTION = gql`
 const ShareScore = ({ student, protocol }) => {
 	const [protocolInfo] = protocol
 	const [shareInfo] = student.hasProtocols.filter(protocol => protocol.isActive === true)
-	const [shareComments, setShareComments] = useState([])
-	console.log(shareInfo.shareEarnedPoints)
+	const [shareComments, setShareComments] = useState(['Good try'])
+
+	console.log(student.firstName + ': ' + shareComments)
+	useEffect(() => {
+		setShareComments(['Good try'])
+	}, [student])
+
 	const [setShareScore, { data }] = useMutation(SCORE_SHARE_SOCRATIC_QUESTION, {
 		refetchQueries: ['FindStudent'],
 		onCompleted: data => console.log(data)
@@ -44,103 +49,63 @@ const ShareScore = ({ student, protocol }) => {
 					marginTop: '2%',
 					marginBottom: '3%'
 				}}>
-				{shareComments.includes('Refused to answer') && (
-					<button
-						style={{
-							backgroundColor: 'var(--blue)',
-							color: 'var(--white)',
-							height: '2rem',
-							marginTop: '2%'
-						}}
-						onClick={() => {
-							const commentLocation = shareComments.findIndex(
-								comment => comment === 'Refused to answer'
-							)
-
-							setShareComments(list => [
-								...list.slice(0, commentLocation),
-								...list.slice(commentLocation + 1)
-							])
-						}}>
-						Refused
-					</button>
-				)}
-				{!shareComments.includes('Refused to answer') && (
-					<button
-						style={{
-							backgroundColor: 'var(--white)',
-							color: 'var(--blue)',
-							height: '2rem',
-							marginTop: '2%'
-						}}
-						onClick={() => setShareComments(list => [...list, 'Refused to answer'])}>
-						Refused
-					</button>
-				)}
-				{shareComments.includes('Good try') && (
-					<button
-						style={{
-							backgroundColor: 'var(--blue)',
-							color: 'var(--white)',
-							height: '2rem',
-							marginTop: '2%'
-						}}
-						onClick={() => {
-							const commentLocation = shareComments.findIndex(comment => comment === 'Good try')
-
-							setShareComments(list => [
-								...list.slice(0, commentLocation),
-								...list.slice(commentLocation + 1)
-							])
-						}}>
-						Good Try
-					</button>
-				)}
-				{!shareComments.includes('Good try') && (
-					<button
-						style={{
-							backgroundColor: 'var(--white)',
-							color: 'var(--blue)',
-							height: '2rem',
-							marginTop: '2%'
-						}}
-						onClick={() => setShareComments(list => [...list, 'Good try'])}>
-						Good Try
-					</button>
-				)}
-				{shareComments.includes('Well thought out') && (
-					<button
-						style={{
-							backgroundColor: 'var(--blue)',
-							color: 'var(--white)',
-							height: '2rem',
-							marginTop: '2%'
-						}}
-						onClick={() => {
-							const commentLocation = shareComments.findIndex(
-								comment => comment === 'Well thought out'
-							)
-
-							setShareComments(list => [
-								...list.slice(0, commentLocation),
-								...list.slice(commentLocation + 1)
-							])
-						}}>
-						Well thought out
-					</button>
-				)}
-				{!shareComments.includes('Well thought out') && (
-					<button
-						style={{
-							backgroundColor: 'var(--white)',
-							color: 'var(--blue)',
-							height: '2rem',
-							marginTop: '2%'
-						}}
-						onClick={() => setShareComments(list => [...list, 'Well thought out'])}>
-						Well thought out
-					</button>
-				)}
+				<button
+					style={
+						shareComments.includes('Refused to answer')
+							? {
+									backgroundColor: 'var(--blue)',
+									color: 'var(--white)',
+									height: '2rem',
+									marginTop: '2%'
+							  }
+							: {
+									backgroundColor: 'var(--white)',
+									color: 'var(--blue)',
+									height: '2rem',
+									marginTop: '2%'
+							  }
+					}
+					onClick={() => setShareComments(['Refused to answer'])}>
+					Refused
+				</button>
+				<button
+					style={
+						shareComments.includes('Good try')
+							? {
+									backgroundColor: 'var(--blue)',
+									color: 'var(--white)',
+									height: '2rem',
+									marginTop: '2%'
+							  }
+							: {
+									backgroundColor: 'var(--white)',
+									color: 'var(--blue)',
+									height: '2rem',
+									marginTop: '2%'
+							  }
+					}
+					onClick={() => setShareComments(['Good try'])}>
+					Good Try
+				</button>
+				<button
+					style={
+						shareComments.includes('Well thought out')
+							? {
+									backgroundColor: 'var(--blue)',
+									color: 'var(--white)',
+									height: '2rem',
+									marginTop: '2%'
+							  }
+							: {
+									backgroundColor: 'var(--white)',
+									color: 'var(--blue)',
+									height: '2rem',
+									marginTop: '2%'
+							  }
+					}
+					onClick={() => setShareComments(['Well thought out'])}>
+					Well thought out
+				</button>
 			</div>
 			<div style={{ display: 'flex', justifyContent: 'space-evenly', width: '15rem' }}>
 				{shareInfo.shareEarnedPoints === 0 && (

@@ -28,6 +28,10 @@ const ThinkPairScore = ({ student, protocol }) => {
 	const [thinkPairInfo] = student.hasProtocols.filter(protocol => protocol.isActive === true)
 
 	const [thinkPairComments, setThinkPairComments] = useState(['Did not discuss question'])
+	console.log(student.firstName + ': ' + thinkPairComments)
+	useEffect(() => {
+		setThinkPairComments(['Did not discuss question'])
+	}, [student])
 	const [additionalPoints, setAdditionalPoints] = useState(0)
 	useEffect(() => {
 		if (thinkPairComments.includes('Discussed question')) {
