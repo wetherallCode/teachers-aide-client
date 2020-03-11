@@ -53,7 +53,8 @@ const OEQGradeSubmit = ({
 			commentList.includes('Off Topic - Used wrong material') ||
 			commentList.includes('Outside Information was used in answering the question') ||
 			commentList.includes('Information was copied from text') ||
-			commentList.includes('Essay was copied from another student')
+			commentList.includes('Essay was copied from another student') ||
+			commentList.includes('No essay written')
 		) {
 			return setParagraphScore(0)
 		}

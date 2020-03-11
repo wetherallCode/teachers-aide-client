@@ -4,7 +4,8 @@ export const generalCommentList = [
 	'Outside Information was used in answering the question',
 	'Information was copied from text',
 	'Essay was copied from another student',
-	'Essay is a summary'
+	'Essay is a summary',
+	'No essay written'
 ]
 export const topicSentenceCommentList = [
 	'Topic sentence is complete',
@@ -20,6 +21,7 @@ export const answerCommentList = [
 	'Outside Information was used in answering the question',
 	'Information was copied from text',
 	'Essay was copied from another student',
+	'No essay written',
 	'Essay is a summary',
 	'No text structure or organization',
 	'Text structure doesn’t match the question’s text structure',

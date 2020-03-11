@@ -61,7 +61,7 @@ const ClassPeriodItems = ({ items, match }) => {
 	return (
 		<div
 			style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr 1fr 1fr' }}>
-			{items.map((period, index) => (
+			{items.slice(0, items.length - 1).map((period, index) => (
 				<Link
 					key={period}
 					to={`/dashboard/classroom/class-period-selector/${period}/${Math.floor(

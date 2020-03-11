@@ -27,7 +27,7 @@ const ShareScore = ({ student, protocol }) => {
 	const [shareInfo] = student.hasProtocols.filter(protocol => protocol.isActive === true)
 	const [shareComments, setShareComments] = useState(['Good try'])
 
-	console.log(student.firstName + ': ' + shareComments)
+	console.log(shareInfo.shareEarnedPoints)
 	useEffect(() => {
 		setShareComments(['Good try'])
 	}, [student])
@@ -49,7 +49,7 @@ const ShareScore = ({ student, protocol }) => {
 					marginTop: '2%',
 					marginBottom: '3%'
 				}}>
-				<button
+				{/* <button
 					style={
 						shareComments.includes('Refused to answer')
 							? {
@@ -67,7 +67,7 @@ const ShareScore = ({ student, protocol }) => {
 					}
 					onClick={() => setShareComments(['Refused to answer'])}>
 					Refused
-				</button>
+				</button> */}
 				<button
 					style={
 						shareComments.includes('Good try')
@@ -108,7 +108,7 @@ const ShareScore = ({ student, protocol }) => {
 				</button>
 			</div>
 			<div style={{ display: 'flex', justifyContent: 'space-evenly', width: '15rem' }}>
-				{shareInfo.shareEarnedPoints === 0 && (
+				{shareInfo.shareScore === 0 && (
 					<>
 						<StudentInfoMutatorButton
 							mutation={setShareScore}
@@ -130,7 +130,7 @@ const ShareScore = ({ student, protocol }) => {
 								socraticQuestion: protocolInfo.socraticQuestion,
 								shareScore: 1,
 								shareEarnedPoints: 0,
-								shareComments: shareComments
+								shareComments: ['Refused to answer']
 							}}
 							buttonDisplay={'No Answer'}
 							buttonColor={'red'}
@@ -138,7 +138,7 @@ const ShareScore = ({ student, protocol }) => {
 						/>
 					</>
 				)}
-				{shareInfo.shareEarnedPoints > 0 && (
+				{shareInfo.shareScore > 0 && (
 					<StudentInfoMutatorButton
 						mutation={undoShareScore}
 						variables={{

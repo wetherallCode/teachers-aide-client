@@ -7,6 +7,7 @@ import { conclusionCommentList } from './OEQCommentList'
 import CommentListDisplayCheckBoxes from './CommentListDisplayCheckBoxes'
 
 const CommentListDisplay = ({ commentCategories, commentList, setCommentList }) => {
+	console.log(answerCommentList)
 	return (
 		<div style={{ overflow: 'scroll', marginTop: '2%' }}>
 			{commentCategories === 'organizerCommentList' && (

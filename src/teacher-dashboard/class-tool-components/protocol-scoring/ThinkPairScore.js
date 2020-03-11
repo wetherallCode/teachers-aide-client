@@ -95,7 +95,7 @@ const ThinkPairScore = ({ student, protocol }) => {
 				</button>
 			</div>
 			<div style={{ display: 'flex', justifyContent: 'space-evenly', width: '15rem' }}>
-				{thinkPairInfo.thinkPairEarnedPoints === 0 && (
+				{thinkPairInfo.thinkPairScore === 0 && (
 					<>
 						<StudentInfoMutatorButton
 							mutation={setThinkPairScore}
@@ -125,7 +125,7 @@ const ThinkPairScore = ({ student, protocol }) => {
 						/>
 					</>
 				)}
-				{thinkPairInfo.thinkPairEarnedPoints > 0 && (
+				{thinkPairInfo.thinkPairScore > 0 && (
 					<StudentInfoMutatorButton
 						mutation={undoThinkPairScore}
 						variables={{

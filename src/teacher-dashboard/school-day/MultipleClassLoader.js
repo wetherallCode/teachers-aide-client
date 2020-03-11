@@ -26,7 +26,7 @@ const MultipleClassLoader = ({
 	}
 
 	const revisedClassPeriods = allClassperiods.filter(classPeriod => classPeriod !== period).sort()
-
+	console.log(revisedClassPeriods.slice(0, revisedClassPeriods.length - 1))
 	return (
 		<div
 			style={{
@@ -44,7 +44,7 @@ const MultipleClassLoader = ({
 					width: '75%',
 					marginRight: '5%'
 				}}>
-				{revisedClassPeriods.map(classPeriod => (
+				{revisedClassPeriods.slice(0, revisedClassPeriods.length - 1).map(classPeriod => (
 					<div
 						key={classPeriod}
 						style={{

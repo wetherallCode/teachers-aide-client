@@ -34,24 +34,27 @@ const WebSitePeriodSelectorDisplay = ({ periods }) => {
 			</div>
 			{periodSelector && (
 				<>
-					{periods.sort().map(period => {
-						return (
-							<Link
-								key={period}
-								to={`/website/${period}`}
-								style={{
-									marginLeft: '1%',
-									width: '6rem',
-									color: 'var(--white)',
-									textDecoration: 'none'
-								}}
-								onClick={() => setPeriodSelector(!periodSelector)}
-								onMouseOver={event => (event.target.style.fontSize = '110%')}
-								onMouseOut={event => (event.target.style.fontSize = '100%')}>
-								{`${period.substring(0, 1)} ${period.substring(2, 3)}-${period.substring(3, 4)}`}
-							</Link>
-						)
-					})}
+					{periods
+						.slice(0, periods.length - 1)
+						.sort()
+						.map(period => {
+							return (
+								<Link
+									key={period}
+									to={`/website/${period}`}
+									style={{
+										marginLeft: '1%',
+										width: '6rem',
+										color: 'var(--white)',
+										textDecoration: 'none'
+									}}
+									onClick={() => setPeriodSelector(!periodSelector)}
+									onMouseOver={event => (event.target.style.fontSize = '110%')}
+									onMouseOut={event => (event.target.style.fontSize = '100%')}>
+									{`${period.substring(0, 1)} ${period.substring(2, 3)}-${period.substring(3, 4)}`}
+								</Link>
+							)
+						})}
 				</>
 			)}
 		</>
