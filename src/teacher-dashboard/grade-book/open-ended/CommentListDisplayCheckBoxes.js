@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
 const CommentListDisplayCheckBoxes = ({ comment, commentList, setCommentList }) => {
-	console.log(!commentList.includes('Topic sentence is complete'))
 	const [isChecked, setIsChecked] = useState(false)
 
 	useEffect(() => {
