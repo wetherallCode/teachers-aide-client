@@ -49,7 +49,6 @@ const TestGrid = ({ classRoster, dueDate, periodName, test }) => {
 		onComplete: () => {
 			setTestList([])
 			setListSetter(false)
-			console.log('complete')
 		}
 	})
 
