@@ -187,6 +187,26 @@ const CriticalThinkingScoreMutator = ({
 											assignmentType: 'THINKING_GUIDE',
 											exempt: false,
 											missing: false,
+											score: 2,
+											earnedPoints: 5,
+											responsibilityPoints: 5,
+											comments: ['Complete'],
+											late: false
+										}}
+										buttonDisplay={'Complete'}
+										buttonColor={'blue'}
+										height={heightControl}
+									/>
+								)}
+								{criticalThinkingStatusValue && !exemptToggle && (
+									<StudentInfoMutatorButton
+										mutation={scoreAssignment}
+										variables={{
+											_id: student._id,
+											date: todaysDate,
+											assignmentType: 'THINKING_GUIDE',
+											exempt: false,
+											missing: false,
 											score: 1,
 											earnedPoints: 3,
 											responsibilityPoints: 3,
@@ -208,12 +228,12 @@ const CriticalThinkingScoreMutator = ({
 											exempt: false,
 											missing: false,
 											score: 2,
-											earnedPoints: 4,
-											responsibilityPoints: 4,
-											comments: ['Complete'],
+											earnedPoints: 3,
+											responsibilityPoints: 3,
+											comments: ['Completed in class'],
 											late: false
 										}}
-										buttonDisplay={'Complete'}
+										buttonDisplay={'Completed in Class'}
 										buttonColor={'blue'}
 										height={heightControl}
 									/>
