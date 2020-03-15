@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Route } from 'react-router'
 import DeskSelector from './DeskSelector'
 import ClassRoomTools from './ClassRoomTools'
@@ -9,7 +9,7 @@ import { gql } from 'apollo-boost'
 const FIND_CLASSPERIOD_FOR_CLASSROOM = gql`
 	query findClassPeriodForClassRoom($assignedDate: Date, $period: periodName) {
 		findClassPeriod(assignedDate: $assignedDate, period: $period) {
-			# _id
+			_id
 			assignedLesson {
 				_id
 				lessonName
@@ -67,12 +67,6 @@ const FIND_CLASSPERIOD_FOR_CLASSROOM = gql`
 `
 
 const ClassRoom = ({ match }) => {
-	const [teacherOptions, setTeacherOptions] = useState({
-		behaviorPointsToggle: false,
-		criticalThinkingToggle: true
-	})
-	const [protocolToggle, setProtocolToggle] = useState(true)
-
 	const todaysDate = new Date().toISOString().substring(0, 10)
 	const { periodName } = match.params
 
@@ -81,7 +75,6 @@ const ClassRoom = ({ match }) => {
 	})
 	if (loading) return null
 	if (error) console.log(error)
-
 	const { url } = match
 
 	return (
@@ -91,8 +84,9 @@ const ClassRoom = ({ match }) => {
 					backgroundColor: 'var(--white)',
 					display: 'grid',
 					gridTemplateRows: '3fr 1fr',
-					gridGap: '1px',
-					height: '100vh'
+					gridGap: '1px'
+					// height: '100vh',
+					// overflow: 'scroll'
 				}}>
 				<DeskSelector match={match} periodName={periodName} todaysDate={todaysDate} />
 				{data.findClassPeriod !== 'undefined' && (
@@ -100,27 +94,13 @@ const ClassRoom = ({ match }) => {
 						classPeriodInfo={data.findClassPeriod}
 						period={periodName}
 						match={match}
-						teacherOptions={teacherOptions}
-						setTeacherOptions={setTeacherOptions}
-						protocolToggle={protocolToggle}
-						setProtocolToggle={setProtocolToggle}
 						todaysDate={todaysDate}
 					/>
 				)}
 			</div>
 			<Route
 				path={`${url}/:deskNumber`}
-				render={props => (
-					<StudentInfo
-						{...props}
-						periodName={periodName}
-						teacherOptions={teacherOptions}
-						setTeacherOptions={setTeacherOptions}
-						todaysDate={todaysDate}
-						protocolToggle={protocolToggle}
-						setProtocolToggle={setProtocolToggle}
-					/>
-				)}
+				render={props => <StudentInfo {...props} periodName={periodName} todaysDate={todaysDate} />}
 			/>
 		</>
 	)
