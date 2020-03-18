@@ -6,7 +6,6 @@ import SmallWebsiteOldLessonsDisplay from './SmallWebsiteOldLessonsDisplay'
 
 const SmallWebsiteOldLessons = ({ todaysDate, period }) => {
 	const [lessonDate, setLessonDate] = useState(todaysDate)
-	const [isVisible, setIsVisible] = useState(false)
 
 	const { loading, error, data } = useQuery(FIND_CLASS_PERIOD, {
 		variables: { assignedDate: lessonDate, period: period }
@@ -24,11 +23,9 @@ const SmallWebsiteOldLessons = ({ todaysDate, period }) => {
 					value={lessonDate}
 					onChange={e => {
 						setLessonDate(e.target.value)
-						setIsVisible(true)
 					}}
 					style={{ backgroundColor: 'transparent', marginLeft: '1em' }}
 				/>
-				<>{isVisible && 'changing'}</>
 			</div>
 			{data.findClassPeriod !== null ? (
 				<SmallWebsiteOldLessonsDisplay lesson={data.findClassPeriod} />
