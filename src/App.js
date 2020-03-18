@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import './App.css'
 import DashBoardNavigation from './teacher-dashboard/dashboard'
@@ -6,14 +6,24 @@ import StudentDashboard from './student-dashboard/StudentDashboard'
 import WebSite from './website/WebSite'
 
 const App = () => {
+	// const [screenSize, setScreenSize] = useState(0)
+	// useEffect(() => {
+	// 	let screenWidth = window.screen.width
+	// 	if (screenWidth < 750) {
+	// 		setScreenSize()
+	// 	} else console.log(false)
+	// }, [])
+	console.log(window.screen.width)
 	return (
 		<div className='App'>
-			<Router>
-				<Route exact path='/' component={Home} />
-				<Route path='/dashboard' component={DashBoardNavigation} />
-				<Route path='/students' component={StudentDashboard} />
-				<Route path='/website' component={WebSite} />
-			</Router>
+			{
+				<Router>
+					<Route exact path='/' component={Home} />
+					<Route path='/dashboard' component={DashBoardNavigation} />
+					<Route path='/students' component={StudentDashboard} />
+					<Route path='/website' component={WebSite} />
+				</Router>
+			}
 		</div>
 	)
 }

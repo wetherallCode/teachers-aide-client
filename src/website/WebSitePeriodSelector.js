@@ -3,7 +3,7 @@ import { gql } from 'apollo-boost'
 import { useQuery } from '@apollo/react-hooks'
 import { Link } from 'react-router-dom'
 
-const GET_PERIOD_NAMES = gql`
+export const GET_PERIOD_NAMES = gql`
 	query getPeriodNamesgetPeriodNamesForWebSitePeriodSelector {
 		periodName: __type(name: "periodName") {
 			enumValues {
@@ -13,19 +13,21 @@ const GET_PERIOD_NAMES = gql`
 	}
 `
 
-const WebSitePeriodSelector = () => {
+const WebSitePeriodSelector = ({ periodSelector, setPeriodSelector }) => {
 	const { data, loading, error } = useQuery(GET_PERIOD_NAMES)
 	if (loading) return <div style={{ paddingLeft: '2%' }}>Loading</div>
 	if (error) console.log(error)
 
 	return (
-		<WebSitePeriodSelectorDisplay periods={data.periodName.enumValues.map(period => period.name)} />
+		<WebSitePeriodSelectorDisplay
+			periods={data.periodName.enumValues.map(period => period.name)}
+			periodSelector={periodSelector}
+			setPeriodSelector={setPeriodSelector}
+		/>
 	)
 }
 
-const WebSitePeriodSelectorDisplay = ({ periods }) => {
-	const [periodSelector, setPeriodSelector] = useState(false)
-
+const WebSitePeriodSelectorDisplay = ({ periods, periodSelector, setPeriodSelector }) => {
 	const sortByPeriod = (a, b) => a - b
 	return (
 		<>

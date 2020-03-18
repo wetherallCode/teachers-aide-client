@@ -25,7 +25,6 @@ export const ME_QUERY = gql`
 			name
 			_id
 		}
-		createLessonMode @client
 	}
 `
 

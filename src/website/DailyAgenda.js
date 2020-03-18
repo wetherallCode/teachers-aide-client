@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
-// import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
-import AgendaItemsNavBar from './AgendaItemsNavBar'
+import { Route, Link } from 'react-router-dom'
 import { gql } from 'apollo-boost'
 import { useQuery } from '@apollo/react-hooks'
-import { Route, Link } from 'react-router-dom'
+
+import AgendaItemsNavBar from './AgendaItemsNavBar'
 import ResourceButton from './ResourceButton'
 import OldLesson from './OldLesson'
 
-const FIND_CLASS_PERIOD = gql`
+export const FIND_CLASS_PERIOD = gql`
 	query findClassPeriodForDailyAgenda($assignedDate: Date, $period: periodName) {
 		findClassPeriod(assignedDate: $assignedDate, period: $period) {
 			assignedLesson {
@@ -63,6 +63,8 @@ const DailyAgenda = ({ match }) => {
 
 	// const OEQ = data.findClassPeriod.assignedHomework.filter(x => x.assignmentType === 'OEQ')
 	// console.log(OEQ)
+	const mql = window.matchMedia('(max-width: 1024px)')
+	// console.log(mql)
 
 	return (
 		<>
