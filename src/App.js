@@ -60,16 +60,28 @@ const Home = () => (
 					backgroundColor: 'var(--white)',
 					color: 'var(--blue)'
 				}}>
-				<h1 style={{ fontSize: '250%' }}>Welcome to Mr. Wetherall's Class</h1>
+				<h1 style={window.screen.width > 750 ? { fontSize: '250%' } : { fontSize: '140%' }}>
+					Welcome to Mr. Wetherall's Class
+				</h1>
 				<Link style={{ color: 'var(--white)', textDecoration: 'none' }} to='/website'>
 					<button
-						style={{
-							width: '10rem',
-							height: '3rem',
-							fontSize: '140%',
-							color: 'var(--white)',
-							backgroundColor: 'var(--blue)'
-						}}>
+						style={
+							window.screen.width > 750
+								? {
+										width: '10rem',
+										height: '3rem',
+										fontSize: '140%',
+										color: 'var(--white)',
+										backgroundColor: 'var(--blue)'
+								  }
+								: {
+										width: '7rem',
+										height: '2rem',
+										fontSize: '80%',
+										color: 'var(--white)',
+										backgroundColor: 'var(--blue)'
+								  }
+						}>
 						Get Started
 					</button>
 				</Link>

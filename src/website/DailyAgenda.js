@@ -69,7 +69,13 @@ const DailyAgenda = ({ match }) => {
 	return (
 		<>
 			{data.findClassPeriod === null ? (
-				<div style={{ display: 'grid', gridTemplateColumns: '1fr 3fr' }}>
+				<div
+					style={{
+						height: '90vh',
+						overflow: 'scroll',
+						display: 'grid',
+						gridTemplateColumns: '1fr 3fr'
+					}}>
 					<div
 						style={{
 							backgroundColor: 'var(--blue)',
@@ -81,8 +87,8 @@ const DailyAgenda = ({ match }) => {
 							flexDirection: 'column',
 							justifyContent: 'flex-start',
 							alignItems: 'center',
-							paddingTop: '8%',
-							overflow: 'scroll'
+							paddingTop: '8%'
+							// overflow: 'scroll'
 						}}>
 						<div style={{ fontSize: '130%', marginBottom: '10%', textDecoration: 'underline' }}>
 							{match.params.courseName.substring(0, 1)} Day Period{' '}
@@ -161,8 +167,8 @@ const DailyAgenda = ({ match }) => {
 					style={{
 						display: 'grid',
 						gridTemplateColumns: '1fr 3fr',
-						height: '100vh',
-						overflow: 'auto'
+						height: '90vh',
+						overflow: 'scroll'
 					}}>
 					<AgendaItemsNavBar match={match} lesson={data.findClassPeriod} />
 					<Route
@@ -176,6 +182,7 @@ const DailyAgenda = ({ match }) => {
 									justifyContent: 'flex-start',
 									marginTop: '5%',
 									alignItems: 'center',
+									height: '90vh',
 									overflow: 'scroll'
 								}}>
 								<h1
