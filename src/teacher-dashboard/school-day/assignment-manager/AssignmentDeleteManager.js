@@ -124,6 +124,50 @@ const AssignmentDeleteManager = ({ period, date, assignedHomework, assignedTest 
 							</div>
 						)}
 					</div>
+					<div>
+						{assignedHomework.map(assignment => assignment.assignmentType).includes('OEQ') && (
+							<div>
+								<div>Delete Open Ended? </div>
+								<button
+									onClick={() =>
+										deleteAssignment({
+											variables: {
+												input: {
+													period: period,
+													assignedDate: date,
+													assignmentType: 'OEQ'
+												}
+											}
+										})
+									}>
+									Yes
+								</button>
+							</div>
+						)}
+					</div>
+					<div>
+						{assignedHomework
+							.map(assignment => assignment.assignmentType)
+							.includes('THINKING_GUIDE') && (
+							<div>
+								<div>Delete Critical Thinking Guide? </div>
+								<button
+									onClick={() =>
+										deleteAssignment({
+											variables: {
+												input: {
+													period: period,
+													assignedDate: date,
+													assignmentType: 'THINKING_GUIDE'
+												}
+											}
+										})
+									}>
+									Yes
+								</button>
+							</div>
+						)}
+					</div>
 				</>
 			) : (
 				<div>No Assignments </div>
