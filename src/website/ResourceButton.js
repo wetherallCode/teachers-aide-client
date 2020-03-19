@@ -17,6 +17,16 @@ const ResourceButton = () => {
 			</a>
 			<a
 				style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}
+				href='https://docs.google.com/document/d/1_EwSsZ7xSSV7IyernvOo37cLprtueQYV2Ph-A4LXwLw/edit?usp=sharing'>
+				Critical Thinking Question Template
+			</a>
+			<a
+				style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}
+				href='https://docs.google.com/document/d/1GanTjd_XtTH0HlprMNIAU6XxX-JFKKAimAbBD4L4NHk/edit?usp=sharing'>
+				Open Ended Question Template
+			</a>
+			<a
+				style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}
 				href='https://docs.google.com/document/d/1qMDPpq2_rpnzhp0orQBt3fFGeKWj_8376fG-gdpJXzY/edit'>
 				Open Ended Question Guide
 			</a>
