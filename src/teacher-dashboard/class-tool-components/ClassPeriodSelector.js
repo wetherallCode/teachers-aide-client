@@ -10,7 +10,6 @@ export const GET_PERIOD_NAMES = gql`
 				name
 			}
 		}
-		gradeBookToggle @client
 	}
 `
 const ClassPeriodSelector = ({ match }) => {
