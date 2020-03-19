@@ -14,28 +14,24 @@ import { gql } from 'apollo-boost'
 // 	}
 // `
 
-const RemoveStudentToggle = ({ removeStudentScreen }) => {
+const RemoveStudentToggle = ({ removeStudentScreen, setRemoveStudentScreen }) => {
 	return (
-		<ApolloConsumer>
-			{client => (
-				<button
-					style={{
-						fontSize: '70%',
-						height: '50px',
-						width: '30%',
-						textDecoration: 'none',
-						color: 'var(--white)',
-						backgroundColor: 'var(--red)'
-						// var(--blue)
-					}}
-					type='button'
-					onClick={() => {
-						client.writeData({ data: { removeStudentScreen: !removeStudentScreen } })
-					}}>
-					{!removeStudentScreen ? 'Delete Student' : 'Go Back'}
-				</button>
-			)}
-		</ApolloConsumer>
+		<button
+			style={{
+				fontSize: '70%',
+				height: '50px',
+				width: '30%',
+				textDecoration: 'none',
+				color: 'var(--white)',
+				backgroundColor: 'var(--red)'
+				// var(--blue)
+			}}
+			type='button'
+			onClick={() => {
+				setRemoveStudentScreen(removeStudentScreen)
+			}}>
+			{!removeStudentScreen ? 'Delete Student' : 'Go Back'}
+		</button>
 	)
 }
 export default RemoveStudentToggle

@@ -5,11 +5,11 @@ import Modal from 'react-responsive-modal'
 import { gql } from 'apollo-boost'
 import { useApolloClient, useQuery, useMutation } from '@apollo/react-hooks'
 
-const USER_LOGIN_MODAL_TOGGLE = gql`
-	query userLoginModalToggle {
-		userLogin @client
-	}
-`
+// const USER_LOGIN_MODAL_TOGGLE = gql`
+// 	query userLoginModalToggle {
+
+// 	}
+// `
 
 const LOGIN_MUTATION = gql`
 	mutation Login($name: String!, $password: String!) {
@@ -23,10 +23,11 @@ const LOGIN_MUTATION = gql`
 const UserLogin = ({ history }) => {
 	const [loginName, setLoginName] = useState('')
 	const [loginPassword, setLoginPassword] = useState('')
+	const [userLogin, setUserLogin] = useState(true)
 
 	const [errorLog, setErrorLog] = useState(null)
 
-	const { data } = useQuery(USER_LOGIN_MODAL_TOGGLE)
+	// const { data } = useQuery(USER_LOGIN_MODAL_TOGGLE)
 
 	const displayError = error => setErrorLog(error)
 
@@ -37,10 +38,9 @@ const UserLogin = ({ history }) => {
 	})
 
 	const client = useApolloClient()
-	const { userLogin } = data
 
 	const userLoginModalToggle = () => {
-		client.writeData({ data: { userLogin: !userLogin } })
+		setUserLogin(!userLogin)
 	}
 
 	return (

@@ -1,14 +1,14 @@
 import React from 'react'
 import { ApolloConsumer } from '@apollo/react-hooks'
 
-const EditModeToggle = ({ isEditStudentMode }) => {
+const EditModeToggle = ({ isEditStudentMode, setIsEditStudentMode }) => {
 	return (
 		<ApolloConsumer>
-			{(client) => (
+			{client => (
 				<button
 					className='blueButton'
 					type='button'
-					onClick={() => client.writeData({ data: { isEditStudentMode: !isEditStudentMode } })}>
+					onClick={() => setIsEditStudentMode(!isEditStudentMode)}>
 					{isEditStudentMode ? 'Go Back' : 'Edit Mode'}
 				</button>
 			)}

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { gql } from 'apollo-boost'
 import { useQuery, useMutation, useApolloClient } from '@apollo/react-hooks'
@@ -27,8 +27,8 @@ export const STUDENT_INFO_QUERY = gql`
 			daysLate
 			learningStyle
 		}
-		isEditStudentMode @client
-		removeStudentScreen @client
+		# isEditStudentMode @client
+		# removeStudentScreen @client
 	}
 `
 
@@ -47,7 +47,8 @@ const REMOVE_STUDENT_MUTATION = gql`
 Modal.setAppElement(document.getElementById('root'))
 
 const Student = ({ match, history }) => {
-	const client = useApolloClient()
+	const [isEditStudentMode, setIsEditStudentMode] = useState(false)
+	const [removeStudentScreen, setRemoveStudentScreen] = useState(false)
 	const { studentInfo } = match.params
 	const todaysDate = new Date().toISOString().substring(0, 10)
 
@@ -80,7 +81,7 @@ const Student = ({ match, history }) => {
 	if (loading) return <h1>Loading</h1>
 	if (error) console.log(error)
 
-	const { student, isEditStudentMode, removeStudentScreen } = data
+	const { student } = data
 	const {
 		schoolID,
 		firstName,
@@ -116,13 +117,18 @@ const Student = ({ match, history }) => {
 						<div>
 							{isEditStudentMode ? (
 								<div>
-									<EditModeToggle className='blueButton' isEditStudentMode={isEditStudentMode} />
+									<EditModeToggle
+										className='blueButton'
+										isEditStudentMode={isEditStudentMode}
+										setIsEditStudentMode={setIsEditStudentMode}
+									/>
 									<h1>Edit Student</h1>
 									<EditModeForm
 										clasName='button'
 										studentInfo={student}
 										history={history}
 										isEditStudentMode={isEditStudentMode}
+										setIsEditStudentMode={setIsEditStudentMode}
 									/>
 								</div>
 							) : (
@@ -180,11 +186,16 @@ const Student = ({ match, history }) => {
 												Back to Class
 											</button>
 										</Link>
-										<EditModeToggle className='blueButton' isEditStudentMode={isEditStudentMode} />
+										<EditModeToggle
+											className='blueButton'
+											isEditStudentMode={isEditStudentMode}
+											setIsEditStudentMode={setIsEditStudentMode}
+										/>
 										<StudentHider studentInfo={student} />
 										<RemoveStudentToggle
 											className='redButton'
 											removeStudentScreen={removeStudentScreen}
+											setRemoveStudentScreen={setRemoveStudentScreen}
 										/>
 									</div>
 								</div>
@@ -206,6 +217,7 @@ const Student = ({ match, history }) => {
 									textShadow: '2px 2px 2px #888'
 								}}
 								removeStudentScreen={removeStudentScreen}
+								setRemoveStudentScreen={setRemoveStudentScreen}
 							/>
 							<Modal
 								style={{
@@ -220,9 +232,7 @@ const Student = ({ match, history }) => {
 									}
 								}}
 								isOpen={removeStudentScreen}
-								onRequestClose={() =>
-									client.writeData({ data: { removeStudentScreen: !removeStudentScreen } })
-								}>
+								onRequestClose={() => setRemoveStudentScreen(!removeStudentScreen)}>
 								<div
 									style={{
 										display: 'flex',
@@ -241,9 +251,7 @@ const Student = ({ match, history }) => {
 											fontSize: '170%',
 											marginBottom: '10%'
 										}}
-										onClick={() =>
-											client.writeData({ data: { removeStudentScreen: !removeStudentScreen } })
-										}>
+										onClick={() => setRemoveStudentScreen(!removeStudentScreen)}>
 										Don't Delete!
 									</button>
 									<button
@@ -258,7 +266,7 @@ const Student = ({ match, history }) => {
 										onClick={() => {
 											removeStudent()
 											const goBack = () => {
-												client.writeData({ data: { removeStudentScreen: !removeStudentScreen } })
+												setRemoveStudentScreen(!removeStudentScreen)
 												return !isHiddenFromRoster
 													? history.push(`/dashboard/roster-view/${period}`)
 													: history.push(`/dashboard/allStudent`)

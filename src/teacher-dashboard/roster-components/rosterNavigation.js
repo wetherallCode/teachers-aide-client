@@ -13,20 +13,20 @@ export const GET_PERIOD_NAMES = gql`
 				name
 			}
 		}
-		gradeBookToggle @client
+		# gradeBookToggle @client
 	}
 `
 
 const RosterNavBar = ({ match }) => {
-	const client = useApolloClient()
+	// const client = useApolloClient()
 
 	const { data, loading, error } = useQuery(GET_PERIOD_NAMES)
 
 	if (loading) return <h1>Loading</h1>
 	if (error) console.log(error)
 
-	const { gradeBookToggle } = data
-	const toggleGradebook = () => client.writeData({ data: { gradeBookToggle: !gradeBookToggle } })
+	// const { gradeBookToggle } = data
+	// const toggleGradebook = () => client.writeData({ data: { gradeBookToggle: !gradeBookToggle } })
 
 	return (
 		<div
