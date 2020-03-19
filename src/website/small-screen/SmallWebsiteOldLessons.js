@@ -16,7 +16,14 @@ const SmallWebsiteOldLessons = ({ todaysDate, period }) => {
 	return (
 		<div style={{ height: '80vh', color: 'var(--blue)' }}>
 			<div
-				style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '10vh' }}>
+				style={{
+					display: 'flex',
+					justifyContent: 'center',
+					alignItems: 'center',
+					height: '10vh',
+					fontSize: '130%',
+					borderBottom: '3px solid var(--blue)'
+				}}>
 				<div>Lesson Date: </div>
 				<input
 					type='date'
@@ -28,17 +35,20 @@ const SmallWebsiteOldLessons = ({ todaysDate, period }) => {
 				/>
 			</div>
 			{data.findClassPeriod !== null ? (
-				<SmallWebsiteOldLessonsDisplay lesson={data.findClassPeriod} />
+				<div style={{ marginTop: '2%' }}>
+					<SmallWebsiteOldLessonsDisplay lesson={data.findClassPeriod} />
+				</div>
 			) : (
 				<div
 					style={{
-						height: '70vh',
+						height: '20vh',
 						display: 'flex',
 						justifyContent: 'center',
-						alignItems: 'center'
+						alignItems: 'center',
+						fontSize: '130%'
 						// backgroundColor: 'var(--grey)'
 					}}>
-					<div>No Lesson Scheduled</div>
+					<div>No Lesson for This Day</div>
 				</div>
 			)}
 		</div>

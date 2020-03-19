@@ -43,8 +43,8 @@ const SmallWebsiteOldLessonsDisplay = ({ lesson }) => {
 					Study Guide Questions
 				</div>
 				<ol>
-					{lesson.assignedLesson.studyGuideQuestions.map(question => (
-						<li>{question}</li>
+					{lesson.assignedLesson.studyGuideQuestions.map((question, i) => (
+						<li key={i}>{question}</li>
 					))}
 				</ol>
 				<div style={{ textAlign: 'center', textDecoration: 'underline', fontSize: '110%' }}>
