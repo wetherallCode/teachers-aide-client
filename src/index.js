@@ -29,7 +29,7 @@ const httpLink = new HttpLink({
 	credentials: 'include'
 })
 const wsLink = new WebSocketLink({
-	uri: 'ws://mrwetherall.herokuapp.com/graphql ',
+	uri: 'wss://mrwetherall.herokuapp.com/graphql ',
 	options: { reconnect: true }
 })
 const terminatingLink = split(
