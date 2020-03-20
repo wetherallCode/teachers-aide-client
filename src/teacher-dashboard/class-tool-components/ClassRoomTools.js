@@ -57,7 +57,8 @@ const ClassRoomTools = ({
 			style={{
 				backgroundColor: 'var(--blue)',
 				display: 'grid',
-				gridTemplateColumns: '1fr 4fr 1fr'
+				gridTemplateColumns: '1fr 4fr 1fr',
+				height: '23.8vh'
 			}}>
 			<div
 				style={{
@@ -101,16 +102,28 @@ const ClassRoomTools = ({
 						{period.substring(0, 1) + ' ' + period.substring(2, 3) + '-' + period.substring(3)}
 					</button>
 				</Link>
-				<ClassToolsDisplayBox
-					selector={selectorSwitch}
-					period={period}
-					classPeriodInfo={classPeriodInfo}
-					teacherOptions={teacherOptions}
-					setTeacherOptions={setTeacherOptions}
-					setProtocolToggle={setProtocolToggle}
-					protocolToggle={protocolToggle}
-					eligibleStudentList={eligibleStudentList}
-				/>
+				{classPeriodInfo !== null ? (
+					<ClassToolsDisplayBox
+						selector={selectorSwitch}
+						period={period}
+						classPeriodInfo={classPeriodInfo}
+						teacherOptions={teacherOptions}
+						setTeacherOptions={setTeacherOptions}
+						setProtocolToggle={setProtocolToggle}
+						protocolToggle={protocolToggle}
+						eligibleStudentList={eligibleStudentList}
+					/>
+				) : (
+					<div
+						style={{
+							display: 'flex',
+							justifyContent: 'center',
+							alignItems: 'center',
+							fontSize: '130%'
+						}}>
+						<div>No Class Today</div>
+					</div>
+				)}
 			</div>
 
 			<div

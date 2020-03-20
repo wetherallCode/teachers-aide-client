@@ -1,12 +1,9 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import ResourceButton from './ResourceButton'
+import ResourceButton from '../ResourceButton'
 
-const AgendaItemsNavBar = ({ match, lesson }) => {
+const AgendaItemsNavBar = ({ match, lesson, setAgendaItemSelector }) => {
 	const [agendaButton, setAgendaButton] = useState(false)
-
-	// const [studyGuideButton, setStudyGuideButton] = useState(false)
-
 	const [classRoomResources, setClassRoomResources] = useState(false)
 
 	const todaysDate = new Date().toISOString().substring(0, 10)
@@ -16,7 +13,7 @@ const AgendaItemsNavBar = ({ match, lesson }) => {
 	return (
 		<div
 			style={{
-				height: '120vh',
+				height: '100vh',
 				backgroundColor: 'var(--blue)',
 				color: 'var(--white)',
 				fontSize: '150%',
@@ -60,36 +57,41 @@ const AgendaItemsNavBar = ({ match, lesson }) => {
 						alignItems: 'center',
 						paddingTop: '2%'
 					}}>
-					<Link
-						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}
-						to={`${match.url}/studyGuide`}>
+					<div
+						onClick={() => setAgendaItemSelector('STUDY_GUIDE')}
+						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}>
 						Study Guide
-					</Link>
-					<Link
-						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}
-						to={`${match.url}/essentialQuestion`}>
+					</div>
+					<div
+						onClick={() => setAgendaItemSelector('WARMUP')}
+						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}>
+						Warm Up
+					</div>
+					<div
+						onClick={() => setAgendaItemSelector('ESSENTIAL_QUESTION')}
+						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}>
 						Essential Question
-					</Link>
-					<Link
-						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}
-						to={`${match.url}/readings`}>
-						Reading
-					</Link>
-					<Link
-						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}
-						to={`${match.url}/vocabWords`}>
+					</div>
+					<div
+						onClick={() => setAgendaItemSelector('READINGS')}
+						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}>
+						Readings
+					</div>
+					<div
+						onClick={() => setAgendaItemSelector('VOCAB')}
+						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}>
 						Vocabulary
-					</Link>
-					<Link
-						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}
-						to={`${match.url}/socraticQuestions`}>
+					</div>
+					<div
+						onClick={() => setAgendaItemSelector('PROTOCOLS')}
+						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}>
 						Socratic Questions
-					</Link>
-					<Link
-						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}
-						to={`${match.url}/workDue`}>
+					</div>
+					<div
+						onClick={() => setAgendaItemSelector('HOMEWORK')}
+						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}>
 						Homework
-					</Link>
+					</div>
 				</div>
 			)}
 			{/* {lesson.assignedLesson.studyGuideQuestions && (
@@ -123,7 +125,7 @@ const AgendaItemsNavBar = ({ match, lesson }) => {
 					}}>
 					<Link
 						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}
-						to={`${match.url}/studyGuideQuestions`}>
+						>
 						Study Guide
 					</Link>
 				</div>
@@ -167,8 +169,7 @@ const AgendaItemsNavBar = ({ match, lesson }) => {
 							// fontSize: '150%',
 							color: 'var(--white)',
 							textDecoration: 'none'
-						}}
-						to={`${match.url}/oldLesson/${oldLessonDate}`}>
+						}}>
 						Get Lesson
 					</Link>
 				</>

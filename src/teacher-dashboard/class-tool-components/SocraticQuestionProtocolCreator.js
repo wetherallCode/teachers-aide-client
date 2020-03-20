@@ -77,6 +77,7 @@ const SocraticQuestionProtocolCreator = ({
 					onClick={() => {
 						createSocraticQuestionProtocol()
 					}}
+					className='whiteButton'
 					style={{ width: '7rem', height: '2rem', color: 'var(--blue)', fontSize: '110%' }}>
 					Create
 				</button>

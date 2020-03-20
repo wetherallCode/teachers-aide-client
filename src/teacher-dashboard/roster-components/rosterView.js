@@ -89,7 +89,8 @@ const RosterDisplay = ({ match, markingPeriod }) => {
 	const { periodName } = match.params
 
 	const { data, loading, error } = useQuery(GET_CLASS_ROSTER, {
-		variables: { period: periodName }
+		variables: { period: periodName },
+		pollInterval: 500
 	})
 
 	if (loading) return <h1>Loading</h1>

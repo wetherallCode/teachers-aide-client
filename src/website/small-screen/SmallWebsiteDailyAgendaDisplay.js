@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 
-import { FIND_CLASS_PERIOD } from '../DailyAgenda'
+import { FIND_CLASS_PERIOD } from '../large-screen/DailyAgenda'
 import SmallWebsiteDailyAgendaDisplayStudyGuide from './SmallWebsiteDailyAgendaDisplayStudyGuide'
 import SmallWebsiteDailyAgendaDisplayEssentialQuestion from './SmallWebsiteDailyAgendaDisplayEssentialQuestion'
 import SmallWebsiteDailyAgendaDisplayReadings from './SmallWebsiteDailyAgendaDisplayReadings'

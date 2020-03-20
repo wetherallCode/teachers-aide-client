@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import Timer from 'react-compound-timer'
-import { gql } from 'apollo-boost'
 import { useQuery } from '@apollo/react-hooks'
-import SocraticQuestionPicker from './SocraticQuestionPicker'
-import ProtocolManager from './ProtocolManager'
+
 import { CURRENT_MARKING_PERIOD_ID } from '../../utils'
 import { GET_CURRENT_MARKING_PERIOD } from '../school-day/ClassPeriodCreator'
 import ProtocolDisplay from './ProtocolDisplay'
+import LivePeriodDisplay from './LivePeriodDisplay'
 
 const ClassToolsDisplayBox = ({
 	selector,
@@ -26,7 +25,7 @@ const ClassToolsDisplayBox = ({
 	})
 	if (loading) return null
 	if (error) console.log(error)
-	console.log(classPeriodInfo)
+
 	return (
 		<>
 			{selector === 0 ? (
@@ -113,44 +112,7 @@ const ClassToolsDisplayBox = ({
 					}}
 				</Timer>
 			) : selector === 2 ? (
-				<div
-					style={{
-						display: 'flex',
-						flexWrap: 'wrap',
-						justifyContent: 'space-evenly',
-						alignItems: 'flex-start',
-						marginTop: '5%',
-						fontSize: '140%'
-					}}>
-					<button
-						className='whiteButton'
-						style={{ backgroundColor: 'var(--grey)' }}
-						onClick={() =>
-							setTeacherOptions({ behaviorPointsToggle: true, criticalThinkingToggle: false })
-						}>
-						Behavior Points
-					</button>
-					<button
-						className='whiteButton'
-						style={{ backgroundColor: 'var(--grey)' }}
-						onClick={() =>
-							setTeacherOptions({ behaviorPointsToggle: false, criticalThinkingToggle: true })
-						}>
-						Critical Thinking
-					</button>
-					{/* <button className='whiteButton' style={{ backgroundColor: 'var(--grey)' }}>
-						Button
-					</button> */}
-					{/* <div
-						style={{
-							height: 'auto',
-							backgroundColor: 'var(--white)',
-							width: '90%',
-							overflow: 'auto'
-						}}>
-						button
-					</div> */}
-				</div>
+				<LivePeriodDisplay classPeriodInfo={classPeriodInfo} />
 			) : (
 				<div
 					style={{

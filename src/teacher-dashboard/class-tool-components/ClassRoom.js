@@ -56,12 +56,13 @@ const FIND_CLASSPERIOD_FOR_CLASSROOM = gql`
 				readingSections
 			}
 			assignedProtocols {
-				isActive
 				... on SocraticQuestionProtocolForClassPeriod {
+					isActive
 					socraticQuestion
 					socraticQuestionType
 				}
 			}
+			livePeriod
 		}
 	}
 `
@@ -71,10 +72,12 @@ const ClassRoom = ({ match }) => {
 	const { periodName } = match.params
 
 	const { data, loading, error } = useQuery(FIND_CLASSPERIOD_FOR_CLASSROOM, {
-		variables: { period: periodName, assignedDate: todaysDate }
+		variables: { period: periodName, assignedDate: todaysDate },
+		pollInterval: 10
 	})
 	if (loading) return null
 	if (error) console.log(error)
+
 	const { url } = match
 
 	return (

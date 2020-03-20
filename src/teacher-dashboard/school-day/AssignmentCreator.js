@@ -41,13 +41,7 @@ const AssignmentCreator = ({
 	const { grade, lessonName } = lessonValues
 
 	const [createClass, { data }] = useMutation(CREATE_CLASS_PERIOD, {
-		onError: displayError,
-		onCompleted: data => console.log(data),
-		refetchQueries: [
-			'findClassPeriodForClassManagerDisplay',
-			'getClassPeriodForTestManager',
-			'rosterList'
-		]
+		onError: displayError
 	})
 
 	const createClasses = e => {

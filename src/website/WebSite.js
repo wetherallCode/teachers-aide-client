@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Route, Link } from 'react-router-dom'
 import TodaysDate from './TodaysDate'
 import WebSitePeriodSelector from './WebSitePeriodSelector'
-import DailyAgenda from './DailyAgenda'
+import DailyAgenda from './large-screen/DailyAgenda'
 import SmallWebsiteDisplay from './small-screen/SmallWebsiteDisplay'
 
 const WebSite = () => {

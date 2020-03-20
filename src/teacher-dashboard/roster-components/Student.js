@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { gql } from 'apollo-boost'
-import { useQuery, useMutation, useApolloClient } from '@apollo/react-hooks'
+import { useQuery, useMutation } from '@apollo/react-hooks'
 import EditModeToggle from './EditModeToggle'
 import EditModeForm from './EditModeForm'
 import StudentHider from './StudentHider'
-import RemoveStudentToggle from './RemoveStudentToggle'
 import Modal from 'react-modal'
 // import { GET_CLASS_ROSTER } from './rosterView'
 import DaysAbsent from './DaysAbsent'
+import { useToggle } from '../../hooks'
 
 export const STUDENT_INFO_QUERY = gql`
 	query getStudentInfo($_id: ID!) {
@@ -32,7 +32,7 @@ export const STUDENT_INFO_QUERY = gql`
 	}
 `
 
-const REMOVE_STUDENT_MUTATION = gql`
+export const REMOVE_STUDENT_MUTATION = gql`
 	mutation removeStudent($_id: ID!) {
 		removeStudent(_id: $_id) {
 			removed
@@ -48,7 +48,7 @@ Modal.setAppElement(document.getElementById('root'))
 
 const Student = ({ match, history }) => {
 	const [isEditStudentMode, setIsEditStudentMode] = useState(false)
-	const [removeStudentScreen, setRemoveStudentScreen] = useState(false)
+	const [isRemoved, toggleRemoveModal] = useToggle(false)
 	const { studentInfo } = match.params
 	const todaysDate = new Date().toISOString().substring(0, 10)
 
@@ -113,7 +113,7 @@ const Student = ({ match, history }) => {
 						width: '100%',
 						backgroundColor: 'var(--grey)'
 					}}>
-					{!removeStudentScreen ? (
+					{!isRemoved ? (
 						<div>
 							{isEditStudentMode ? (
 								<div>
@@ -192,18 +192,26 @@ const Student = ({ match, history }) => {
 											setIsEditStudentMode={setIsEditStudentMode}
 										/>
 										<StudentHider studentInfo={student} />
-										<RemoveStudentToggle
-											className='redButton'
-											removeStudentScreen={removeStudentScreen}
-											setRemoveStudentScreen={setRemoveStudentScreen}
-										/>
+										<button
+											style={{
+												fontSize: '70%',
+												height: '50px',
+												width: '30%',
+												textDecoration: 'none',
+												color: 'var(--white)',
+												backgroundColor: 'var(--red)'
+												// var(--blue)
+											}}
+											onClick={toggleRemoveModal}>
+											{!isRemoved ? 'Delete Student' : 'Go Back'}
+										</button>
 									</div>
 								</div>
 							)}
 						</div>
 					) : (
 						<div>
-							<RemoveStudentToggle
+							<button
 								style={{
 									backgroundColor: 'red',
 									border: '0.01px solid black',
@@ -215,10 +223,9 @@ const Student = ({ match, history }) => {
 									fontWeight: 'bolder',
 									boxShadow: '3px 3px 3px black',
 									textShadow: '2px 2px 2px #888'
-								}}
-								removeStudentScreen={removeStudentScreen}
-								setRemoveStudentScreen={setRemoveStudentScreen}
-							/>
+								}}>
+								Delete Student
+							</button>
 							<Modal
 								style={{
 									overlay: {
@@ -231,8 +238,8 @@ const Student = ({ match, history }) => {
 										height: '25rem'
 									}
 								}}
-								isOpen={removeStudentScreen}
-								onRequestClose={() => setRemoveStudentScreen(!removeStudentScreen)}>
+								isOpen={toggleRemoveModal}
+								onRequestClose={toggleRemoveModal}>
 								<div
 									style={{
 										display: 'flex',
@@ -251,7 +258,8 @@ const Student = ({ match, history }) => {
 											fontSize: '170%',
 											marginBottom: '10%'
 										}}
-										onClick={() => setRemoveStudentScreen(!removeStudentScreen)}>
+										// onClick={() => setRemoveStudentScreen(!removeStudentScreen)}
+										onClick={toggleRemoveModal}>
 										Don't Delete!
 									</button>
 									<button
@@ -266,7 +274,7 @@ const Student = ({ match, history }) => {
 										onClick={() => {
 											removeStudent()
 											const goBack = () => {
-												setRemoveStudentScreen(!removeStudentScreen)
+												toggleRemoveModal()
 												return !isHiddenFromRoster
 													? history.push(`/dashboard/roster-view/${period}`)
 													: history.push(`/dashboard/allStudent`)

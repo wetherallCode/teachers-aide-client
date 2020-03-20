@@ -4,7 +4,7 @@ import { useMutation, useQuery, ApolloConsumer } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
 import DaysAbsent from './DaysAbsent'
 
-const UPDATE_STUDENT_MUTATION = gql`
+export const UPDATE_STUDENT_MUTATION = gql`
 	mutation update($input: UpdateStudentInput!) {
 		updateStudent(input: $input) {
 			firstName
