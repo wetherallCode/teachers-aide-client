@@ -4,7 +4,7 @@ import LivePeriodSelector from './LivePeriodSelector'
 import { gql } from 'apollo-boost'
 import { useMutation } from '@apollo/react-hooks'
 
-const UPDATE_LIVE_PERIOD = gql`
+export const UPDATE_LIVE_PERIOD = gql`
 	mutation updateLivePeriod($input: LivePeriodInput) {
 		updateLivePeriod(input: $input) {
 			livePeriod

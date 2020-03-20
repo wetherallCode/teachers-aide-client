@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { gql } from 'apollo-boost'
 import { useMutation } from '@apollo/react-hooks'
 import { SET_SOCRATIC_QUESTION_PROTOCOL_ISACTIVE } from './ProtocolManager'
+import { UPDATE_LIVE_PERIOD } from '../class-tool-components/LivePeriodDisplay'
 
 export const CREATE_SOCRATIC_QUESTION_PROTOCOL = gql`
 	mutation createSocraticQuestionProtocol($input: SocraticQuestionProtocolInput) {
@@ -31,6 +32,7 @@ const SocraticQuestionProtocolCreator = ({
 	setErrorDisplay,
 	protocolList
 }) => {
+	const [updateLivePeriod] = useMutation(UPDATE_LIVE_PERIOD)
 	const [createSocraticQuestionProtocol, { error }] = useMutation(
 		CREATE_SOCRATIC_QUESTION_PROTOCOL,
 		{
@@ -52,6 +54,7 @@ const SocraticQuestionProtocolCreator = ({
 			refetchQueries: ['FindStudent', 'findClassPeriodForClassRoom']
 		}
 	)
+
 	const [setIsActive, { data }] = useMutation(SET_SOCRATIC_QUESTION_PROTOCOL_ISACTIVE, {
 		variables: {
 			input: {
@@ -76,6 +79,15 @@ const SocraticQuestionProtocolCreator = ({
 				<button
 					onClick={() => {
 						createSocraticQuestionProtocol()
+						updateLivePeriod({
+							variables: {
+								input: {
+									period: classPeriodInfo.period,
+									assignedDate: classPeriodInfo.assignedDate,
+									liveStatus: 'PROTOCOLS'
+								}
+							}
+						})
 					}}
 					className='whiteButton'
 					style={{ width: '7rem', height: '2rem', color: 'var(--blue)', fontSize: '110%' }}>
@@ -84,7 +96,9 @@ const SocraticQuestionProtocolCreator = ({
 			)}
 			{questionCheck && (
 				<button
-					onClick={() => setIsActive()}
+					onClick={() => {
+						setIsActive()
+					}}
 					style={{ width: '7rem', height: '2rem', color: 'var(--blue)', fontSize: '1em' }}>
 					Open
 				</button>

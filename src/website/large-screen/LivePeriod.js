@@ -36,6 +36,7 @@ const LivePeriod = ({ classPeriod, livePeriod, match }) => {
 					{/* <div style={{ fontSize: '120%', marginTop: '3%', marginBottom: '6%' }}> */}
 					Period {match.params.courseName.substring(2, 3)}-{match.params.courseName.substring(3, 4)}{' '}
 				</div>
+				<div>Live Period</div>
 			</div>
 			{livePeriod === 'STUDY_GUIDE' && <StudyGuide lesson={classPeriod.assignedLesson} />}
 			{livePeriod === 'ESSENTIAL_QUESTION' && (

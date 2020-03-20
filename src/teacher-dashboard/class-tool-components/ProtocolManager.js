@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { gql } from 'apollo-boost'
 import { useMutation } from '@apollo/react-hooks'
+import { UPDATE_LIVE_PERIOD } from './LivePeriodDisplay'
 
 export const REMOVE_SOCRATIC_QUESTION_PROTOCOL = gql`
 	mutation deleteSocraticQuestion($input: DeleteSocraticQuestionProtocolInput) {
@@ -53,7 +54,7 @@ const ProtocolManager = ({
 	activeProtocol
 }) => {
 	const [socraticQuestion] = activeProtocol
-
+	const [updateLivePeriod] = useMutation(UPDATE_LIVE_PERIOD)
 	const [deleteSocraticQuestion] = useMutation(REMOVE_SOCRATIC_QUESTION_PROTOCOL, {
 		variables: {
 			input: {
@@ -96,7 +97,18 @@ const ProtocolManager = ({
 				}}>
 				<button
 					style={{ width: '10rem', height: '2.5rem', color: 'var(--blue)', fontSize: '1.1rem' }}
-					onClick={() => setIsActive()}>
+					onClick={() => {
+						setIsActive()
+						updateLivePeriod({
+							variables: {
+								input: {
+									period: classPeriodInfo.period,
+									assignedDate: classPeriodInfo.assignedDate,
+									liveStatus: 'NONE'
+								}
+							}
+						})
+					}}>
 					Question Finished
 				</button>
 				<button
@@ -108,6 +120,15 @@ const ProtocolManager = ({
 					}}
 					onClick={() => {
 						deleteSocraticQuestion()
+						updateLivePeriod({
+							variables: {
+								input: {
+									period: classPeriodInfo.period,
+									assignedDate: classPeriodInfo.assignedDate,
+									liveStatus: 'NONE'
+								}
+							}
+						})
 					}}>
 					Undo Question
 				</button>

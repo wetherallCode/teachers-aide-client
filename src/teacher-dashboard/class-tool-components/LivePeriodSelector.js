@@ -36,7 +36,7 @@ const LivePeriodSelector = ({ livePeriod, classPeriodInfo, updateLivePeriod }) =
 									gridTemplateColumns: '1fr 1fr 1fr',
 									gridTemplateAreas: '1fr 1fr 1fr ',
 									gridGap: '1%',
-									width: '98%'
+									width: '90%'
 							  }
 							: {
 									display: 'grid',

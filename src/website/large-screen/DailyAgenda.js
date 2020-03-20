@@ -184,10 +184,12 @@ const DailyAgenda = ({ match }) => {
 								match={match}
 							/>
 						)}
+
 						{data.findClassPeriod.livePeriod === 'DISABLED' && (
 							<ManualAgenda classPeriod={data.findClassPeriod} match={match} />
 						)}
 					</>
+
 					{/* <div>
 						<div
 							style={{
