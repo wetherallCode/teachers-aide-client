@@ -54,7 +54,12 @@ const ResponsibilityPointsDownloader = ({ roster, period }) => {
 					) : (
 						<div
 							onClick={() => setCsvToggle(true)}
-							style={{ marginRight: '2%', textDecoration: 'none', color: 'var(--white)' }}>
+							style={{
+								marginRight: '2%',
+								textDecoration: 'none',
+								color: 'var(--white)',
+								cursor: 'pointer'
+							}}>
 							Load CSV
 						</div>
 					)}
