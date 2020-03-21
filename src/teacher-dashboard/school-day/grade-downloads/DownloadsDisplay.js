@@ -14,11 +14,17 @@ const DownloadsDisplay = ({
 	return (
 		<>
 			<div style={{ display: 'flex', justifyContent: 'space-evenly', fontSize: '130%' }}>
-				<div onClick={() => setDownloadCategorySelector('openEnded')}>Open Ended</div>
-				<div onClick={() => setDownloadCategorySelector('responsibility')}>
+				<div style={{ cursor: 'pointer' }} onClick={() => setDownloadCategorySelector('openEnded')}>
+					Open Ended
+				</div>
+				<div
+					style={{ cursor: 'pointer' }}
+					onClick={() => setDownloadCategorySelector('responsibility')}>
 					Responsibility Points
 				</div>
-				<div onClick={() => setDownloadCategorySelector('test')}>Test Grade</div>
+				<div style={{ cursor: 'pointer' }} onClick={() => setDownloadCategorySelector('test')}>
+					Test Grade
+				</div>
 			</div>
 			{downloadCategorySelector === 'responsibility' && (
 				<ResponsibilityPointsDownloader roster={roster} period={period} />
