@@ -73,10 +73,13 @@ const ClassRoom = ({ match }) => {
 	const todaysDate = new Date().toISOString().substring(0, 10)
 	const { periodName } = match.params
 
-	const { data, loading, error } = useQuery(FIND_CLASSPERIOD_FOR_CLASSROOM, {
-		variables: { period: periodName, assignedDate: todaysDate }
-		// pollInterval: 10
-	})
+	const { data, loading, error, startPolling, stopPolling } = useQuery(
+		FIND_CLASSPERIOD_FOR_CLASSROOM,
+		{
+			variables: { period: periodName, assignedDate: todaysDate }
+			// pollInterval: 10
+		}
+	)
 	if (loading) return null
 	if (error) console.log(error)
 
@@ -106,6 +109,8 @@ const ClassRoom = ({ match }) => {
 						period={periodName}
 						match={match}
 						todaysDate={todaysDate}
+						startPolling={startPolling}
+						stopPolling={stopPolling}
 					/>
 				)}
 			</div>

@@ -31,7 +31,9 @@ const ClassRoomTools = ({
 	setTeacherOptions,
 	setProtocolToggle,
 	protocolToggle,
-	presentStudents
+	presentStudents,
+	startPolling,
+	stopPolling
 }) => {
 	const [selectorSwitch, setSelectorSwitch] = useState(0)
 
@@ -121,6 +123,8 @@ const ClassRoomTools = ({
 						setProtocolToggle={setProtocolToggle}
 						protocolToggle={protocolToggle}
 						eligibleStudentList={eligibleStudentList}
+						startPolling={startPolling}
+						stopPolling={stopPolling}
 					/>
 				) : (
 					<div

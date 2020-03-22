@@ -13,7 +13,7 @@ const LIVE_PERIOD_SELECTORS = gql`
 	}
 `
 
-const LivePeriodSelector = ({ livePeriod, classPeriodInfo, updateLivePeriod }) => {
+const LivePeriodSelector = ({ livePeriod, classPeriodInfo, updateLivePeriod, stopPolling }) => {
 	const [isLive, endLive] = useToggle(true)
 	const { loading, error, data } = useQuery(LIVE_PERIOD_SELECTORS)
 	if (loading) return null
@@ -30,7 +30,7 @@ const LivePeriodSelector = ({ livePeriod, classPeriodInfo, updateLivePeriod }) =
 			<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 				<div
 					style={
-						window.screen.width === 1024
+						window.screen.width < 1025
 							? {
 									display: 'grid',
 									gridTemplateColumns: '1fr 1fr 1fr',
@@ -96,7 +96,7 @@ const LivePeriodSelector = ({ livePeriod, classPeriodInfo, updateLivePeriod }) =
 							width: '20rem',
 							fontSize: '90%'
 						}}
-						onClick={() =>
+						onClick={() => {
 							updateLivePeriod({
 								variables: {
 									input: {
@@ -106,7 +106,7 @@ const LivePeriodSelector = ({ livePeriod, classPeriodInfo, updateLivePeriod }) =
 									}
 								}
 							})
-						}>
+						}}>
 						Sure?
 					</button>
 				) : (

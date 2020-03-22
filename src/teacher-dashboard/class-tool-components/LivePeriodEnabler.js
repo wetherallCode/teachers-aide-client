@@ -1,12 +1,12 @@
 import React from 'react'
 
-const LivePeriodEnabler = ({ updateLivePeriod, classPeriodInfo }) => {
-	console.log(classPeriodInfo.period)
+const LivePeriodEnabler = ({ updateLivePeriod, classPeriodInfo, startPolling }) => {
 	return (
 		<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
 			<button
 				className='whiteButton'
-				onClick={() =>
+				onClick={() => {
+					startPolling(10)
 					updateLivePeriod({
 						variables: {
 							input: {
@@ -16,7 +16,7 @@ const LivePeriodEnabler = ({ updateLivePeriod, classPeriodInfo }) => {
 							}
 						}
 					})
-				}>
+				}}>
 				Enable Live Period
 			</button>
 		</div>

@@ -15,7 +15,9 @@ const ClassToolsDisplayBox = ({
 	setTeacherOptions,
 	protocolToggle,
 	setProtocolToggle,
-	eligibleStudentList
+	eligibleStudentList,
+	startPolling,
+	stopPolling
 }) => {
 	const date = new Date().toISOString().substring(0, 10)
 
@@ -111,7 +113,11 @@ const ClassToolsDisplayBox = ({
 					}}
 				</Timer>
 			) : selector === 2 ? (
-				<LivePeriodDisplay classPeriodInfo={classPeriodInfo} />
+				<LivePeriodDisplay
+					classPeriodInfo={classPeriodInfo}
+					startPolling={startPolling}
+					stopPolling={stopPolling}
+				/>
 			) : (
 				<div
 					style={{
