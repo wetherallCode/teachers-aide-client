@@ -68,12 +68,14 @@ const FIND_CLASSPERIOD_FOR_CLASSROOM = gql`
 `
 
 const ClassRoom = ({ match }) => {
+	const [presentStudents, setPresentStudents] = useState([])
+	// console.log(presentStudents)
 	const todaysDate = new Date().toISOString().substring(0, 10)
 	const { periodName } = match.params
 
 	const { data, loading, error } = useQuery(FIND_CLASSPERIOD_FOR_CLASSROOM, {
-		variables: { period: periodName, assignedDate: todaysDate },
-		pollInterval: 10
+		variables: { period: periodName, assignedDate: todaysDate }
+		// pollInterval: 10
 	})
 	if (loading) return null
 	if (error) console.log(error)
@@ -91,10 +93,16 @@ const ClassRoom = ({ match }) => {
 					// height: '100vh',
 					// overflow: 'scroll'
 				}}>
-				<DeskSelector match={match} periodName={periodName} todaysDate={todaysDate} />
+				<DeskSelector
+					match={match}
+					periodName={periodName}
+					todaysDate={todaysDate}
+					setPresentStudents={setPresentStudents}
+				/>
 				{data.findClassPeriod !== 'undefined' && (
 					<ClassRoomTools
 						classPeriodInfo={data.findClassPeriod}
+						presentStudents={presentStudents}
 						period={periodName}
 						match={match}
 						todaysDate={todaysDate}

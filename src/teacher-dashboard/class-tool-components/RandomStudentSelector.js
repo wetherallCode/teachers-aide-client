@@ -16,10 +16,11 @@ const useRollingArray = maxLength => {
 }
 
 const RandomStudentSelector = ({ eligibleStudentList, period }) => {
+	// console.log(eligibleStudentList)
 	const [selectedStudents, registerNewStudent] = useRollingArray(
 		Math.floor(eligibleStudentList.length * 0.6)
 	)
-
+	// console.log(selectedStudents)
 	const [currentStudent, setCurrentStudent] = useState(
 		Math.floor(Math.random() * eligibleStudentList.length + 1)
 	)

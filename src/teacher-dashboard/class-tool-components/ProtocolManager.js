@@ -51,7 +51,8 @@ const ProtocolManager = ({
 	setProtocolToggle,
 	protocolQuestionForProtocolManager,
 	eligibleStudentList,
-	activeProtocol
+	activeProtocol,
+	previousLiveStatus
 }) => {
 	const [socraticQuestion] = activeProtocol
 	const [updateLivePeriod] = useMutation(UPDATE_LIVE_PERIOD)
@@ -62,8 +63,7 @@ const ProtocolManager = ({
 				socraticQuestion: socraticQuestion.socraticQuestion,
 				assignedDate: date
 			}
-		},
-		refetchQueries: ['findClassPeriodForClassRoom', 'FindStudent']
+		}
 	})
 
 	const [setIsActive] = useMutation(SET_SOCRATIC_QUESTION_PROTOCOL_ISACTIVE, {
@@ -74,8 +74,7 @@ const ProtocolManager = ({
 				assignedDate: date,
 				isActive: false
 			}
-		},
-		refetchQueries: ['findClassPeriodForClassRoom', 'FindStudent']
+		}
 	})
 
 	return (
@@ -104,7 +103,7 @@ const ProtocolManager = ({
 								input: {
 									period: classPeriodInfo.period,
 									assignedDate: classPeriodInfo.assignedDate,
-									liveStatus: 'NONE'
+									liveStatus: previousLiveStatus
 								}
 							}
 						})
@@ -125,7 +124,7 @@ const ProtocolManager = ({
 								input: {
 									period: classPeriodInfo.period,
 									assignedDate: classPeriodInfo.assignedDate,
-									liveStatus: 'NONE'
+									liveStatus: previousLiveStatus
 								}
 							}
 						})

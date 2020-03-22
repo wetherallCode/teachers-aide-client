@@ -111,7 +111,16 @@ const StudentInfo = ({
 						gridGap: '2px',
 						backgroundColor: 'var(--white)'
 					}}>
-					<div style={{ backgroundColor: 'var(--blue)' }}></div>
+					<div
+						style={{
+							backgroundColor: 'var(--blue)',
+							display: 'flex',
+							justifyContent: 'center',
+							alignItems: 'center',
+							fontSize: '130%'
+						}}>
+						<div>Select Student</div>
+					</div>
 					<div style={{ backgroundColor: 'var(--grey)' }}></div>
 				</div>
 			)}

@@ -80,8 +80,8 @@ const ClassPeriodManager = ({ match }) => {
 	const { periods } = match.params
 
 	const { data, loading, error } = useQuery(FIND_CLASS_PERIOD, {
-		variables: { assignedDate: lessonPlanDate, period: periods },
-		pollInterval: 10
+		variables: { assignedDate: lessonPlanDate, period: periods }
+		// pollInterval: 10
 	})
 	if (loading) return null
 	if (error) console.error(error)

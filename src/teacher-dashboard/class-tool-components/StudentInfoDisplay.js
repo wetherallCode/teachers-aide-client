@@ -74,29 +74,29 @@ const StudentInfoDisplay = ({ student, periodName, todaysDate }) => {
 
 	const [markStudentAbsent] = useMutation(MARK_STUDENT_ABSENT, {
 		variables: { _id: _id, date: todaysDate, assignedDate: todaysDate, period: period },
-		refetchQueries: ['findEligibleStudents'],
-		update(client, { data: { markStudentAbsent } }) {
-			const { findStudentByPeriodAndDesk } = client.readQuery({
-				query: FIND_STUDENT_QUERY,
-				variables: { period: periodName, desk: desk }
-			})
-			const { daysAbsent, __typename } = findStudentByPeriodAndDesk
+		refetchQueries: ['findEligibleStudents', 'FindStudent']
+		// update(client, { data: { markStudentAbsent } }) {
+		// 	const { findStudentByPeriodAndDesk } = client.readQuery({
+		// 		query: FIND_STUDENT_QUERY,
+		// 		variables: { period: periodName, desk: desk }
+		// 	})
+		// 	const { daysAbsent, __typename } = findStudentByPeriodAndDesk
 
-			client.writeQuery({
-				query: gql`
-					query markStudentAbsentCacheUpdate($period: periodName!, $desk: Int!) {
-						findStudentByPeriodAndDesk(period: $period, desk: $desk) {
-							_id
-							daysAbsent
-						}
-					}
-				`,
-				variables: { period: periodName, desk: desk },
-				data: {
-					findStudentByPeriodAndDesk: { _id: _id, __typename, daysAbsent }
-				}
-			})
-		}
+		// 	client.writeQuery({
+		// 		query: gql`
+		// 			query markStudentAbsentCacheUpdate($period: periodName!, $desk: Int!) {
+		// 				findStudentByPeriodAndDesk(period: $period, desk: $desk) {
+		// 					_id
+		// 					daysAbsent
+		// 				}
+		// 			}
+		// 		`,
+		// 		variables: { period: periodName, desk: desk },
+		// 		data: {
+		// 			findStudentByPeriodAndDesk: { _id: _id, __typename, daysAbsent }
+		// 		}
+		// 	})
+		// }
 	})
 	const [unduMarkStudentAbsent] = useMutation(UNDO_MARK_STUDENT_ABSENT, {
 		variables: { _id: _id, date: todaysDate },

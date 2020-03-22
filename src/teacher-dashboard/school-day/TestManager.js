@@ -22,8 +22,8 @@ const GET_CLASS_PERIOD_FOR_TEST_MANAGER = gql`
 
 const TestManager = ({ dueDate, period }) => {
 	const { loading, data, error } = useQuery(GET_CLASS_PERIOD_FOR_TEST_MANAGER, {
-		variables: { period: period, dueDate: dueDate },
-		pollInterval: 10
+		variables: { period: period, dueDate: dueDate }
+		// pollInterval: 10
 	})
 	if (loading) return null
 	if (error) console.error(error)

@@ -10,7 +10,7 @@ const SET_ISPRESENT_FOR_PROTOCOL = gql`
 	}
 `
 
-const DeskName = ({ student, todaysDate }) => {
+const DeskName = ({ student, todaysDate, setPresentStudents }) => {
 	const protocolIsActive = student.hasProtocols.some(protocol => protocol.isActive === true)
 	const [activeProtocol] = student.hasProtocols.filter(protocol => protocol.isActive === true)
 	const isAbsent = student.daysAbsent.includes(todaysDate)
@@ -39,7 +39,9 @@ const DeskName = ({ student, todaysDate }) => {
 			}
 		}
 	}, [activeProtocol, isAbsent])
-
+	useEffect(() => {
+		setPresentStudents(list => [...list, student])
+	}, [student.daysAbsent])
 	return (
 		<div>
 			{student.nickName === null || student.nickName === '' ? student.firstName : student.nickName}

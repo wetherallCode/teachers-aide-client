@@ -1,12 +1,17 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import SocraticQuestionPicker from './SocraticQuestionPicker'
 import ProtocolManager from './ProtocolManager'
 
 const ProtocolDisplay = ({ classPeriodInfo, period, date, markingPeriod }) => {
+	const [previousLiveStatus, setPreviousLiveStatus] = useState(classPeriodInfo.livePeriod)
 	const activeProtocol = classPeriodInfo.assignedProtocols.filter(
 		protocol => protocol.isActive === true
 	)
-	console.log(classPeriodInfo)
+	useEffect(() => {
+		setPreviousLiveStatus(classPeriodInfo.livePeriod)
+	}, [])
+
+	console.log('LiveStatus: ' + previousLiveStatus)
 	return (
 		<>
 			{activeProtocol.length !== 0 ? (
@@ -14,12 +19,9 @@ const ProtocolDisplay = ({ classPeriodInfo, period, date, markingPeriod }) => {
 					classPeriodInfo={classPeriodInfo}
 					period={period}
 					date={date}
-					// protocolToggle={protocolToggle}
-					// setProtocolToggle={setProtocolToggle}
-					// protocolQuestionForProtocolManager={protocolQuestionForProtocolManager}
-					// eligibleStudentList={eligibleStudentList}
 					activeProtocol={activeProtocol}
 					protocolList={classPeriodInfo.assignedProtocols}
+					previousLiveStatus={previousLiveStatus}
 				/>
 			) : (
 				<SocraticQuestionPicker
@@ -29,10 +31,6 @@ const ProtocolDisplay = ({ classPeriodInfo, period, date, markingPeriod }) => {
 					markingPeriod={markingPeriod}
 					activeProtocol={activeProtocol}
 					protocolList={classPeriodInfo.assignedProtocols}
-					// protocolToggle={protocolToggle}
-					// setProtocolToggle={setProtocolToggle}
-					// setProtocolQuestionForProtocolManager={setProtocolQuestionForProtocolManager}
-					// eligibleStudentList={eligibleStudentList}
 				/>
 			)}
 		</>

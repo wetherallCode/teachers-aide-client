@@ -9,6 +9,7 @@ import Vocab from './Vocab'
 import Protocols from './Protocols'
 
 const LivePeriod = ({ classPeriod, livePeriod, match }) => {
+	console.log(classPeriod.assignedProtocols)
 	// const [agendaItemSelector, setAgendaItemSelector] = useState('NONE')
 	return (
 		<>

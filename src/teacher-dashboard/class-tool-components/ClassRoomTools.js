@@ -1,17 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { gql } from 'apollo-boost'
 import { useQuery } from '@apollo/react-hooks'
 import ClassToolsDisplayBox from './ClassToolsDisplayBox'
 import RandomStudentSelector from './RandomStudentSelector'
 
-const FIND_ELIGIBLE_STUDENTS_QUERY = gql`
+export const FIND_ELIGIBLE_STUDENTS_QUERY = gql`
 	query findEligibleStudents($period: periodName!) {
 		classRoster(period: $period) {
 			desk
 			firstName
 			daysAbsent
-			period
 		}
 	}
 `
@@ -31,27 +30,37 @@ const ClassRoomTools = ({
 	teacherOptions,
 	setTeacherOptions,
 	setProtocolToggle,
-	protocolToggle
+	protocolToggle,
+	presentStudents
 }) => {
 	const [selectorSwitch, setSelectorSwitch] = useState(0)
-	if (selectorSwitch > 2) setSelectorSwitch(0)
-	if (selectorSwitch < 0) setSelectorSwitch(2)
 
 	const { data, loading, error } = useQuery(FIND_ELIGIBLE_STUDENTS_QUERY, {
 		variables: { period: period }
+		// pollInterval: 10
 	})
 	if (loading) return null
 	if (error) console.log(error)
 	const { classRoster } = data
+	if (selectorSwitch > 2) setSelectorSwitch(0)
+	if (selectorSwitch < 0) setSelectorSwitch(2)
 
 	const eligibleStudentList = []
+	const presentStudentList = []
+
+	presentStudents.forEach(student => {
+		if (student.daysAbsent !== null && student.daysAbsent.includes(todaysDate)) {
+			return null
+		} else presentStudentList.unshift(student.desk)
+	})
 
 	classRoster.forEach(student => {
 		if (student.daysAbsent !== null && student.daysAbsent.includes(todaysDate)) {
 			return null
 		} else eligibleStudentList.unshift(student.desk)
 	})
-
+	console.log(eligibleStudentList)
+	console.log(presentStudentList)
 	return (
 		<div
 			style={{
@@ -69,7 +78,7 @@ const ClassRoomTools = ({
 				}}>
 				{eligibleStudentList.length > 2 && (
 					<RandomStudentSelector
-						eligibleStudentList={eligibleStudentList}
+						eligibleStudentList={presentStudentList}
 						period={period}
 						match={match}
 					/>

@@ -28,7 +28,7 @@
 		"eject": "react-scripts eject",
 		"codegen:watch": "npx apollo client:codegen --target=typescript --watch",
 		"check": "npx apollo client:check",
-		"push-git": "git push origin master",
+		"push-github": "git push origin master",
 		"push-heroku": "git push heroku master"
 	},
 	"eslintConfig": {

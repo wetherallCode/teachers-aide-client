@@ -22,16 +22,16 @@ const BehaviorPointsMutator = ({
 }) => {
 	const [pointsButtonToggle, setPointsButtonToggle] = useState(true)
 	const { _id, desk, responsibilityPoints } = student
-	const [updateResponsibilityPoints] = useMutation(UPDATE_RESPONSIBILITY_POINTS, {
-		refetchQueries: ['']
+	const [updateResponsibilityPoints] = useMutation(
+		UPDATE_RESPONSIBILITY_POINTS,
+		{ refetchQueries: ['FindStudent'] }
+		// {
 		// update(client, { data: { updateResponsibilityPoints } }) {
 		// 	const { findStudentByPeriodAndDesk } = client.readQuery({
 		// 		query: FIND_STUDENT_QUERY,
 		// 		variables: { input: { period: periodName, desk: desk } }
 		// 	})
-
 		// 	const { responsibilityPoints, __typename } = findStudentByPeriodAndDesk
-
 		// 	client.writeQuery({
 		// 		query: gql`
 		// 			query updateResponsibilityPointsCacheUpdate($period: periodName!, $desk: Int!) {
@@ -47,7 +47,8 @@ const BehaviorPointsMutator = ({
 		// 		}
 		// 	})
 		// }
-	})
+		// }
+	)
 
 	return (
 		<>

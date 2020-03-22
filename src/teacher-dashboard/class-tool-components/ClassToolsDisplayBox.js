@@ -17,7 +17,6 @@ const ClassToolsDisplayBox = ({
 	setProtocolToggle,
 	eligibleStudentList
 }) => {
-	// const [protocolQuestionForProtocolManager, setProtocolQuestionForProtocolManager] = useState('')
 	const date = new Date().toISOString().substring(0, 10)
 
 	const { data, loading, error } = useQuery(GET_CURRENT_MARKING_PERIOD, {

@@ -1,12 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useQuery } from '@apollo/react-hooks'
 import { FIND_STUDENT_QUERY } from './StudentInfo'
 import DeskName from './DeskName'
 
-const Desk = ({ match, deskNumber, periodName, todaysDate }) => {
+const Desk = ({ match, deskNumber, periodName, todaysDate, setPresentStudents }) => {
 	const { data, loading, error } = useQuery(FIND_STUDENT_QUERY, {
 		variables: { period: periodName, desk: deskNumber }
+		// pollInterval: 10
 	})
 
 	if (loading) return null
@@ -48,7 +49,11 @@ const Desk = ({ match, deskNumber, periodName, todaysDate }) => {
 										boxShadow: '1x 1px 1px var(--darkgrey)'
 								  }
 						}>
-						<DeskName student={findStudentByPeriodAndDesk} todaysDate={todaysDate} />
+						<DeskName
+							student={findStudentByPeriodAndDesk}
+							todaysDate={todaysDate}
+							setPresentStudents={setPresentStudents}
+						/>
 					</button>
 				</Link>
 			) : (
