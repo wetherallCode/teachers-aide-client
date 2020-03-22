@@ -69,7 +69,7 @@ export const FIND_CLASSPERIOD_FOR_CLASSROOM = gql`
 
 const ClassRoom = ({ match }) => {
 	const [presentStudents, setPresentStudents] = useState([])
-	// console.log(presentStudents)
+
 	const todaysDate = new Date().toISOString().substring(0, 10)
 	const { periodName } = match.params
 

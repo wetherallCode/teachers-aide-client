@@ -46,39 +46,43 @@ const LivePeriodSelector = ({ livePeriod, classPeriodInfo, updateLivePeriod, sto
 									width: '80%'
 							  }
 					}>
-					{livePeriodSelectors.map(selector => (
-						<button
-							key={selector}
-							style={
-								livePeriod === selector
-									? {
-											backgroundColor: 'var(--grey)',
-											color: 'var(--white)',
-											height: '2rem',
-											width: '10rem',
-											fontSize: '90%'
-									  }
-									: {
-											backgroundColor: 'var(--white)',
-											height: '2rem',
-											fontSize: '90%',
-											width: '10rem'
-									  }
-							}
-							onClick={() =>
-								updateLivePeriod({
-									variables: {
-										input: {
-											period: classPeriodInfo.period,
-											assignedDate: classPeriodInfo.assignedDate,
-											liveStatus: selector
+					{livePeriodSelectors.map(selector => {
+						// console.log(selector)
+						return (
+							<button
+								key={selector}
+								style={
+									livePeriod === selector
+										? {
+												backgroundColor: 'var(--grey)',
+												color: 'var(--white)',
+												height: '2rem',
+												width: '10rem',
+												fontSize: '90%'
+										  }
+										: {
+												backgroundColor: 'var(--white)',
+												height: '2rem',
+												fontSize: '90%',
+												width: '10rem'
+										  }
+								}
+								onClick={() => {
+									console.log(selector)
+									updateLivePeriod({
+										variables: {
+											input: {
+												period: classPeriodInfo.period,
+												assignedDate: classPeriodInfo.assignedDate,
+												liveStatus: selector
+											}
 										}
-									}
-								})
-							}>
-							{selector}
-						</button>
-					))}
+									})
+								}}>
+								{selector}
+							</button>
+						)
+					})}
 				</div>
 			</div>
 			<div

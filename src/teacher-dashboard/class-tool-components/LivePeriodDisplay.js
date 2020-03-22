@@ -13,7 +13,7 @@ export const UPDATE_LIVE_PERIOD = gql`
 `
 const LivePeriodDisplay = ({ classPeriodInfo, startPolling, stopPolling }) => {
 	const [updateLivePeriod] = useMutation(UPDATE_LIVE_PERIOD)
-	console.log(classPeriodInfo.livePeriod)
+
 	useEffect(() => {
 		if (classPeriodInfo.livePeriod == 'DISABLED') {
 			stopPolling()

@@ -10,14 +10,9 @@ import Protocols from './Protocols'
 
 const LivePeriod = ({ classPeriod, livePeriod, match }) => {
 	console.log(classPeriod.assignedProtocols)
-	// const [agendaItemSelector, setAgendaItemSelector] = useState('NONE')
+
 	return (
 		<>
-			{/* <AgendaItemsNavBar
-				match={match}
-				lesson={classPeriod}
-				setAgendaItemSelector={setAgendaItemSelector}
-			/> */}
 			<div
 				style={{
 					height: '89vh',
