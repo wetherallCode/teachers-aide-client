@@ -6,7 +6,7 @@ import StudentInfo from './StudentInfo'
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
 
-const FIND_CLASSPERIOD_FOR_CLASSROOM = gql`
+export const FIND_CLASSPERIOD_FOR_CLASSROOM = gql`
 	query findClassPeriodForClassRoom($assignedDate: Date, $period: periodName) {
 		findClassPeriod(assignedDate: $assignedDate, period: $period) {
 			_id

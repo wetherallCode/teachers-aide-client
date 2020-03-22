@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { gql } from 'apollo-boost'
 import { useMutation } from '@apollo/react-hooks'
 import { UPDATE_LIVE_PERIOD } from './LivePeriodDisplay'
+import { FIND_CLASSPERIOD_FOR_CLASSROOM } from './ClassRoom'
 
 export const REMOVE_SOCRATIC_QUESTION_PROTOCOL = gql`
 	mutation deleteSocraticQuestion($input: DeleteSocraticQuestionProtocolInput) {
@@ -22,6 +23,7 @@ export const SET_SOCRATIC_QUESTION_PROTOCOL_ISACTIVE = gql`
 	mutation setSocraticQuestionProtcolIsActive($input: SetSocraticQuestionProtocolIsActiveInput) {
 		setSocraticQuestionProtcolIsActive(input: $input) {
 			classPeriod {
+				_id
 				assignedProtocols {
 					isActive
 					... on SocraticQuestionProtocolForClassPeriod {
@@ -63,7 +65,8 @@ const ProtocolManager = ({
 				socraticQuestion: socraticQuestion.socraticQuestion,
 				assignedDate: date
 			}
-		}
+		},
+		refetchQueries: ['FindStudent', 'findClassPeriodForClassRoom']
 	})
 
 	const [setIsActive] = useMutation(SET_SOCRATIC_QUESTION_PROTOCOL_ISACTIVE, {
@@ -74,7 +77,21 @@ const ProtocolManager = ({
 				assignedDate: date,
 				isActive: false
 			}
-		}
+		},
+		update(cache, { data: { setIsActive } }) {
+			const { findClassPeriod } = cache.readQuery({
+				query: FIND_CLASSPERIOD_FOR_CLASSROOM,
+				variables: { assignedDate: date, period: period }
+			})
+			cache.writeQuery({
+				query: FIND_CLASSPERIOD_FOR_CLASSROOM,
+				variables: { assignedDate: date, period: period },
+				data: { findClassPeriod }
+			})
+			// const { findStudentByPeriodAndDesk } = cache.readQuery({})
+			// console.log(findClassPeriod)
+		},
+		refetchQueries: ['FindStudent']
 	})
 
 	return (
