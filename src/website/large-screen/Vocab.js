@@ -30,7 +30,7 @@ const Vocab = ({ lesson }) => {
 					fontSize: '200%',
 					// paddingLeft: '3%',
 					overflow: 'scroll',
-					height: '100vh'
+					height: '90vh'
 					// marginBottom: '20%'
 				}}>
 				{lesson.vocabWords.map((word, i) => (

@@ -173,8 +173,8 @@ const DailyAgenda = ({ match }) => {
 					style={{
 						display: 'grid',
 						gridTemplateColumns: '1fr 3fr',
-						height: '90vh',
-						overflow: 'scroll'
+						height: '100vh'
+						// overflow: 'scroll'
 					}}>
 					<>
 						{data.findClassPeriod.livePeriod !== 'DISABLED' && (

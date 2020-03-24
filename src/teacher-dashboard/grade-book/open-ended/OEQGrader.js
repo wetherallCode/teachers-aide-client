@@ -116,6 +116,26 @@ const OEQGrader = ({ student, assignment, essentialQuestion }) => {
 								Grade Lesson
 							</button>
 						)}
+						{!assignment.exempt && (
+							<StudentInfoMutatorButton
+								mutation={scoreAssignment}
+								variables={{
+									_id: student._id,
+									date: assignment.dueDate,
+									assignmentType: 'OEQ',
+									exempt: true,
+									missing: false,
+									score: 0,
+									earnedPoints: 0,
+									responsibilityPoints: 0,
+									comments: ['Exempt'],
+									late: false
+								}}
+								buttonDisplay={'Exempt'}
+								buttonColor={'red'}
+								height={3}
+							/>
+						)}
 						{!assignment.missing && (
 							<StudentInfoMutatorButton
 								mutation={undoScoreAssignment}

@@ -11,7 +11,7 @@ const StudentListinRosterViewRow = ({ student, index, markingPeriod, todaysDate 
 		markingPeriod,
 		todaysDate
 	})
-	console.log(markingPeriod)
+	console.log(testTotalScoredPointsForGradeBook)
 	return (
 		<div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', color: 'var(--blue)' }}>
 			<Link

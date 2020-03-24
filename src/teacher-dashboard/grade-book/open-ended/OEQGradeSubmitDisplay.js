@@ -72,7 +72,7 @@ const OEQGradeSubmitDisplay = ({
 						exempt: false,
 						missing: false,
 						score: overallScore,
-						earnedPoint: 2,
+						earnedPoints: 2,
 						responsibilityPoints: 2,
 						comments: commentList,
 						late: late

@@ -22,7 +22,10 @@ export const CurrentGradeCalculator = ({ student, markingPeriod, todaysDate }) =
 		const openEndedTotalScoredPoints = student.hasAssignments
 			.filter(
 				oeq =>
-					oeq.assignmentType === 'OEQ' && oeq.maxScore === 5 && oeq.markingPeriod === markingPeriod
+					oeq.assignmentType === 'OEQ' &&
+					oeq.maxScore === 5 &&
+					oeq.markingPeriod === markingPeriod &&
+					oeq.exempt === false
 			)
 			.map(oeq => oeq.score)
 			.reduce((acummulator, currentValue) => acummulator + currentValue)
@@ -30,11 +33,16 @@ export const CurrentGradeCalculator = ({ student, markingPeriod, todaysDate }) =
 		const openEndedTotalMaxScorePoints = student.hasAssignments
 			.filter(
 				oeq =>
-					oeq.maxScore === 5 && oeq.markingPeriod === markingPeriod && oeq.dueDate <= todaysDate
+					oeq.maxScore === 5 &&
+					oeq.markingPeriod === markingPeriod &&
+					oeq.dueDate <= todaysDate &&
+					oeq.exempt === false
 			)
 			.map(oeq => oeq.maxScore)
 			.reduce((acummulator, currentValue) => acummulator + currentValue)
-
+		console.log(
+			student.firstName + ': ' + openEndedTotalScoredPoints + '/' + openEndedTotalMaxScorePoints
+		)
 		const openEndedGrade =
 			(Math.round(100 * (openEndedTotalScoredPoints / openEndedTotalMaxScorePoints)) / 100) * 50
 

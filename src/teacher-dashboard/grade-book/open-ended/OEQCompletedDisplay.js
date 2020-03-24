@@ -39,9 +39,13 @@ const OEQCompletedDisplay = ({ assignment }) => {
 						// marginBottom: '5%'
 					}}>
 					<div>Score: </div>
-					<div>
-						{assignment.score}/{assignment.maxScore}
-					</div>
+					{!assignment.exempt ? (
+						<div>
+							{assignment.score}/{assignment.maxScore}
+						</div>
+					) : (
+						<div>Exempt</div>
+					)}
 				</div>
 			</div>
 
