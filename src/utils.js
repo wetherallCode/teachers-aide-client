@@ -40,17 +40,31 @@ export const CurrentGradeCalculator = ({ student, markingPeriod, todaysDate }) =
 			)
 			.map(oeq => oeq.maxScore)
 			.reduce((acummulator, currentValue) => acummulator + currentValue)
-		console.log(
-			student.firstName + ': ' + openEndedTotalScoredPoints + '/' + openEndedTotalMaxScorePoints
-		)
 		const openEndedGrade =
 			(Math.round(100 * (openEndedTotalScoredPoints / openEndedTotalMaxScorePoints)) / 100) * 50
+		// console.log(
+		// 	student.firstName +
+		// 		': ' +
+		// 		openEndedTotalScoredPoints +
+		// 		'/' +
+		// 		openEndedTotalMaxScorePoints +
+		// 		'= ' +
+		// 		openEndedGrade
+		// )
 
 		const responsibilityPointsGrade = Math.round((100 * student.responsibilityPoints) / 100) * 0.15
 		// const responsibilityPointsGrade = Math.round((100 * student.responsibilityPoints) / 100) * 15
 
 		const grade = Math.round(responsibilityPointsGrade + openEndedGrade + testGrade)
-
+		// console.log(
+		// 	student.firstName +
+		// 		':  ' +
+		// 		responsibilityPointsGrade +
+		// 		', ' +
+		// 		openEndedGrade +
+		// 		', ' +
+		// 		testGrade
+		// )
 		return grade
 	} else return 0
 }

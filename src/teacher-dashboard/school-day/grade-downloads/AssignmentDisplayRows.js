@@ -14,6 +14,7 @@ const AssignmentDisplayRows = ({
 			assignment.readingSections === assignmentValue &&
 			assignment.assignmentType === assignmentTypeFilterValue
 	)
+
 	const [assignmentValues, setAssignmentValues] = useState({
 		NAME: student.lastName + ', ' + student.firstName,
 		STUDENTID: student.schoolID,

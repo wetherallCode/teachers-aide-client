@@ -33,18 +33,21 @@ const AssignmentsDisplay = ({ assignmentValue, roster, period, assignmentTypeFil
 				<div>Exempt</div>
 			</div>
 			<div>
-				{roster.sort(sortByLastName).map((student, i) => (
-					<AssignmentDisplayRows
-						key={student._id}
-						index={i}
-						assignmentValue={assignmentValue}
-						student={student}
-						assignmentTypeFilterValue={assignmentTypeFilterValue}
-						assignmentList={assignmentList}
-						setAssignmentList={setAssignmentList}
-						createCSVToggle={createCSVToggle}
-					/>
-				))}
+				{roster.sort(sortByLastName).map((student, i) => {
+					if (student.hasAssignments.length > 0)
+						return (
+							<AssignmentDisplayRows
+								key={student._id}
+								index={i}
+								assignmentValue={assignmentValue}
+								student={student}
+								assignmentTypeFilterValue={assignmentTypeFilterValue}
+								assignmentList={assignmentList}
+								setAssignmentList={setAssignmentList}
+								createCSVToggle={createCSVToggle}
+							/>
+						)
+				})}
 			</div>
 			{!createCSVToggle && (
 				<button
