@@ -93,8 +93,8 @@ const DailyAgenda = ({ match }) => {
 							flexDirection: 'column',
 							justifyContent: 'flex-start',
 							alignItems: 'center',
-							paddingTop: '8%'
-							// overflow: 'scroll'
+							paddingTop: '8%',
+							overflow: 'scroll'
 						}}>
 						<div style={{ fontSize: '130%', marginBottom: '10%', textDecoration: 'underline' }}>
 							{match.params.courseName.substring(0, 1)} Day Period{' '}
