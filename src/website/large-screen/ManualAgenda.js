@@ -30,7 +30,7 @@ const ManualAgenda = ({
 				setOldLessonDateForDisplay={setOldLessonDateForDisplay}
 				setOldLessonDisplay={setOldLessonDisplay}
 			/>
-			{oldLessonDisplay && (
+			{agendaItemSelector === 'OLDLESSON' && (
 				<OldLesson
 					oldLessonDateForDisplay={oldLessonDateForDisplay}
 					setOldLessonDateForDisplay={setOldLessonDateForDisplay}

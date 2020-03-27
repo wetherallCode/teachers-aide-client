@@ -235,7 +235,7 @@ const AgendaItemsNavBar = ({
 						// to={`${match.url}/${oldLessonDate}`}
 						onClick={() => {
 							setOldLessonDateForDisplay(oldLessonDate)
-							setOldLessonDisplay(true)
+							setAgendaItemSelector('OLDLESSON')
 						}}>
 						Get Lesson
 					</div>
