@@ -7,17 +7,36 @@ import EssentialQuestion from './EssentialQuestion'
 import Readings from './Readings'
 import Vocab from './Vocab'
 import Protocols from './Protocols'
+import OldLesson from '../OldLesson'
 
-const ManualAgenda = ({ match, classPeriod }) => {
+const ManualAgenda = ({
+	match,
+	classPeriod,
+	setOldLessonDateForDisplay,
+	setOldLessonDisplay,
+	oldLessonDisplay,
+	oldLessonDateForDisplay,
+	period
+}) => {
 	const [agendaItemSelector, setAgendaItemSelector] = useState('NONE')
+	console.log(agendaItemSelector, oldLessonDisplay)
+	if (agendaItemSelector === 'NONE' && oldLessonDisplay) console.log('it should work')
 	return (
 		<>
 			<AgendaItemsNavBar
 				match={match}
 				lesson={classPeriod}
 				setAgendaItemSelector={setAgendaItemSelector}
+				setOldLessonDateForDisplay={setOldLessonDateForDisplay}
+				setOldLessonDisplay={setOldLessonDisplay}
 			/>
-
+			{oldLessonDisplay && (
+				<OldLesson
+					oldLessonDateForDisplay={oldLessonDateForDisplay}
+					setOldLessonDateForDisplay={setOldLessonDateForDisplay}
+					period={period}
+				/>
+			)}
 			{agendaItemSelector === 'STUDY_GUIDE' && <StudyGuide lesson={classPeriod.assignedLesson} />}
 			{agendaItemSelector === 'ESSENTIAL_QUESTION' && (
 				<EssentialQuestion lesson={classPeriod.assignedLesson} />

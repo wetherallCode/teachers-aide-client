@@ -2,14 +2,20 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import ResourceButton from '../ResourceButton'
 
-const AgendaItemsNavBar = ({ match, lesson, setAgendaItemSelector }) => {
+const AgendaItemsNavBar = ({
+	match,
+	lesson,
+	setAgendaItemSelector,
+	setOldLessonDateForDisplay,
+	setOldLessonDisplay
+}) => {
 	const [agendaButton, setAgendaButton] = useState(false)
 	const [classRoomResources, setClassRoomResources] = useState(false)
 
 	const todaysDate = new Date().toISOString().substring(0, 10)
 	const [oldLessonToggle, setOldLessonToggle] = useState(false)
 	const [oldLessonDate, setOldLessonDate] = useState(todaysDate)
-
+	console.log(oldLessonToggle, oldLessonDate)
 	return (
 		<div
 			style={{
@@ -58,38 +64,94 @@ const AgendaItemsNavBar = ({ match, lesson, setAgendaItemSelector }) => {
 						paddingTop: '2%'
 					}}>
 					<div
-						onClick={() => setAgendaItemSelector('STUDY_GUIDE')}
-						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}>
+						onClick={() => {
+							setOldLessonDisplay(false)
+							setAgendaItemSelector('STUDY_GUIDE')
+						}}
+						style={{
+							textDecoration: 'none',
+							color: 'var(--white)',
+							paddingTop: '10%',
+							cursor: 'pointer'
+						}}>
 						Study Guide
 					</div>
 					<div
-						onClick={() => setAgendaItemSelector('WARMUP')}
-						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}>
+						onClick={() => {
+							setOldLessonDisplay(false)
+							setAgendaItemSelector('WARMUP')
+						}}
+						style={{
+							textDecoration: 'none',
+							color: 'var(--white)',
+							paddingTop: '10%',
+							cursor: 'pointer'
+						}}>
 						Warm Up
 					</div>
 					<div
-						onClick={() => setAgendaItemSelector('ESSENTIAL_QUESTION')}
-						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}>
+						onClick={() => {
+							setOldLessonDisplay(false)
+							setAgendaItemSelector('ESSENTIAL_QUESTION')
+						}}
+						style={{
+							textDecoration: 'none',
+							color: 'var(--white)',
+							paddingTop: '10%',
+							cursor: 'pointer'
+						}}>
 						Essential Question
 					</div>
 					<div
-						onClick={() => setAgendaItemSelector('READINGS')}
-						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}>
+						onClick={() => {
+							setOldLessonDisplay(false)
+							setAgendaItemSelector('READINGS')
+						}}
+						style={{
+							textDecoration: 'none',
+							color: 'var(--white)',
+							paddingTop: '10%',
+							cursor: 'pointer'
+						}}>
 						Readings
 					</div>
 					<div
-						onClick={() => setAgendaItemSelector('VOCAB')}
-						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}>
+						onClick={() => {
+							setOldLessonDisplay(false)
+							setAgendaItemSelector('VOCAB')
+						}}
+						style={{
+							textDecoration: 'none',
+							color: 'var(--white)',
+							paddingTop: '10%',
+							cursor: 'pointer'
+						}}>
 						Vocabulary
 					</div>
 					<div
-						onClick={() => setAgendaItemSelector('PROTOCOLS')}
-						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}>
+						onClick={() => {
+							setOldLessonDisplay(false)
+							setAgendaItemSelector('PROTOCOLS')
+						}}
+						style={{
+							textDecoration: 'none',
+							color: 'var(--white)',
+							paddingTop: '10%',
+							cursor: 'pointer'
+						}}>
 						Socratic Questions
 					</div>
 					<div
-						onClick={() => setAgendaItemSelector('HOMEWORK')}
-						style={{ textDecoration: 'none', color: 'var(--white)', paddingTop: '10%' }}>
+						onClick={() => {
+							setOldLessonDisplay(false)
+							setAgendaItemSelector('HOMEWORK')
+						}}
+						style={{
+							textDecoration: 'none',
+							color: 'var(--white)',
+							paddingTop: '10%',
+							cursor: 'pointer'
+						}}>
 						Homework
 					</div>
 				</div>
@@ -162,16 +224,21 @@ const AgendaItemsNavBar = ({ match, lesson, setAgendaItemSelector }) => {
 						type='date'
 						value={oldLessonDate}
 						onChange={e => setOldLessonDate(e.target.value)}></input>
-					<Link
+					<div
 						style={{
 							marginRight: '1%',
 							marginTop: '10%',
 							// fontSize: '150%',
 							color: 'var(--white)',
 							textDecoration: 'none'
+						}}
+						// to={`${match.url}/${oldLessonDate}`}
+						onClick={() => {
+							setOldLessonDateForDisplay(oldLessonDate)
+							setOldLessonDisplay(true)
 						}}>
 						Get Lesson
-					</Link>
+					</div>
 				</>
 			)}
 			<button

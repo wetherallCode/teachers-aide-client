@@ -36,15 +36,20 @@ const FIND_CLASS_PERIOD = gql`
 	}
 `
 
-const OldLesson = ({ match }) => {
-	const { oldLessonDate, courseName } = match.params
-
+const OldLesson = ({ match, oldLessonDateForDisplay, setOldLessonDateForDisplay, period }) => {
+	// const { oldLessonDate, courseName } = match.params
+	// console.log(oldLessonDate)
+	console.log(period)
 	const { data, loading, error } = useQuery(FIND_CLASS_PERIOD, {
-		variables: { assignedDate: oldLessonDate, period: courseName }
+		variables: {
+			assignedDate: match !== undefined ? match.params.oldLessonDate : oldLessonDateForDisplay,
+			period: match !== undefined ? match.params.courseName : period
+		}
 	})
 	if (loading) return <h1 className='loading'>Loading</h1>
 	if (error) console.error(error)
 	// const { assignedLesson } = data.findClassPeriod
+
 	return (
 		<>
 			{data.findClassPeriod ? (
@@ -64,14 +69,25 @@ const OldLesson = ({ match }) => {
 							justifyContent: 'center',
 							alignItems: 'center'
 						}}>
-						<div>
-							Lesson for{' '}
-							{oldLessonDate.substring(5, 7) +
-								'/' +
-								oldLessonDate.substring(8, 10) +
-								'/' +
-								oldLessonDate.substring(0, 4)}
-						</div>
+						{match !== undefined ? (
+							<div>
+								Lesson for{' '}
+								{match.params.oldLessonDate.substring(5, 7) +
+									'/' +
+									match.params.oldLessonDate.substring(8, 10) +
+									'/' +
+									match.params.oldLessonDate.substring(0, 4)}
+							</div>
+						) : (
+							<div>
+								Lesson for{' '}
+								{oldLessonDateForDisplay.substring(5, 7) +
+									'/' +
+									oldLessonDateForDisplay.substring(8, 10) +
+									'/' +
+									oldLessonDateForDisplay.substring(0, 4)}
+							</div>
+						)}
 					</div>
 					<div style={{ marginLeft: '2%' }}>
 						<div style={{ fontSize: '160%', marginTop: '4%' }}>

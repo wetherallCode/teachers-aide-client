@@ -58,12 +58,16 @@ export const FIND_CLASS_PERIOD = gql`
 
 const DailyAgenda = ({ match }) => {
 	const { courseName } = match.params
+
 	const todaysDate = new Date().toISOString().substring(0, 10)
 
 	const [classRoomResources, setClassRoomResources] = useState(false)
 
 	const [oldLessonToggle, setOldLessonToggle] = useState(false)
 	const [oldLessonDate, setOldLessonDate] = useState(todaysDate)
+	const [oldLessonDateForDisplay, setOldLessonDateForDisplay] = useState(todaysDate)
+	const [oldLessonDisplay, setOldLessonDisplay] = useState(false)
+	console.log(oldLessonDisplay, oldLessonDateForDisplay)
 
 	const { data, loading, error } = useQuery(FIND_CLASS_PERIOD, {
 		variables: { assignedDate: todaysDate, period: courseName },
@@ -164,7 +168,7 @@ const DailyAgenda = ({ match }) => {
 					</div>
 					<Route
 						path={`${match.path}/:oldLessonDate`}
-						// render={props => <OldLesson {...props} date={oldLessonDate}></OldLesson>}>
+						// render={props => <OldLesson {...props} date={oldLessonDate}/>}
 						component={OldLesson}
 					/>
 				</div>
@@ -186,10 +190,30 @@ const DailyAgenda = ({ match }) => {
 						)}
 
 						{data.findClassPeriod.livePeriod === 'DISABLED' && (
-							<ManualAgenda classPeriod={data.findClassPeriod} match={match} />
+							<ManualAgenda
+								classPeriod={data.findClassPeriod}
+								match={match}
+								setOldLessonDisplay={setOldLessonDisplay}
+								oldLessonDisplay={oldLessonDisplay}
+								oldLessonDateForDisplay={oldLessonDateForDisplay}
+								setOldLessonDateForDisplay={setOldLessonDateForDisplay}
+								period={courseName}
+							/>
 						)}
 					</>
 
+					{/* {oldLessonDisplay && (
+						<OldLesson
+							oldLessonDateForDisplay={oldLessonDateForDisplay}
+							setOldLessonDateForDisplay={setOldLessonDateForDisplay}
+							period={courseName}
+						/>
+					)} */}
+					{/* <Route
+						path={`${match.path}/:oldLessonDate`}
+						// render={props => <OldLesson {...props} date={oldLessonDate}></OldLesson>}>
+						component={OldLesson}
+					/> */}
 					{/* <div>
 						<div
 							style={{
@@ -223,11 +247,6 @@ const DailyAgenda = ({ match }) => {
 							</div>
 						</div>
 					</div> */}
-					<Route
-						path={`${match.path}/oldLesson/:oldLessonDate`}
-						// render={props => <OldLesson {...props} date={oldLessonDate}></OldLesson>}>
-						component={OldLesson}
-					/>
 				</div>
 			)}
 		</>

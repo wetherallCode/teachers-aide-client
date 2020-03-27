@@ -6,7 +6,7 @@ const SmallWebsiteOldLessonsDisplay = ({ lesson }) => {
 	const [thinkingGuide] = lesson.assignedHomework.filter(
 		assignment => assignment.assignmentType === 'THINKING_GUIDE'
 	)
-	console.log(oeq)
+	console.log(lesson.readingPages)
 	return (
 		<div style={{ height: '70vh', overflow: 'scroll' }}>
 			<div>
@@ -27,16 +27,20 @@ const SmallWebsiteOldLessonsDisplay = ({ lesson }) => {
 				</div>
 				<div>
 					<ul>
-						<li>
-							Read {oeq.readingPages}: {oeq.readingSections} and complete the following Open Ended
-							Question:
-							<ul>
-								<li>{lesson.assignedLesson.essentialQuestion.question}</li>
-							</ul>
-						</li>
-						<li>
-							{thinkingGuide.readingPages}: {thinkingGuide.readingSections}
-						</li>
+						{oeq !== undefined && (
+							<li>
+								Read {oeq.readingPages}: {oeq.readingSections} and complete the following Open Ended
+								Question:
+								<ul>
+									<li>{lesson.assignedLesson.essentialQuestion.question}</li>
+								</ul>
+							</li>
+						)}
+						{thinkingGuide !== undefined && (
+							<li>
+								{thinkingGuide.readingPages}: {thinkingGuide.readingSections}
+							</li>
+						)}
 					</ul>
 				</div>
 				<div style={{ textAlign: 'center', textDecoration: 'underline', fontSize: '110%' }}>
