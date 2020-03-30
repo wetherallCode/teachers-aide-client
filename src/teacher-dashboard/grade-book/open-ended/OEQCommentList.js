@@ -31,6 +31,7 @@ export const answerCommentList = [
 	'Answer is not supported by evidence from the text',
 	'Missing  parts of the text structure',
 	'Answer is only partially correct',
+	'Answer is confusing because it wasn’t proofread',
 	'Missing details that would explain your answer better',
 	'Answer explains the topic sentence completely',
 	'Missing appropriate transitions to connect your ideas',

@@ -78,7 +78,8 @@ const OEQGradeSubmit = ({
 			commentList.includes('Not enough textual evidence') ||
 			commentList.includes('Answer is only partially correct') ||
 			commentList.includes('Parts of the text Structure don’t logically connect') ||
-			commentList.includes('Missing  parts of the text structure')
+			commentList.includes('Missing  parts of the text structure') ||
+			commentList.includes('Answer is confusing because it wasn’t proofread')
 		) {
 			return setParagraphScore(2)
 		}
