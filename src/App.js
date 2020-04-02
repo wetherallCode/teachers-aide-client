@@ -13,7 +13,7 @@ const App = () => {
 	// 		setScreenSize()
 	// 	} else console.log(false)
 	// }, [])
-	console.log(window.screen.width)
+
 	return (
 		<div className='App'>
 			{
