@@ -144,3 +144,11 @@ export const sortByLastName = (a, b) => {
 	}
 	return 0
 }
+export const dateDisplayFormatter = (date) => {
+	const todaysYear = date.substring(0, 4)
+	const todaysMonth = date.substring(5, 7)
+	const todaysDay = date.substring(8, 10)
+
+	const formattedDate = todaysMonth + '/' + todaysDay + '/' + todaysYear
+	return formattedDate 
+}
