@@ -18,8 +18,8 @@
 		"react-modal": "^3.11.1",
 		"react-responsive-modal": "^4.0.1",
 		"react-router-dom": "^5.1.2",
-		"react-scripts": "^3.4.0",
-		"react-to-pdf": "0.0.10",
+		"react-scripts": "^5.0.1",
+		"react-to-pdf": "3.1.0",
 		"slate": "^0.57.1",
 		"slate-react": "^0.57.1",
 		"subscriptions-transport-ws": "^0.9.16"
